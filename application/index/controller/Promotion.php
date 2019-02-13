@@ -1,11 +1,7 @@
 <?php
+namespace app\index;
 
-/**
- * 晋级管理
- * @@CreateTime 2016-8-3 14:49:34
- * @version v1.0
- */
-class PromotionAction extends CommonAction {
+class Promotion extends Base {
 
     public function index() {
         $this->nav = 8;

@@ -1,11 +1,13 @@
 <?php
+namespace app\admins;
 
 /**
  * 站点配置
  *
  * @author Administrator
  */
-class ConfigAction extends CommonAction {
+class Config extends Base
+{
 
     public function index() {
         $M = M(MODULE_NAME);
@@ -27,5 +29,3 @@ class ConfigAction extends CommonAction {
     }
 
 }
-
-?>

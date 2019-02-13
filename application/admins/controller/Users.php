@@ -1,17 +1,17 @@
 <?php
+namespace app\admins;
+
 
 /**
  * 会员管理
  *
- * @@CreateTime 2016-8-4 14:32:16
- * @version v1.0
  */
-class UsersAction extends CommonAction {
+class Users extends Base
+{
 
     public function index() {
         $user_name=$_GET['user_name'];
-        
-        
+
         $this->user_name=$user_name;
         
         if(empty($user_name)){

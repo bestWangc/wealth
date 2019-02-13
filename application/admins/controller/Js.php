@@ -1,12 +1,12 @@
 <?php
-/* 
- * js路径解析控制器
- *
- */
+namespace app\admins;
+
+use think\Controller;
 
 /**
  * js全局路径解析控制器
  */
-class JsAction extends Action{
+class JsAction extends Controller
+{
+
 }
-?>

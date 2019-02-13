@@ -1,10 +1,11 @@
 <?php
-
+namespace app\index;
 /**
  * 财务中心
  *
  */
-class FinanceAction extends CommonAction {
+class Finance extends Base
+{
 
     public function index() {
         $this->nav = 4;

@@ -1,12 +1,12 @@
 <?php
+namespace app\admins;
 
 /**
  * 充值管理
  *
- * @@CreateTime 2016-8-4 10:16:09
- * @version v1.0
  */
-class RechargeAction extends CommonAction {
+class Recharge extends Base
+{
 
     public function money() {
         $this->list=M("AdminMoneyhistory")->order("id desc")->limit(50)->select();

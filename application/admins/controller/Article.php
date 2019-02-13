@@ -1,11 +1,11 @@
 <?php
+namespace app\admins;
 
 /**
  * 文章管理
- *
- * @lanfengye <zibin_5257@163.com>
  */
-class ArticleAction extends CommonAction {
+class Article extends Base
+{
     public function add() {
         $ContentType = M('ContentType');
         $list = $ContentType

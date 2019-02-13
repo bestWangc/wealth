@@ -1,8 +1,13 @@
-<?php 
+<?php
+namespace app\admins;
+
+use think\Controller;
+
 /**
  *文件上传类 
  */
-class FileAction extends Action{
+class File extends Controller
+{
         /**
          *前台单文件上传方法 
          */
@@ -127,4 +132,3 @@ class FileAction extends Action{
         }
     }
 }
-?>

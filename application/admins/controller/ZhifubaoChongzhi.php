@@ -1,12 +1,12 @@
 <?php
+namespace app\admins;
 
 /**
  * 支付宝充值管理
  *
- * @@CreateTime 2016-8-4 13:38:40
- * @version v1.0
  */
-class ZhifubaoChongzhiAction extends CommonAction {
+class ZhifubaoChongzhi extends Base
+{
 
     public function index() {
         parent::index(20, "id desc");

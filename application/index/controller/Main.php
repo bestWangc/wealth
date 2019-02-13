@@ -1,11 +1,8 @@
 <?php
+namespace app\index;
 
-/**
- *
- * @@CreateTime 2016-8-3 9:17:39
- * @version v1.0
- */
-class MainAction extends CommonAction {
+class Main extends Base
+{
 
     public function index() {
         $this->nav = 1;

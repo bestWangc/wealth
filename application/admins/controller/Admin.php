@@ -1,6 +1,9 @@
 <?php
+namespace app\admins;
+
 //系统管理控制器
-class AdminAction extends CommonAction{
+class Admin extends Base
+{
     
     function index(){
         parent::index(20, 'ly_id desc');
@@ -103,4 +106,3 @@ class AdminAction extends CommonAction{
     }
 
 }
-?>

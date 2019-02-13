@@ -1,10 +1,14 @@
 <?php
+namespace app\admins;
+
+use think\Controller;
 
 /**
  * 控制器基类 
  * 包括公有常用的公有方法
  */
-class CommonAction extends Action {
+class Base extends Controller
+{
 
     function _initialize() {  //初始化
         $this->assign('module_name', parse_name(MODULE_NAME));

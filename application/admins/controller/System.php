@@ -1,8 +1,16 @@
 <?php
-//系统管理控制器类
+namespace app\admins;
 
 
-class SystemAction extends Action{
+use think\Controller;
+
+/**
+ * 系统管理控制器类
+ * Class System
+ * @package app\admins
+ */
+class System extends Controller
+{
 	
 	public function out()   //退出系统
 	{
@@ -41,4 +49,3 @@ class SystemAction extends Action{
         }
     }
 }
-?>

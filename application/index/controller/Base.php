@@ -1,12 +1,10 @@
 <?php
+namespace app\index;
 
-/**
- * 
- *
- * @@CreateTime 2016-8-2 15:50:58
- * @version v1.0
- */
-class CommonAction extends Action {
+use think\Controller;
+
+
+class Base extends Controller {
 
     public function _initialize() {
         $user_id = session("user_id");

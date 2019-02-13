@@ -1,11 +1,11 @@
 <?php
-
+namespace app\admins;
 /**
  * 系统缓存管理类
  *
- * @lanfengye <zibin_5257@163.com>
  */
-class CacheAction extends CommonAction {
+class Cache extends Base
+{
 
     /**
      * 缓存清理方法 

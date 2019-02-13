@@ -1,6 +1,9 @@
 <?php
+namespace app\admins;
 
-class MainAction extends CommonAction {
+
+class Main extends Base
+{
 
     public function main() {
         $this->sum_num = M("Users")->where(array("status" => 1))->count();
@@ -81,5 +84,3 @@ class MainAction extends CommonAction {
     }
 
 }
-
-?>

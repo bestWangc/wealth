@@ -1,12 +1,12 @@
 <?php
+namespace app\admins;
 
 /**
  * 晋级申请管理
  *
- * @@CreateTime 2016-8-4 15:26:38
- * @version v1.0
  */
-class JibieApplyAction extends CommonAction {
+class JibieApply extends Base
+{
 
     public function index() {
         parent::index(20, "id desc");

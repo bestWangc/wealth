@@ -1,11 +1,11 @@
 <?php
+namespace app\index;
 
 /**
  * 用户中心
- * @@CreateTime 2016-8-3 11:02:06
- * @version v1.0
  */
-class UserAction extends CommonAction {
+class User extends Base
+{
 
     public function index() {
         $this->nav = 2;

@@ -1,8 +1,13 @@
 <?php
+namespace app\index;
 
-class IndexAction extends Action {
+use think\Controller;
 
-    public function index() {
+class Index extends Controller
+{
+
+    public function index()
+    {
         $this->display();
     }
 
