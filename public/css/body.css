@@ -1,0 +1,9 @@
+#copyright {
+	background: rgb(182, 194, 139); font: 12px/normal tahoma, arial; margin: 0px auto; padding: 20px 35px; width: 80%; color: rgb(50, 65, 67); min-width: 650px; font-size-adjust: none; font-stretch: normal;
+}
+#copyright a {
+	color: rgb(50, 65, 67);
+}
+#copyright a:hover {
+	color: rgb(23, 31, 38);
+}

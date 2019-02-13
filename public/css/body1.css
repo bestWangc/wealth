@@ -1,0 +1,18 @@
+/* common page styles */
+
+
+#copyright {
+	width: 80%;
+	min-width: 650px;
+	margin: 0 auto;
+	padding: 20px 35px;
+	background: #B6C28B;
+	font: 12px tahoma, arial;
+	color: #324143
+}
+#copyright a {
+	color: #324143
+}
+#copyright a:hover {
+	color: #171F26
+}

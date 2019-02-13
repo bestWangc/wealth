@@ -1,0 +1,79 @@
+
+<include file="Public:header" /><body style="background:#fff url('../images/bg.png');">
+<load href="__PUBLIC__/scripts/common_list_delete.js" />
+<div id="main-content">
+    <noscript>
+    <div class="notification error png_bg">
+        <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+    </div>
+    </noscript>
+
+    <include file="daohang" />
+
+    <div class="clear"></div>
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>会员管理</h3>
+            <div class="clear"></div>
+        </div>
+
+        <div class="content-box-content">
+                
+            <div class="tab-content default-tab" id="tab1">
+                <div class="notification attention png_bg" id="pop">
+                </div>
+                <a href="{:U('add')}"><button class="btn btn-default">添加会员</button></a>
+                <hr/>
+                <fieldset>
+                    <form method="get" action="{:U('index')}">
+                        搜索：用户名：<input type='text' name="user_name" value="{$user_name}" />
+                        <input type="submit" value="搜索" name="submit" />
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>注册时间</th>
+                                    <th>登录次数</th>
+                                    <th>状态</th>
+                                    <th>级别</th>
+                                    <th>收益币</th>
+                                    <th>钱包</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="pagination">{$page}</div>
+                                        <div class="clear"></div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            <foreach name="list" item="vo">
+                                <tr id="tr_{$vo.id}">
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.user_name}&nbsp;&nbsp;&nbsp;<a href="{:U(MODULE_NAME.'/login?id='.$vo['id'])}"></a></td>
+                                    <td>{:get_date_full($vo['create_time'])}</td>
+                                    <td>{$vo.login_count}</td>
+                                    <td><php>if($vo['status']==0) echo '<font color="red">禁用</font>'; else echo '启用';</php></td>
+                                <td>{:get_jibie_name($vo['jibie_id'])}</td>
+                                <td>{$vo.bi}</td>
+                                <td>{$vo.money}</td>
+                                <td>
+                                    <!-- Icons -->
+                                    <a href="{:U(MODULE_NAME.'/edit?id='.$vo['id'])}" title="编辑"><img src="__PUBLIC__/images/icons/pencil.png" alt="Edit" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="###" class="delete_action" id="{$vo.id}"><img src="__PUBLIC__/images/icons/cross.png" title="删除" alt="删除" /></a>
+                                </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </form>
+                </fieldset>
+                <div class="clear"></div>
+            </div>                 
+        </div>
+    </div>
+<include file="Public:banquan" /></div>

@@ -1,0 +1,80 @@
+<tagLib name="Lbase"/>
+<include file="Public:header"/>
+<body style="background:#fff url('../images/bg.png');">
+<div id="main-content">
+    <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+    </noscript>
+
+    <include file="daohang"/>
+
+    <div class="clear"></div>
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>编辑</h3>
+            <div class="clear"></div>
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab">
+                <fieldset>
+                    <form action="{:U(MODULE_NAME.'/do_add')}" method="post" name="b">
+                        <p>
+                            <label>推荐人用户名：</label>
+                            <input name="tj_name" id="RID" type="text" value=""
+                                   class="ipt"/>
+                        </p>
+                        <p>
+                            <label>推荐人电话：</label>
+                       <input name="tj_mobile" type="text" class="ipt" id="tuihao"
+                                                 value=""/>
+
+                        </p>
+                        <p>
+                            <label>用户名：</label>
+                            <input name="user_name" id="UserID" type="text" value="" class="ipt"/>
+                        </p>
+
+                        <p>
+                            <label>手机号：</label>
+                        <input name="mobile" type="text" class="ipt" id="UserTel" value=""/>
+                        <span class="Prompt" style="width:298px">填写手机号码，手机号码是您身份的唯一凭证</span>
+
+                        </p>
+
+                        <p>
+                            <label>登录密码：</label>
+                            <input name="user_pwd" type="password" class="ipt" id="Password"
+                                   value=""/>
+                        </p>
+                        <p>
+                            <label>确认密码：</label>
+                            <input name="user_pwd_1" type="password" class="ipt" id="rePassword"
+                                   value=""/>
+                        </p>
+                        <p>
+                            <label>二级密码：</label>
+                            <input name="user_pwd1" type="password" class="ipt" id="PassOpen"
+                                   value=""/>
+                        </p>
+
+                        <p>
+                            <label>确认密码：</label>
+                            <input name="user_pwd1_1" type="password" class="ipt" id="rePassOpen"
+                                   value=""/>
+                        </p>
+
+                        <p>
+                            <input class="button" id="tijiao" type="submit" value="保 存"/>
+                        </p>
+                    </form>
+                </fieldset>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <include file="Public:banquan"/>
+</div>
+<include file="Public:ender"/>

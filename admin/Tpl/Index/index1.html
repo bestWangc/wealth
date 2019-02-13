@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>网站后台管理系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+td{font-size:10pt;line-height:140%;display: block;}
+body{font-size:10pt;line-height:140%}
+
+a:link          { color: #000000; text-decoration: none }
+a:visited       { color: #000000; text-decoration: none }
+a:active        { color: #FF0000; text-decoration: none }
+a:hover         { color: #0033CC; text-decoration: underline}
+</style>
+<style type="text/css"></style>
+<load file="__ROOT__/js/jquery.js" />
+<script type="text/javascript">
+    $(function(){
+        $('#admin_name').focus();
+        $('#tijiao').click(function(){
+            var admin_name=$('#admin_name').val();
+            var admin_pwd=$('#admin_pwd').val();
+
+            if(check(admin_name,admin_pwd)){
+                $('#pop').load("{:U('system/check')}",{
+                    'admin_name':admin_name,
+                    'admin_pwd':admin_pwd
+                });
+            }
+        });
+
+
+        $('#cancle').click(function(){
+            $('#admin_name').val('');
+            $('#admin_pwd').val('');
+            $('#pop').html('');
+            $('#admin_name').focus();
+        });
+        
+        function check(admin_name,admin_pwd){
+            if(admin_name==''){
+                $('#pop').html('<font color="red">用户名不能为空！请填写用户名！</font>');
+                $('#admin_name').focus();
+                return false;
+            }
+            
+            if(admin_pwd==''){
+                $('#pop').html('<font color="red">用户密码不能为空！请填写用户密码！</font>');
+                $('#admin_pwd').focus();
+                return false;
+            }
+            return true;
+        }
+
+        $('#pop').ajaxStart(function(){
+            $('#pop').html('<font color="red">数据请求中...请稍后...</font>');
+        });
+
+
+
+    });
+</script>
+</head>
+    <body bgcolor="#ffffff">
+    
+        <!--提示--><a id="pop"></a>
+        <br />
+        用户名：<input type="text" id="admin_name" maxlength="10" style="width:200px;height: 20px;border:1px #aaaaaa solid;" />
+        <br /><br />
+        密　码：<input type="password" id="admin_pwd" maxlength="20" style="width:200px;height: 20px;border:1px #aaaaaa solid;" />
+        <input type="button" name="b" id="tijiao" value="登 陆" />
+    </body>
+</html>
+                

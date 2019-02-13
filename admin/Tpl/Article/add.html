@@ -1,0 +1,70 @@
+<tagLib name="Lbase" />
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+    <div id="main-content">
+        <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+        </noscript>
+
+        <include file="daohang" />
+
+        <div class="clear"></div>
+        <div class="content-box">
+            <div class="content-box-header">
+                <h3>添加文章</h3>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="content-box-content">
+                <div class="tab-content default-tab">
+                    <fieldset>
+                        <form action="{:U(MODULE_NAME.'/insert')}" method="post" name="b">
+                        <p>
+                            <label>标题</label>
+                            <input class="text-input medium-input" type="text" name="title" />
+                            
+                        </p>
+                        <p>
+                            <label>SEO页面关键词</label>
+                            <input class="text-input medium-input" type="text" value="" name="seo_keys" />
+                            <br /><small>多个关键词中间请用英文半角逗号","分隔</small>
+                        </p>
+                        <p>
+                            <label>SEO页面简介</label>
+                            <input class="text-input medium-input" type="text" value="" name="seo_description" />
+                        </p>
+                        <p>
+                            <label>排序</label>
+                            <input class="text-input small-input" type="text" value="10" name="sort" />
+                            <br /><small>如无特殊需求，该字段一般无需修改</small>
+                        </p>
+                        <p>
+                            <label>类别ID</label>
+                            <input class="text-input medium-input" type="text" value="" name="kind_id" />
+                            <br /><small>类别查找ID，唯一标识，该项请咨询系统管理员，请勿随便填写</small>
+                        </p>
+                        <div>
+                            <label>文章内容</label>
+                        <lbase:editor 
+                            id="editor_id" 
+                            name="content" 
+                            type="editor" 
+                            width="95%" 
+                            height="300" 
+                            content="" />
+                        </div>
+
+                        <p>
+                            <input class="button" id="tijiao" type="submit" value="保 存" />
+                        </p>
+                        </form>
+                    </fieldset>
+                    <div class="clear"></div>
+                </div>                 
+            </div>
+        </div>
+        <include file="Public:banquan" />
+    </div>
+<include file="Public:ender" />

@@ -1,0 +1,90 @@
+<tagLib name="Lbase" />
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+    <div id="main-content">
+        <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+        </noscript>
+
+        <include file="daohang" />
+
+        <div class="clear"></div>
+        <div class="content-box">
+            <div class="content-box-header">
+                <h3>钱包充值</h3>
+                <div class="clear"></div>
+            </div>
+
+            <div class="content-box-content">
+                <div class="tab-content default-tab">
+                    <fieldset>
+                        <form action="{:U(MODULE_NAME.'/money_action')}" method="post" name="b">
+                            <p>
+                                <label>会员用户名</label>
+                                <input class="text-input medium-input" type="text" name="user_name" autocomplete="off" />
+                            </p>
+                            <p>
+                                <label>充值金额</label>
+                                <input class="text-input medium-input" type="text" name="epoints" value="0" autocomplete="off"/>
+                                <small>请输入需要充值的金额，如需扣除金钱请输入负数</small>
+                            </p>
+
+                            <p>
+                                <input class="button" id="tijiao" type="submit" value="确认充值" />
+                            </p>
+                        </form>
+                    </fieldset>
+                    <div class="clear"></div>
+                </div>                 
+            </div>
+
+        </div>
+        
+        <div class="content-box">
+                <div class="content-box-header">
+                    <h3>近50笔充值记录</h3>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="content-box-content">
+                    <div class="tab-content default-tab" id="tab1">
+                        <fieldset>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>充值时间</th>
+                                            <th>充值用户</th>
+                                            <th>数量</th>
+                                            <th>操作人</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4">
+<!--                                                <div class="pagination">{$page}</div>
+                                                <div class="clear"></div>-->
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <foreach name="list" item="vo">
+                                        <tr id="tr_{$vo.id}">
+                                            <td>{:get_date_full($vo['create_time'])}</td>
+                                            <td>{:get_user_name($vo['uid'])}</td>
+                                            <td>{$vo.epoints}</td>
+                                            <td>{:get_admin_name($vo['admin'])}</td>
+                                        </tr>
+                                    </foreach>
+                                    </tbody>
+                                </table>
+                        </fieldset>
+                        <div class="clear"></div>
+                    </div>                 
+                </div>
+            </div>
+        
+        <include file="Public:banquan" />
+    </div>
+<include file="Public:ender" />

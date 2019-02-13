@@ -1,0 +1,65 @@
+
+<include file="Public:header" />
+<tagLib name="Lbase" /><body style="background:#fff url('../images/bg.png');">
+    <div id="main-content">
+        <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+        </noscript>
+
+        <include file="daohang" />
+
+        <div class="clear"></div>
+        <div class="content-box">
+            <div class="content-box-header">
+                <h3>编辑</h3>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="content-box-content">
+                <div class="tab-content default-tab">
+                    <fieldset>
+                        <form action="{:U(MODULE_NAME.'/update')}" method="post" name="b">
+                        <p>
+                            <label>标题</label>
+                            <input class="text-input medium-input" type="text" value="{$title}" name="title" />
+                            
+                        </p>
+                        <p>
+                            <label>SEO页面关键词</label>
+                            <input class="text-input medium-input" type="text" value="{$seo_keys}" name="seo_keys" />
+                            <br /><small>多个关键词中间请用英文半角逗号","分隔</small>
+                        </p>
+                        <p>
+                            <label>SEO页面简介</label>
+                            <input class="text-input medium-input" type="text" value="{$seo_description}" name="seo_description" />
+                        </p>
+                        <p>
+                            <label>排序</label>
+                            <input class="text-input small-input" type="text" value="{$sort}" name="sort" />
+                            <br /><small>如无特殊需求，该字段一般无需修改</small>
+                        </p>
+                        <p>
+                            <label>类别ID</label>
+                            <input class="text-input small-input" type="text" value="{$kind_id}" name="kind_id" />
+                            <br /><small>类别查找ID，唯一标识，如不明白该字段含义，请勿修改，否则可能造成系统无法运行</small>
+                        </p>
+                        <div>
+                            <label>文章内容</label>
+                       <textarea name="content" id="" cols="30" rows="10">{$content}</textarea>
+                        </div>
+
+                        <p>
+                            <input type="hidden" name="id" value="{$id}" />
+                            <input class="button" id="tijiao" type="submit" value="保 存" />
+                        </p>
+                        </form>
+                    </fieldset>
+                    <div class="clear"></div>
+                </div>                 
+            </div>
+        </div>
+        <include file="Public:banquan" />
+    </div>
+<include file="Public:ender" />

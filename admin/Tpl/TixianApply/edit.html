@@ -1,0 +1,78 @@
+<tagLib name="Lbase" />
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+    <div id="main-content">
+        <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+        </noscript>
+
+        <include file="daohang" />
+
+        <div class="clear"></div>
+        <div class="content-box">
+            <div class="content-box-header">
+                <h3>编辑</h3>
+                <div class="clear"></div>
+            </div>
+
+            <div class="content-box-content">
+                <div class="tab-content default-tab">
+                    <fieldset>
+                        <form action="{:U(MODULE_NAME.'/update')}" method="post" name="b">
+                            <p>
+                                <label>用户名</label>
+                            <div>{:get_user_name($uid)}</div>
+                            </p>
+
+                            <p>
+                                <label>申请时间</label>
+                            <div>{:get_date_full($create_time)}</div>
+                            </p>
+
+                            <p>
+                                <label>提现金额</label>
+                            <div>{$epoints}</div>
+                            </p>
+                            
+                            <p>
+                                <label>姓名</label>
+                            <div>{:get_user_real_name($uid)}</div>
+                            </p>
+
+                            <p>
+                                <label>支付宝账户</label>
+                            <div>{:get_user_alipay($uid)}</div>
+                            </p>
+                            
+                            <p>
+                                <label>说明</label>
+                            <div>{$text}</div>
+                            </p>
+
+                            <p>
+                                <label>审核状态</label>
+                            <php>if($status==0){</php>
+                            <select name="status">
+                                <option value="0">未审核</option>
+                                <option value="1" selected="selected">完成提现</option>
+                            </select>
+                            <php>}else{echo get_zfb_status($status);}</php>
+                            </p>
+
+                            <p>
+                                <input type="hidden" name="id" value="{$id}" />
+                            <php>if($status==0){</php>
+                            <input class="button" id="tijiao" type="submit" value="保 存" />
+                            <php>}</php>
+                            </p>
+                        </form>
+                    </fieldset>
+                    <div class="clear"></div>
+                </div>                 
+            </div>
+        </div>
+        <include file="Public:banquan" />
+    </div>
+<include file="Public:ender" />

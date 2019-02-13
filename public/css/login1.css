@@ -1,0 +1,6 @@
+* { margin: 0; padding: 0; }
+body {background:#221205;;  font-size: 12px; font-family: Arial,simsun}
+img {border:0;}
+.login_bg{ background:url(../images/login_bg.jpg); width:1002px; height:525px; margin-top:100px;}
+.login_tab{ color:#FFFFFF;}
+.ipt_text{ font-size:14px; font-family:Verdana, Geneva, sans-serif;}

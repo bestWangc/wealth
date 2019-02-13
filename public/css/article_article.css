@@ -1,0 +1,85 @@
+	/* css 重置 */
+* {
+	margin:0;
+	padding:0;
+	list-style:none;
+	font-family:"微软雅黑";
+}
+
+img {
+	border:0;
+}
+a {
+	text-decoration:none;
+}
+ul {
+	list-style-type:none;
+}
+hr{
+    border:2px solid #ffffff;
+}
+body{
+}
+
+.top1{
+    padding:30px 0;
+    width:100%;
+    background-image:url(http://t1.mcp.cn/oshpgkjp/635155/templets/lchuzhu/a.jpg);
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+.top{
+    margin:0px auto;
+    width:80%;
+}
+.top li{
+    margin:20px auto;
+    float:left;
+    width:16.666666666667%;
+    text-align:center;
+}
+.red{
+    color:#FF0000;
+    font-size:14px;
+    margin:0 5px;
+}
+.top a{
+    color:#fff;
+    font-size:26px;
+}
+.top a:hover {
+	color:#FF0000;
+}
+.title {
+	font-size:26px;
+	margin:30px 0 30px 0;
+	font-weight:normal;
+	color:#282828;
+	text-align:center;
+	letter-spacing:1px;
+}
+.nr{
+    width:60%;
+    margin:10px auto;
+}
+.nr p{
+	color:#585858;
+	font-size:17px;
+	letter-spacing:1px;
+	line-height:24px;
+	margin:20px 0;
+}
+.nr img{
+    max-width:100%;
+    display:block;
+    margin:15px auto;
+    text-align:center;
+}
+
+
+
+
+
+
+
+

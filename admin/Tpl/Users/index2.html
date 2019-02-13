@@ -1,0 +1,60 @@
+
+<include file="Public:header" /><body style="background:#fff url('../images/bg.png');">
+<load href="__PUBLIC__/scripts/common_list_delete.js" />
+<div id="main-content">
+    <noscript>
+    <div class="notification error png_bg">
+        <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+    </div>
+    </noscript>
+
+    <include file="daohang" />
+
+    <div class="clear"></div>
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>会员级别</h3>
+            <div class="clear"></div>
+        </div>
+
+        <div class="content-box-content">
+                
+            <div class="tab-content default-tab" id="tab1">
+                <div class="notification attention png_bg" id="pop">
+                </div>
+                <a href="{:U('add')}">
+                <button class="btn btn-default">添加会员级别</button>
+                </a>
+                <hr/>
+                <fieldset>
+                    <form method="get" action="{:U('index')}">
+                      <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th>级别</th>
+                            <th>要求直推人数</th>
+                            <th>要求团队总人数</th>
+                            <th>奖金</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <foreach name='jibie_array' item='vo'>
+                            <tr>
+                              <td>{:get_jibie_title($vo['jibie_id'])}</td>
+                              <td>{$vo.zhitui_num}</td>
+                              <td>{$vo.team_num}</td>
+                              <td>{$vo.bonus_amount}</td>
+                            </tr>
+                          </foreach>
+                        </tbody>
+                      </table>
+                    </form>
+                </fieldset>
+                <div class="clear"></div>
+            </div>                 
+        </div>
+    </div>
+    <include file="Public:banquan" />
+</div>
+<include file="Public:ender" />

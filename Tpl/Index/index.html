@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>会员登录-{:MC('site_name')}</title>
+        <link href="__PUBLIC__/login/css/style.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+
+        <div class="main">
+            <div class="denglu">
+                <!--                <div class="text" style="font-size:13px;"><strong>重要提示：</strong><br />
+                                    一、考生登录本系统可查看考试结果，还可查看并保存电子合格证书。<br />
+                                    二、国网系统外考生可申请邮寄合格证书，付款一周后在“网银交费”页面可查看邮寄状态及快递单号。<br />
+                                    <font color="red">三、2014年2月24日后不再每日邮寄一次，将改成每两周邮寄一次，整体邮寄工作截止到5月15日。</font></div>-->
+                <div class="dlk">
+                    <form method='post' name="login" id="form1" action="{:U('index/check_login')}" >
+                        <table width="292" border="0" align="center" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td height="76" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td width="65" style="font-size:14px;">用户名</td>
+                                <td colspan="2"><input name="user_name" type="text" class="dlinput" /></td>
+                            </tr>
+                            <tr>
+                                <td height="16" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>登录密码</td>
+                                <td colspan="2"><input name="user_pwd" type="password" class="dlinput" /></td>
+                            </tr>
+                            <tr>
+                                <td height="16" colspan="3"></td>
+                            </tr>
+                            <tr height='20'>
+                            </tr>
+                            <tr>
+                                <td height="16" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td colspan="2"><input type="submit" value="登 录" class="loginbtn" /></td>
+                            </tr>
+
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td colspan="2">
+                                    </br><table width="224" border="0" cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td align="right"><a href="{:U('index/reg')}" class="zc" style="font-size:13px;">立即网上注册</a></td>
+                                        </tr>
+                                    </table></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <include file='Public:footer' />
+        </div>
+
+    </body>
+</html>

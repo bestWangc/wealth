@@ -1,0 +1,444 @@
+* {
+	margin: 0px; padding: 0px; text-decoration: none;
+}
+html {
+	color: rgb(106, 108, 111); font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px;
+}
+body {
+	color: rgb(106, 108, 111); font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px;
+}
+body {
+	margin: 0px; padding: 0px;
+}
+img {
+	vertical-align: middle;
+}
+.font_color {
+	color: rgb(119, 119, 119);
+}
+div {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+form {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+img {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+ul {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+ol {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+li {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+dl {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+dt {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+dd {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+table {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+td {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+tr {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+th {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+iframe {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none;
+}
+li {
+	list-style-type: none;
+}
+select {
+	border: 0px currentColor; border-image: none; height: 20px; color: rgb(88, 88, 88); line-height: 20px; font-family: Arial,����; font-size: 12px;
+}
+input {
+	border: 0px currentColor; border-image: none; height: 20px; color: rgb(88, 88, 88); line-height: 20px; font-family: Arial,����; font-size: 12px;
+}
+#top {
+	background: rgb(255, 255, 255); margin: auto 0px; width: 100%; height: 62px; text-align: left; overflow: hidden; border-bottom-color: rgb(228, 229, 231); border-bottom-width: 1px; border-bottom-style: solid; z-index: 99; -ms-zoom: 1;
+}
+.color-line {
+	background: linear-gradient(to right, rgb(52, 73, 94), rgb(52, 73, 94) 25%, rgb(155, 89, 182) 25%, rgb(155, 89, 182) 35%, rgb(52, 152, 219) 35%, rgb(52, 152, 219) 45%, rgb(98, 203, 49) 45%, rgb(98, 203, 49) 55%, rgb(255, 182, 6) 55%, rgb(255, 182, 6) 65%, rgb(230, 126, 34) 65%, rgb(230, 126, 34) 75%, rgb(231, 76, 60) 85%, rgb(231, 76, 60) 85%, rgb(192, 57, 43) 85%, rgb(192, 57, 43) 100%) no-repeat 50% 100% / 100% 6px rgb(52, 73, 94); height: 6px;
+}
+.left_box {
+	
+}
+.infor_box {
+	background: rgb(255, 255, 255); padding: 20px; text-align: center; border-bottom-color: rgb(228, 229, 231); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.head_por {
+	margin: 0px 0px 15px; border-radius: 50%;
+}
+.menu_bg {
+	background: rgb(247, 249, 250); transition:background-color 0.5s; width: 78px; height: 56px; text-align: center; line-height: 56px; font-size: 18px; font-weight: 600; border-right-color: rgb(228, 229, 231); border-left-color: rgb(228, 229, 231); border-right-width: 1px; border-left-width: 1px; border-right-style: solid; border-left-style: solid; float: left; cursor: pointer; -webkit-transition: background-color 0.5s;
+}
+.menu_bg img {
+	margin: 17px auto auto; display: block;
+}
+.logo {
+	background: rgb(247, 249, 250); width: 180px; height: 56px; float: left;
+}
+.logo span {
+	color: rgb(52, 73, 94); padding-top: 22px; padding-left: 22px; font-size: 14px; font-weight: 600; display: block;
+}
+.dk {
+	text-align: center; line-height: 60px; float: right;
+}
+.dk img {
+	margin-top: 17px; float: left; display: block;
+}
+.dk a:link {
+	color: rgb(106, 108, 111); font-size: 14px; font-weight: bold; text-decoration: none; margin-right: 30px;
+}
+.dk a:visited {
+	color: rgb(106, 108, 111); font-size: 14px; font-weight: bold; text-decoration: none; margin-right: 30px;
+}
+.dk a:hover {
+	text-decoration: underline;
+}
+.dk span {
+	color: rgb(106, 108, 111); font-size: 13px; font-weight: bold; margin-right: 30px; float: left; display: block;
+}
+.dk a {
+	color: rgb(106, 108, 111); font-size: 13px; font-weight: bold; margin-right: 30px; float: left; display: block;
+}
+#banner {
+	background: rgb(0, 153, 255); width: 100%; margin-bottom: 30px; min-height: 380px;
+}
+#Main {
+	background: url("../Images/main.gif") no-repeat 0px 120px; margin: 0px auto; width: 695px; padding-top: 100px;
+}
+.box {
+	width: 695px; height: 437px; text-align: center; padding-top: 380px; padding-left: 10px;
+}
+.nav {
+	background: none; width: 180px; height: auto; overflow: hidden; float: left;
+}
+#basic-accordian {
+	background: none; margin-top: 1px;
+}
+.left_bav {
+	width: 100%; height: 100%;
+}
+.accordion_headings h6 {
+	margin-right: 4px; float: left;
+}
+.accordion_headings img {
+	margin-left: 10px;
+}
+.accordion_headings span {
+	
+}
+#aa {
+	color: rgb(106, 108, 111); font-family: "΢���ź�"; display: block;
+}
+#aa small {
+	margin-right: 7px; margin-left: 20px; display: inline-block;
+}
+.pull-right {
+	margin-right: 5px;
+}
+.label-danger {
+	background-color: rgb(217, 83, 79);
+}
+.label {
+	padding: 0.2em 0.6em 0.3em; border-radius: 0.25em; text-align: center; color: rgb(255, 255, 255); line-height: 1; font-size: 75%; font-weight: bold; vertical-align: baseline; display: inline; white-space: nowrap;
+}
+#aa small {
+	
+}
+#aa:visited {
+	background-color: rgb(255, 255, 255);
+}
+#aa:hover {
+	background: rgb(255, 255, 255);
+}
+.current {
+	background: rgb(255, 255, 255);
+}
+#topbox {
+	width: 1440px; height: 170px; float: left;
+}
+.topr {
+	background: url("../images/top2.jpg") repeat-x; width: 100%; height: 215px; float: left;
+}
+.sub_bav {
+	margin: 5px 0px 5px 5px; border: 1px solid rgb(0, 110, 46); border-image: none; width: 100%; height: auto; clear: both;
+}
+.sub_bav1 {
+	margin: 150px 5px 5px; border: 1px solid rgb(0, 110, 46); border-image: none; left: 50%; width: 450px; height: auto; position: relative;
+}
+.sub_bav_bt {
+	background: rgb(0, 110, 46); height: 24px; border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.sub_bav h1 {
+	background: url("../images/sub_bav_left.gif") no-repeat 3px; height: 29px; color: rgb(255, 255, 255); line-height: 29px; padding-left: 20px; font-size: 14px; font-weight: bold;
+}
+.sub_bav table {
+	background: rgb(255, 255, 255); border-collapse: collapse;
+}
+.sub_bav td {
+	padding: 2px; border: 1px solid rgb(208, 208, 208); border-image: none; border-collapse: collapse;
+}
+.left_top {
+	background: rgb(248, 248, 248); margin: 10px 0px; padding: 2px 2px 2px 40px; border: 1px dashed rgb(252, 202, 21); border-image: none; height: auto; text-align: left; clear: both;
+}
+.top_top {
+	background: url("../Images/top_line.gif") repeat-x; width: 100%; height: 100%; text-align: right; line-height: 28px; clear: both;
+}
+.top_top a {
+	color: rgb(153, 0, 0);
+}
+.top_top a:hover {
+	color: red;
+}
+.time_s {
+	width: auto; height: 35px; color: rgb(236, 236, 236); line-height: 32px; font-family: Arial,Tahoma; font-size: 12px; margin-left: 20px; float: left;
+}
+.btn1 {
+	background: url("../images/top_bottom_bg.gif") repeat-x center; border: 1px solid rgb(255, 200, 1); border-image: none; color: rgb(0, 0, 0); letter-spacing: 0.8em;
+}
+.btn2 {
+	border: 0px solid rgb(212, 206, 172); border-image: none; color: rgb(0, 0, 0);
+}
+.head_bg {
+	background: url("../Images/head_bg.png") repeat-x; height: 125px; min-width: 1423px;
+}
+.main {
+	width: 100%; min-width: 1420px;
+}
+.content {
+	background: rgb(239, 245, 251); width: 87.22%; border-left-color: rgb(228, 229, 231); border-left-width: 1px; border-left-style: solid; float: left; min-width: 1150px;
+}
+.main_box {
+	padding: 25px 40px 16px; min-height: 864px; min-width: 1060px;
+}
+.accordion_child ul {
+	width: 100%; text-indent: 60px;
+}
+.accordion_child li {
+	line-height: 36px;
+}
+.accordion_child li a {
+	background: rgb(255, 255, 255); width: 100%; color: rgb(119, 119, 119); line-height: 36px; font-size: 12px; border-bottom-color: rgb(228, 229, 231); border-bottom-width: 1px; border-bottom-style: solid; display: block;
+}
+.accordion_child li a:hover {
+	
+}
+.accordion_child li a:active {
+	
+}
+.accordion_headings {
+	transition:background-color 0.5s; width: 100%; color: rgb(106, 108, 111); text-transform: uppercase; line-height: 48px; font-size: 13px; font-weight: 600; border-bottom-color: rgb(228, 229, 231); border-bottom-width: 1px; border-bottom-style: solid; cursor: pointer; min-height: 48px; background-color: rgb(247, 249, 250); -webkit-transition: background-color 0.5s;
+}
+.header_highlight {
+	color: rgb(106, 108, 111);
+}
+.add {
+	height: 100px;
+}
+.cb1_1 {
+	background: url("../Images/cb_1..gif") no-repeat;
+}
+.cb1_3 {
+	background: url("../Images/cb_3..gif") no-repeat; height: 120px; margin-bottom: 10px;
+}
+.page-title {
+	margin: 13px 0px 8px; font-family: "MyriadPro-Light"; font-size: 20px; font-weight: normal !important; display: block;
+}
+.breadcrumb {
+	list-style: none; margin: 0px 0px 20px; padding: 0px 6px 0px 16px; border-radius: 4px; height: 40px; -webkit-border-radius: 4px; -moz-border-radius: 4px;
+}
+.breadcrumb li {
+	color: rgb(136, 136, 136); line-height: 40px; float: left;
+}
+.breadcrumb .cha_eng {
+	float: right;
+}
+.breadcrumb .cha_eng a {
+	height: 20px; line-height: 20px; padding-top: 10px; padding-right: 20px; vertical-align: top; float: left; display: block; cursor: pointer;
+}
+.breadcrumb .cha_eng img {
+	
+}
+.fast_way {
+	width: 100%; margin-bottom: 24px;
+}
+.fast_way ul {
+	margin: 0px auto; width: 98%; overflow: hidden;
+}
+.fast_way ul li {
+	margin: 0px 1.5% 1.5% 0px; border-radius: 2px; width: 18.7%; height: 118px; float: left; cursor: pointer;
+}
+.fast_way ul li a {
+	width: 100%; height: 100%; display: block;
+}
+.fast_way ul li:hover {
+	box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.3), inset 0px 0px 5px 0px rgba(255,255,255,0.35);
+}
+.fast_way ul li:hover img {
+	width: 70px; height: 65px; opacity: 0.6; transform: rotate(45deg); -moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -o-transform: rotate(45deg);
+}
+.fast_way ul li:hover #values {
+	font-size: 20px; opacity: 1;
+}
+.fast_way ul li p {
+	width: 58%; float: left;
+}
+.icon_1 {
+	width: 40%; height: 118px; float: left;
+}
+.icon_1 img {
+	padding: 32px 0px 0px 20px; transition:width 1.5s, height 1.5s; display: block; opacity: 0.8; -webkit-transition: width 1.5s, height 1.5s, -webkit-transform 1.5s; -moz-transition: width 1.5s, height 1.5s, -moz-transform 1.5s; -o-transition: width 1.5s, height 1.5s, -o-transform 1.5s;
+}
+#values {
+	text-align: center;
+}
+#in12 {
+	text-align: center;
+}
+#values {
+	height: 74px; color: rgb(255, 255, 255); line-height: 80px; font-size: 18px; font-weight: bold; display: block; opacity: 0.9;
+}
+#in12 {
+	height: 44px; color: rgb(255, 255, 255); line-height: 36px; font-family: "΢���ź�"; font-size: 14px; font-weight: normal; display: block; opacity: 0.7;
+}
+.default_shadow {
+	background: rgb(245, 245, 245); box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.65);
+}
+.magnet_tab {
+	padding: 3px; width: 220px; height: 114px; margin-right: 25px; margin-bottom: 25px; float: left; background-color: rgb(255, 255, 255);
+}
+.magnet_tab > .tab_content {
+	margin: 0px; padding: 0px; border: currentColor !important; border-image: none !important; left: 0px; top: 0px; width: 100%; height: 100%; display: block; position: relative; background-color: rgb(136, 136, 136);
+}
+.ncen {
+	margin: 30px auto; width: 94%; border-bottom-color: rgb(228, 229, 231); border-bottom-width: 1px; border-bottom-style: solid; min-width: 500px;
+}
+.trading {
+	background: rgb(249, 249, 249); border-top-color: rgb(228, 229, 231); border-top-width: 1px; border-top-style: solid;
+}
+.records {
+	padding: 10px 0px;
+}
+.hidden {
+	
+}
+.help_Box {
+	background: rgba(0, 0, 0, 0.5); left: 0px; top: 0px; width: 100%; height: 100%; display: none; position: fixed; z-index: 999;
+}
+.del {
+	left: 50%; top: 50%; width: 340px; margin-top: -300px; margin-left: -200px; position: fixed; z-index: 1000; min-height: 550px; background-color: rgb(255, 255, 255);
+}
+.del2 {
+	left: 50%; top: 50%; width: 700px; margin-top: -300px; margin-left: -330px; position: fixed; z-index: 1000; min-height: 500px; background-color: rgb(255, 255, 255);
+}
+.foots {
+	background: rgb(247, 249, 250); width: 100%; height: 50px; bottom: 0px; border-top-color: rgb(231, 234, 235); border-top-width: 1px; border-top-style: solid; position: absolute;
+}
+.mole {
+	padding: 30px 50px;
+}
+.mole p {
+	margin: 8px 0px; line-height: 28px;
+}
+.modal-header {
+	background: rgb(247, 249, 250); padding: 30px 40px 40px; border-bottom-color: rgb(231, 234, 235); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.modal-header h2 {
+	color: rgb(41, 49, 56); padding-bottom: 10px; font-family: "΢���ź�"; font-weight: normal;
+}
+.modal-header small {
+	
+}
+.modal-body {
+	padding: 30px 50px; text-align: center;
+}
+.modal-body h4 {
+	padding-top: 16px; padding-bottom: 14px;
+}
+.modal-body p {
+	padding: 8px; line-height: 18px;
+}
+.modal-body label {
+	padding: 5px 20px; line-height: 15px; display: block;
+}
+.modal-body label input {
+	height: 15px; margin-right: 5px; float: left; display: block;
+}
+.modal-body select {
+	padding: 6px 12px; border-radius: 4px; border: 1px solid rgb(204, 204, 204); transition:border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; border-image: none; width: 100%; height: 34px; color: rgb(85, 85, 85); line-height: 1.4285; font-size: 14px; margin-bottom: 10px; display: block; background-image: none; background-color: rgb(255, 255, 255);
+}
+.btns {
+	padding: 8px 40px 0px; overflow: hidden;
+}
+.btns button {
+	float: right;
+}
+.cancel {
+	background: rgb(255, 255, 255); padding: 6px 12px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; text-align: center; line-height: 1.4285; font-size: 14px; font-weight: normal; margin-bottom: 0px; vertical-align: middle; display: inline-block; white-space: nowrap; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; ackground-image: none;
+}
+.sure {
+	border-color: rgb(255, 182, 6); padding: 5px 10px; border-radius: 3px; color: rgb(255, 255, 255); line-height: 1.5; font-size: 12px; margin-left: 10px; background-color: rgb(255, 182, 6);
+}
+.modal-body .dataa {
+	border-radius: 4px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 100%; height: 36px; text-align: left; line-height: 36px; margin-bottom: 10px;
+}
+.dataa span {
+	background: rgb(247, 249, 250); padding: 0px 6px 0px 8px; font-size: 14px; border-right-color: rgb(204, 204, 204); border-right-width: 1px; border-right-style: solid; display: inline-block; min-width: 20%;
+}
+.dat {
+	border-radius: 4px; border: 1px solid rgb(204, 204, 204); transition:border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; border-image: none; width: 100%; height: 34px; color: rgb(85, 85, 85); line-height: 1.4285; font-size: 14px; margin-bottom: 10px; background-image: none; background-color: rgb(255, 255, 255);
+}
+.dat select {
+	padding: 7px 0px; border: currentColor; border-image: none; width: 95%;
+}
+.center_Box {
+	background: rgb(255, 255, 255); margin: 6px auto 8px; border-radius: 1px; border: 1px solid rgb(228, 229, 231); border-image: none; width: 99.7%; height: auto;
+}
+.records tr td {
+	padding: 6px 0px; position: relative;
+}
+.trades {
+	background: rgb(255, 255, 255); border-radius: 4px; border: 1px solid rgb(231, 232, 235); border-image: none; left: 100%; top: -100px; width: 200px; display: none; position: absolute; z-index: 99; min-height: 200px; box-shadow: 0px 0px 3px #dcdde2;
+}
+#detailsbox {
+	padding: 20px 30px; width: 50%; line-height: 24px;
+}
+.set {
+	margin: 20px 0px 10px 30px; transition:border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; width: 90%; color: rgb(85, 85, 85); line-height: 1.4285; font-size: 14px; background-image: none; background-color: rgb(255, 255, 255);
+}
+.set select {
+	padding: 2px 0px; border-radius: 4px; border: 1px solid rgb(204, 204, 204); border-image: none; width: 200px; height: 34px; margin-top: 6px;
+}
+.set span {
+	font-size: 14px; margin-left: 100px; display: inline-block;
+}
+.midd {
+	background: rgb(255, 255, 255); border: 1px solid rgb(228, 229, 231); border-image: none; width: 99.7%; overflow: hidden; margin-top: 10px; position: relative;
+}
+.hlpp {
+	padding: 16px 0px 16px 5.5%; float: left; min-width: 154px;
+}
+.hlpp h2 {
+	border: currentColor; border-image: none;
+}
+.hlpp p {
+	line-height: 24px; padding-bottom: 10px;
+}
+.lefrg {
+	top: 45%; width: 20px; height: 20px; right: 30px; display: block; position: absolute;
+}
