@@ -1,0 +1,68 @@
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+<load href="__PUBLIC__/scripts/common_list_delete.js" />
+<div id="main-content">
+    <noscript>
+    <div class="notification error png_bg">
+        <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+    </div>
+    </noscript>
+
+    <include file="daohang" />
+
+    <div class="clear"></div>
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>支付宝充值管理</h3>
+            <div class="clear"></div>
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <div class="notification attention png_bg" id="pop">
+                </div>
+                <fieldset>
+                    <form>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>申请时间</th>
+                                    <th>会员名</th>
+                                    <th>充值金额</th>
+                                    <th>流水号</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="pagination">{$page}</div>
+                                        <div class="clear"></div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            <foreach name="list" item="vo">
+                                <tr id="tr_{$vo.id}">
+                                    <td>{:get_date_full($vo['create_time'])}</td>
+                                    <td>{:get_user_name($vo['uid'])}</td>
+                                    <td>{$vo.epoints}</td>
+                                    <td>{$vo.liushui_no}</td>
+                                    <td>{:get_zfb_status($vo['status'])}</td>
+                                    <td>
+                                        <a href="{:U(MODULE_NAME.'/edit?id='.$vo['id'])}" title="编辑"><img src="__PUBLIC__/images/icons/pencil.png" alt="Edit" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </form>
+                </fieldset>
+                <div class="clear"></div>
+            </div>                 
+        </div>
+    </div>
+    <include file="Public:banquan" />
+</div>
+<include file="Public:ender" />

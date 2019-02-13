@@ -1,0 +1,72 @@
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+<load href="__PUBLIC__/scripts/lanfengye_index.js" />
+<div id="main-content">
+    <noscript>
+    <div class="notification error png_bg">
+        <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+    </div>
+    </noscript>
+
+    <ul class="shortcut-buttons-set">
+         <li><a class="shortcut-button" href="{:U(MODULE_NAME.'/index')}">
+                    <span><img src="__PUBLIC__/images/icons/paper_content_pencil_48.png" alt="icon" />
+                        <br />用户列表</span></a></li>
+        <li><a class="shortcut-button" href="{:U(MODULE_NAME.'/add_admin')}">
+                <span><img src="__PUBLIC__/images/icons/paper_content_pencil_48.png" alt="icon" />
+                    <br />添加用户</span></a></li>
+    </ul>
+
+    <div class="clear"></div>
+
+
+    <div class="content-box">
+        <div class="content-box-header">
+            <h3>用户管理</h3>
+            <div class="clear"></div>
+        </div>
+        <!-- End .content-box-header -->
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+
+                <div class="notification attention png_bg" id="pop">
+                    <div>提示语句</div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            
+                            <th>ID</th>
+                            <th>用户名</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                
+                                <div class="pagination"> 
+<!--                                    <a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a> <a href="#" class="number" title="1">1</a> <a href="#" class="number" title="2">2</a> <a href="#" class="number current" title="3">3</a> <a href="#" class="number" title="4">4</a> <a href="#" title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last &raquo;</a>-->
+                                </div>
+                                <div class="clear"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                    <foreach name="list" item="vo">
+                        <tr id="admin_{$vo.ly_id}">
+                            <td>{$vo.ly_id}</td>
+                            <td>{$vo.ly_name}</td>
+                            <td>
+                                <!-- Icons -->
+                                <a href="{:U(MODULE_NAME.'/edit?id='.$vo['ly_id'])}" title="编辑"><img src="__PUBLIC__/images/icons/pencil.png" alt="Edit" /></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="del_admin" id="{$vo.ly_id}"><img src="__PUBLIC__/images/icons/cross.png" title="删除" alt="删除" /></a></td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>                    
+        </div>
+    </div>
+    <include file="Public:banquan" />
+</div>
+<include file="Public:ender" />

@@ -1,0 +1,66 @@
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+<load href="__PUBLIC__/scripts/lanfengye_add_admin.js" />
+    <div id="main-content">
+        <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+        </noscript>
+
+        <ul class="shortcut-buttons-set">
+            <li><a class="shortcut-button" href="{:U(MODULE_NAME.'/index')}">
+                    <span><img src="__PUBLIC__/images/icons/paper_content_pencil_48.png" alt="icon" />
+                        <br />用户列表</span></a></li>
+            <li><a class="shortcut-button" href="{:U(MODULE_NAME.'/index')}">
+                    <span><img src="__PUBLIC__/images/icons/pencil_48.png" alt="icon" />
+                        <br />用户列表</span></a></li>
+        </ul>
+
+        <div class="clear"></div>
+        <div class="content-box">
+            <div class="content-box-header">
+                <h3>添加管理用户</h3>
+                <div class="clear"></div>
+            </div>
+            
+            <div class="content-box-content">
+                <div class="tab-content default-tab">
+                    <div class="notification attention png_bg" id="pop">
+                        <div>提示语句</div>
+                    </div>
+                    <fieldset>
+                        <form>
+                        <p>
+                            <label>管理员用户名</label>
+                            <input class="text-input small-input" type="text" id="admin_name" />
+                            <span id="admin_name_pop" class="input-notification png_bg"></span><!--
+                             <span class="input-notification error png_bg">Error message</span>-->
+                        </p>
+                        <p>
+                            <label>输入登录密码</label>
+                            <input class="text-input small-input" type="password" id="admin_pwd" />
+                            <span id="admin_pwd_pop" class="input-notification png_bg"></span>
+                            <!--                            <span class="input-notification success png_bg">Successful message</span>
+                                                         <span class="input-notification error png_bg">Error message</span>-->
+                        </p>
+                        <p>
+                            <label>确认登录密码</label>
+                            <input class="text-input small-input" type="password" id="admin_pwd1" />
+                            <span id="admin_pwd1_pop" class="input-notification png_bg"></span>
+                            <!--                            <span class="input-notification success png_bg">Successful message</span>
+                                                         <span class="input-notification error png_bg">Error message</span>-->
+                        </p>
+
+                        <p>
+                            <input class="button" id="tijiao" type="button" value="保 存" />
+                        </p>
+                        </form>
+                    </fieldset>
+                    <div class="clear"></div>
+                </div>                 
+            </div>
+        </div>
+        <include file="Public:banquan" />
+    </div>
+<include file="Public:ender" />

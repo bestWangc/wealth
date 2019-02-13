@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html>
+<head>
+<title>{%PAGE_MSG}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="__ROOT__/css/style_tishi.css" rel="stylesheet" />
+<script type="text/javascript" src="__ROOT__/js/jquery.js"></script>
+</head>
+<body>
+	<div class="lfy-body">
+		<div class="fb-title"><div><p><span>页面提示</span></p></div></div>
+		<div class="fb-body">
+			<table class="body-table" cellpadding="0" cellspacing="1" border="0">
+				<tr>
+					<td class="body-table-td">
+						<div class="body-table-div">
+							<table cellpadding="0" cellspacing="0" align="center" class="table-tootip table-tootip-success">
+								<present name="message" >
+								<tr>
+									<th><img src="__ROOT__/images/public/success.png" /></th>
+									<td>
+										<p>{$msgTitle}</p>
+										<p style="color:blue;">{$message}</p>
+										<notpresent name="closeWin" >
+										<p>系统将在 <strong style="color:blue;" class="wait-second">{$waitSecond}</strong> 秒后自动跳转，如果不想等待,直接点击 <a href="{$jumpUrl}">[这里]</a></p>
+										</notpresent>
+									</td>
+								</tr>
+								</present>
+								<present name="error" >
+								<tr>
+									<th><img src="__ROOT__/images/public/error.png" /></th>
+									<td>
+										<p>{$msgTitle}</p>
+										<p style="color:#f30;">{$error}</p>
+										<notpresent name="closeWin" >
+										<p>系统将在 <strong style="color:blue;" class="wait-second">{$waitSecond}</strong> 秒后自动跳转，如果不想等待,直接点击 <a href="{$jumpUrl}">[这里]</a></p>
+										</notpresent>
+									</td>
+								</tr>
+								</present>
+								<present name="closeWin" >
+								<tr>
+									<th><img src="__ROOT__/images/public/close.png" /></th>
+									<td>
+										<p>系统将在 <strong style="color:blue;" class="wait-second">{$waitSecond}</strong> 秒后自动关闭，如果不想等待,直接点击 <a href="{$jumpUrl}">[这里]</a></p>
+									</td>
+								</tr>
+								</present>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+<if condition="$jumpUrl neq ''">
+var timeout = 0;
+var waitSecond = parseInt({$waitSecond});
+var refreshFun = function(){
+	timeout++;
+	if(waitSecond <= timeout)
+		location.href = "{$jumpUrl}";
+	else
+	{
+		$('.wait-second').html(waitSecond - timeout);
+		setTimeout(refreshFun,1000);
+	}
+};
+setTimeout(refreshFun,1000);
+</if>
+
+jQuery(function($){
+	updateBodyDivHeight();
+	$(window).resize(function(){
+		updateBodyDivHeight();
+	});
+});
+
+function updateBodyDivHeight()
+{
+	jQuery(".body-table-div").height(jQuery(".lfy-body").height() - 37);
+}
+</script>
+</html>

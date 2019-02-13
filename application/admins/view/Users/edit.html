@@ -1,0 +1,114 @@
+<tagLib name="Lbase" />
+<include file="Public:header" />
+<body style="background:#fff url('../images/bg.png');">
+    <div id="main-content">
+        <noscript>
+        <div class="notification error png_bg">
+            <div>您的浏览器不支持javascript，请更换IE8以上浏览器或者Chrome浏览器！</div>
+        </div>
+        </noscript>
+
+        <include file="daohang" />
+
+        <div class="clear"></div>
+        <div class="content-box">
+            <div class="content-box-header">
+                <h3>编辑</h3>
+                <div class="clear"></div>
+            </div>
+
+            <div class="content-box-content">
+                <div class="tab-content default-tab">
+                    <fieldset>
+                        <form action="{:U(MODULE_NAME.'/update')}" method="post" name="b">
+                            <p>
+                                <label>用户名</label>
+                            <div>{:get_user_name($id)}</div>
+                            </p>
+
+                            <p>
+                                <label>注册时间</label>
+                            <div>{:get_date_full($create_time)}</div>
+                            </p>
+
+                            <p>
+                                <label>注册IP</label>
+                            <div>{$create_ip}</div>
+                            </p>
+
+                            <p>
+                                <label>最后登录时间</label>
+                            <div>{:get_date_full($last_login_time)}</div>
+                            </p>
+
+                            <p>
+                                <label>最后登录IP</label>
+                            <div>{$last_login_ip}</div>
+                            </p>
+
+                            <p>
+                                <label>登录次数</label>
+                            <div>{$login_count}</div>
+                            </p>
+
+                            <p>
+                                <label>最后修改时间</label>
+                            <div>{:get_date_full($update_time)}</div>
+                            </p>
+
+                            <p>
+                                <label>真实姓名</label>
+                                <input class="text-input medium-input" type="text" value="{$real_name}" name="real_name" />
+                            </p>
+                            
+                            <p>
+                                <label>修改登录密码</label>
+                                <input class="text-input medium-input" type="text" value="" name="user_pwd" />
+                                <small>修改密码请直接填写新密码，否则请留空,新密码不能为0或者空格</small>
+                            </p>
+                            
+                            <p>
+                                <label>支付宝账号</label>
+                                <input class="text-input medium-input" type="text" value="{$zhifubao_no}" name="zhifubao_no" />
+                            </p>
+                            <p>
+                                <label>昵称</label>
+                                <input class="text-input medium-input" type="text" value="{$nick_name}" name="nick_name" />
+                            </p>
+
+                            <p>
+                                <label>手机号码</label>
+                                <input class="text-input medium-input" type="text" value="{$mobile}" name="mobile" />
+                            </p>
+
+                            <p>
+                                <label>级别</label>
+                                <select name='jibie_id'>
+                                    <option value='1'<php>if($jibie_id==1) echo ' selected="selected"';</php>>普通会员</option>
+                                    <foreach name='jibie_list' item='vo'>
+                                        <option value='{$vo.id}'<php>if($jibie_id==$vo['id']) echo ' selected="selected"';</php>>{$vo.title}</option>
+                                    </foreach>
+
+                                </select>
+                            </p>
+
+                            <p>
+                            <label>状态</label>
+                        <input type="radio" name="status" value="1"<php>if($status==1) echo ' checked="checked"';</php> />启用&nbsp;
+                            <input type="radio" name="status" value="0"<php>if($status==0) echo ' checked="checked"';</php> />禁用
+                        </p>
+
+
+                            <p>
+                                <input type="hidden" name="id" value="{$id}" />
+                                <input class="button" id="tijiao" type="submit" value="保 存" />
+                            </p>
+                        </form>
+                    </fieldset>
+                    <div class="clear"></div>
+                </div>                 
+            </div>
+        </div>
+        <include file="Public:banquan" />
+    </div>
+<include file="Public:ender" />

@@ -1,0 +1,26 @@
+<div class="navbar-header" style="float:left;">
+    <a class="navbar-brand" href="{:U('/main')}"><i class="fa fa-gear"></i> <strong>{:MC("site_name")}</strong></a>
+</div>
+<ul class="nav navbar-top-links navbar-right" style="height:60px;">
+    <li class="dropdown" style='color:#fff'>
+        欢迎&nbsp;{$user_info.jibie_name}&nbsp;[{$user_info.user_name}]
+    </li>
+    <li class="divider"></li>
+    <!-- /.dropdown -->
+    <li class="dropdown" style='margin-right: 10px;'>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li><a href="{:U('user/index')}"><i class="fa fa-user fa-fw"></i> 个人资料</a>
+            </li>
+            <li><a href="{:U('user/edit_pwd')}"><i class="fa fa-gear fa-fw"></i> 修改密码</a>
+            </li>
+            <li class="divider"></li>
+            <li><a href="{:U('index/out')}"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+            </li>
+        </ul>
+        <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+</ul>

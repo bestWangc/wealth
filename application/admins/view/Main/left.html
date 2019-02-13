@@ -1,0 +1,16 @@
+<include file="Public:header" />
+<body>
+    <div id="sidebar">
+    <div id="sidebar-wrapper">
+      
+      <h1 id="sidebar-title"><a href="#">博客后台管理</a></h1>
+      
+      <a href="#"><img id="logo" src="__PUBLIC__/images/logo.png" alt="博客后台管理" /></a>
+      
+      <div id="profile-links"> 用户名：{$Think.session.ly_name}<br />管理员<br /><br />
+        <a href="{:U('main/main')}" target="main" title="返回首页">首页</a> | <a href="{:U('system/out')}" title="退出">退出</a> </div>
+      <include file="Public:left" />
+	  
+    </div>
+  </div>
+<include file="Public:ender" />

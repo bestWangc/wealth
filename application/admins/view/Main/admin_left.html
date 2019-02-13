@@ -1,0 +1,242 @@
+<html>
+<style>
+td{font-size:10pt;line-height:140%} 
+body{font-size:10pt;line-height:140%
+	SCROLLBAR-FACE-COLOR: #2B73F1;
+	SCROLLBAR-HIGHLIGHT-COLOR: #0650D2;
+	SCROLLBAR-SHADOW-COLOR: #449AE8;
+	SCROLLBAR-3DLIGHT-COLOR: #449AE8;
+	SCROLLBAR-ARROW-COLOR: #02338A;
+	SCROLLBAR-TRACK-COLOR: #0650D2;
+	SCROLLBAR-DARKSHADOW-COLOR: #0650D2;
+} 
+.sec_menu  { border-left:1px solid #FFFFFF;border-bottom:1px solid #FFFFFF; overflow:hidden; background:#D4ECF5;text-align: right;}
+a:link          { color: #000000; text-decoration: none }
+a:visited       { color: #000000; text-decoration: none }
+a:active        { color: #FF0000; text-decoration: none }
+a:hover         { color: #0033CC; text-decoration: underline}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<head>
+<title></title>
+<load file="__ROOT__/js/prototype.js" />
+</head>
+<body bgcolor="#0650D2">
+<table width="180" border="0" cellpadding="0" cellspacing="0" align="center">
+	<tr>
+		<td height="44" valign="top"><img src="__ROOT__/images/login/main/title.gif"></td>
+		</td>
+	</tr>
+</table>
+<table cellpadding="0" cellspacing="0" width="180" align="center">
+	<tr>
+		<td height="26" background="__ROOT__/images/login/main/title_bg_quit.gif" align="center">
+			<a href='{:U("main/main")}' target='main'><b><font color="#0650D2">管理首页</font></b></a>&nbsp;&nbsp;|&nbsp;&nbsp;
+			<a href="{:U('system/out')}" target='_top'><b><font color="#0650D2">退出</font></b></a>
+		</td>
+	</tr>
+	<tr>
+		<td height="97" background="__ROOT__/images/login/main/title_bg_admin.gif">
+			<table cellpadding="0" cellspacing="0" align="center" width="130">
+				<tr>
+					<td height=20>您的用户名：</td>
+				</tr>
+				<tr>
+					<td height=20>
+					<b><?php echo $_SESSION['ly_name']; ?></b></td>
+				</tr>
+				<tr>
+					<td height=20>您的身份：管理员
+					</td>
+				</tr>
+			</table>
+			<table cellpadding="0" cellspacing="0" align="center" width="130">
+				<tr>
+					 <td height="20"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+<table cellpadding=0 cellspacing=0 width=167 align=center>
+<tr>
+<td height=28 background='__ROOT__/images/login/main/admin_left_1.gif' onclick="new Element.toggle('submenu1')">
+&nbsp;&nbsp;<a href="#"><font color="#0650D2"><b>系统管理</b></font></a></td></tr>
+
+<tr><td align="right" id="submenu1" style="display:none">
+<div class="sec_menu" style="width:165">
+<table cellpadding="0" cellspacing="0" align="center" width="132" bgcolor="#D4ECF5">
+<tr><td height=20><a href="{:U('sysmanger/admin')}" target="main">管理用户管理</a></td></tr>
+<tr><td height=20><a href="{:U('sysmanger/add_admin')}" target="main">添加管理员</a></td></tr>
+<tr><td height=20><a href="{:U('sysmanger/edit_pwd')}" target="main">修改管理密码</a></td></tr>
+</table>
+</div>
+<div  style='width:158'>
+<table cellpadding=0 cellspacing=0 align=center width=130>
+	<tr>
+		<td height=4></td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+    
+    
+    
+    <table cellpadding=0 cellspacing=0 width=167 align=center>
+        <tr>
+            <td height=28 background='__ROOT__/images/login/main/admin_left_5.gif' onclick="new Element.toggle('submenu7')">
+                &nbsp;&nbsp;<a href="#"><font color="#0650D2"><b>系统配置</b></font></a></td></tr>
+    
+        <tr><td align="right" id="submenu7" style="display:none">
+                <div class="sec_menu" style="width:165">
+                    <table cellpadding="0" cellspacing="0" align="center" width="132" bgcolor="#D4ECF5">
+                        <tr><td height=20><a href="{:U('jichu/index')}" target="main">站点信息配置</a></td></tr>
+                    </table>
+                </div>
+                <div  style='width:158'>
+                    <table cellpadding=0 cellspacing=0 align=center width=130>
+                        <tr>
+                            <td height=4></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+<table cellpadding=0 cellspacing=0 width=167 align=center>
+<tr>
+<td height=28 background='__ROOT__/images/login/main/admin_left_3.gif' onclick="new Element.toggle('submenu2')">
+&nbsp;&nbsp;<a href="#"><font color="#0650D2"><b>新闻管理</b></font></a></td></tr>
+
+<tr><td align="right" id="submenu2" style="display:none">
+<div class="sec_menu" style="width:165">
+<table cellpadding="0" cellspacing="0" align="center" width="132" bgcolor="#D4ECF5">
+<tr><td height=20><a href="{:U('news/fabu_news')}" target="main">发布新闻</a></td></tr>
+<tr><td height=20><a href="{:U('news/manger_news')}" target="main">新闻管理</a></td></tr>
+</table>
+</div>
+<div  style='width:158'>
+<table cellpadding=0 cellspacing=0 align=center width=130>
+	<tr>
+		<td height=4></td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+
+
+
+
+<table cellpadding=0 cellspacing=0 width=167 align=center>
+<tr>
+<td height=28 background='__ROOT__/images/login/main/admin_left_3.gif' onclick="new Element.toggle('submenu200')">
+&nbsp;&nbsp;<a href="#"><font color="#0650D2"><b>学习资料管理</b></font></a></td></tr>
+
+<tr><td align="right" id="submenu200" style="display:none">
+<div class="sec_menu" style="width:165">
+<table cellpadding="0" cellspacing="0" align="center" width="132" bgcolor="#D4ECF5">
+<tr><td height=20><a href="{:U('learn/fabu_news')}" target="main">发布学习资料</a></td></tr>
+<tr><td height=20><a href="{:U('learn/manger_news')}" target="main">学习资料管理</a></td></tr>
+</table>
+</div>
+<div  style='width:158'>
+<table cellpadding=0 cellspacing=0 align=center width=130>
+	<tr>
+		<td height=4></td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+    
+    
+<table cellpadding=0 cellspacing=0 width=167 align=center>
+<tr>
+<td height=28 background='__ROOT__/images/login/main/admin_left_3.gif' onclick="new Element.toggle('submenu210')">
+&nbsp;&nbsp;<a href="#"><font color="#0650D2"><b>精彩活动管理</b></font></a></td></tr>
+
+<tr><td align="right" id="submenu210" style="display:none">
+<div class="sec_menu" style="width:165">
+<table cellpadding="0" cellspacing="0" align="center" width="132" bgcolor="#D4ECF5">
+<tr><td height=20><a href="{:U('activity/fabu_news')}" target="main">发布精彩活动</a></td></tr>
+<tr><td height=20><a href="{:U('activity/manger_news')}" target="main">精彩活动管理</a></td></tr>
+</table>
+</div>
+<div  style='width:158'>
+<table cellpadding=0 cellspacing=0 align=center width=130>
+	<tr>
+		<td height=4></td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+
+
+
+
+
+<table cellpadding=0 cellspacing=0 width=167 align=center>
+<tr>
+<td height=28 background='__ROOT__/images/login/main/admin_left_4.gif' onclick="new Element.toggle('submenu5')">
+&nbsp;&nbsp;<a href="#"><font color="#0650D2"><b>留言板管理</b></font></a></td></tr>
+
+<tr><td align="right" id="submenu5" style="display:none">
+<div class="sec_menu" style="width:165">
+<table cellpadding="0" cellspacing="0" align="center" width="132" bgcolor="#D4ECF5">
+<tr><td height=20><a href="{:U('liuyanmanger/liuyan_manger')}" target="main">留言管理</a></td></tr>
+</table>
+</div>
+<div  style='width:158'>
+<table cellpadding=0 cellspacing=0 align=center width=130>
+	<tr>
+		<td height=4></td>
+	</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+
+
+
+
+<table cellpadding="0" cellspacing="0" width="167" align="center">
+	<tr>
+		<td height="28" background="__ROOT__/images/login/main/admin_left_11.gif"><font color="#0650D2"><b>&nbsp;&nbsp;系统信息</b></font></td>
+	</tr>
+	<tr>
+		<td align="right"><div class="sec_menu">
+			<table cellpadding="0" cellspacing="0" align="center" width="130">
+				 <tr>
+					<td height="20">
+						<br>
+						<font color="red">如遇问题，请用以下方式联系：</font>
+						<b>QQ:83429645</b><br>
+						<b>电话：15940442002</b><br><br>
+						版权所有：<br>&nbsp;&nbsp;<a href='#' target="_blank"></a><br>
+						设计制作：<br>&nbsp;&nbsp;<a href='#' target="_blank"></a><br>
+						
+						<br>
+					</td>
+				</tr>
+			</table>
+			</div>
+		</td>
+	</tr>
+</table>	
+</body>
+</html>

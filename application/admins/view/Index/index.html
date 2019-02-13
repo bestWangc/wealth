@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>网站管理后台</title>
+        <link rel="stylesheet" href="__PUBLIC__/css/reset.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="__PUBLIC__/css/invalid.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="__PUBLIC__/scripts/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/scripts/simpla.jquery.configuration.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/scripts/facebox.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/scripts/jquery.wysiwyg.js"></script>
+        <script type="text/javascript" src="{:U('js/url')}"></script>
+    </head>
+    <body id="login">
+        <load href="__PUBLIC__/scripts/login.js" />
+        <div id="login-wrapper" class="png_bg">
+            <div id="login-top">
+                <h1>管理面板</h1>
+                <a href="{:U('index/index')}"><img id="logo" src="__PUBLIC__/images/logo.png" alt="网站管理后台" /></a> </div>
+            <div id="login-content">
+                <form action="index.html">
+                    <div id="pop" class="notification information png_bg">
+                       
+                    </div>
+                    <p>
+                        <label>Username</label>
+                        <input class="text-input" id="admin_name" type="text" />
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                        <label>Password</label>
+                        <input class="text-input" id="admin_pwd" type="password" />
+                    </p>
+                    <div class="clear"></div>
+                    <p>
+                        <input class="button" type="button" name="b" id="tijiao" value="登 录" />
+                    </p>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
