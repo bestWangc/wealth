@@ -1,0 +1,102 @@
+/*****************************************************************
+  文　　件：Global.css
+  文件主题：http://www.meizz.com/ 网站所有网页里所使用的公用样式表定义
+  作　　者：黄方荣（meizz 梅花雪）
+  开始时间：2004-3-2
+
+  ***************************************************************/
+/********* 大模块定义 Begin ********/
+BODY, TD, INPUT, PRE
+{
+  font-size: 9pt;
+  font-family: 宋体;
+}
+BODY, DIV
+{
+  SCROLLBAR-HIGHLIGHT-COLOR: #FFFFFF; /*滚动条及箭头的亮边色*/
+  SCROLLBAR-SHADOW-COLOR: #E1E1E1;    /*滚动条及箭头的暗边色*/
+  SCROLLBAR-3DLIGHT-COLOR: #E1E1E1;   /*滚动条及箭头的3D亮边色*/
+  SCROLLBAR-TRACK-COLOR: #E1EDFD;     /*滚动条底色*/
+  SCROLLBAR-DARKSHADOW-COLOR:#FFFFFF; /*滚动条及箭头的暗边阴影色*/
+  SCROLLBAR-BASE-COLOR: #4169E1;      /*滚动条的基本颜色*/
+  SCROLLBAR-ARROW-COLOR: #35507A;     /*箭头的颜色*/
+  SCROLLBAR-FACE-COLOR: #4169E1;      /*滚动条及箭头的颜色*/
+}
+BODY, FORM, PRE
+{
+  margin: 0;
+}
+UL
+{
+  margin-left: 24;
+}
+/********* 大模块定义 End   ********/
+
+/********* 分块样式 Begin ********/
+div.pageHeading
+{
+  height: 25;
+  color: #003099;
+  padding: 2 8 0 8;
+  font-weight: bold;
+  margin-bottom: 4;
+  background-image: url(../Images/bgHeading.gif);
+  /*filter:alpha(opacity=30, finishOpacity=100, style=1, startX=100, startY=0, finishY=100);*/
+}
+div.TableCaption
+{
+  height: 22;
+  font-size: 9pt;
+  padding: 4px 0px 0px 10px;
+  background-image: url(bgSubHeading.gif);
+}
+col.content
+{
+  text-align: left;
+}
+col.caption
+{
+  background-color: #CEDFFA;
+}
+col.tooltip
+{
+  background-color: #EAF1FC;
+}
+table.table{ width: 100%; border-collapse: collapse;}
+table.table td{ padding: 2px; color: #0000B0;}
+table.table th{ color: #000080; background-color: #95B7F3;}
+input.text     /* 文本输入框的基本样式 */
+{
+  color: #0000D0;
+  font-size: 9pt;
+  border-style: groove;
+}
+input.button    /* 按钮的基本样式 */
+{
+  height: 18px;
+  font-size: 9pt;
+  padding: 1 0 0 1;
+  border: 1px outset white;
+  background-image: url(bgSubHeading.gif);
+}
+A.MzTreeview /* TreeView 链接的基本样式 */
+{
+  cursor: hand;
+  color: #000080;
+  margin-top: 5px;
+  padding: 2 1 0 2;
+  text-decoration: none;
+}
+A.select      /* TreeView 链接被选中时的样式 */
+{
+  color: highlighttext;
+  background-color: highlight;
+}
+textarea.text     /* 文本域的基本样式 */
+{
+  color: #0000D0;
+  font-size: 9pt;
+  border-style: groove;
+}
+/********* 分块样式 End   ********/
+

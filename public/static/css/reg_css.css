@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*整体命名*/
+*{margin:0;padding:0}
+body { margin:0; padding:0; font-size:12px; color:#666;}
+div,form,img,ul,li,dl,dd,h1,h2,h3,h4,h5,h6,p {margin:0; padding:0; border:0;LINE-HEIGHT: 22px;list-style:none;}
+table,td,tr,th,div {font-size:12px;LINE-HEIGHT: 22px;FONT-FAMILY: 宋体;word-break: break-all; word-wrap:break-word; }
+a{color:#fff;text-decoration:none;}
+a:hover{color:#C00;text-decoration:none;}
+#header{ width:100%; height:215px;background:url(../Images/toping.jpg); position:relative;}
+.dier1{ width:100%; height:452px;background:url(../Images/dier1.jpg)}
+.dier2{ width:100%; height:730px;background:url(../Images/dier2.jpg); position:relative;}
+.shipian{ width:975px; height:490px; background:#FFF; margin:0 auto; position:absolute;left:235px; top:210px;}
+.dier3{ width:100%; height:399px; background:url(../Images/dier3.jpg);position:relative;}
+.zhucesc{ width:500px; height:300px;  position:absolute; left:480px;top:75px;}
+/**************************************************控件Text样式*/
+
+.inp1{width:158px;height:35px;line-height:18px; border:0px;background:url(../images/bg_input_text.png) repeat-x;padding:2px 2px 0;font:12px 'Microsoft Sans Serif';	background-color: #fff; position:relative;}
+
+.inp2{width:100px;height:18px;line-height:18px;border:1px solid #ccc;background:url(../images/bg_input_text.png) repeat-x;padding:2px 2px 0;font:12px 'Microsoft Sans Serif';	background-color: #fff;}
+
+.inp3{width:300px;height:18px;line-height:18px;border:1px solid #ccc;background:url(../images/bg_input_text.png) repeat-x;padding:2px 2px 0;font:12px 'Microsoft Sans Serif';	background-color: #fff;}
+
+.inp4{width:60px;height:18px;line-height:18px;border:1px solid #ccc;background:url(../images/bg_input_text.png) repeat-x;padding:2px 2px 0;font:12px 'Microsoft Sans Serif';	background-color: #fff;}
+
+.bt_blue{padding-top:0px;margin-bottom:0;font-size: 12px; width:139px; height:50px;color:#fff;line-height:20px;margin:0 2px;padding-left: 8px;padding-right: 8px;
+background:url(../images/tijiaod.png) repeat-x; border:0px; cursor:pointer;}
+
+.bt_blue2{padding-top:0px;margin-bottom:0;font-size: 12px; width:139px; height:50px;color:#fff;line-height:20px;margin:0 2px;padding-left: 8px;padding-right: 8px;
+background:url(../images/dengld.png) 3px 0px no-repeat; border:0px; cursor:pointer;}
+
+.xiandpa{ width:350px; height:60px;  position:absolute; top:145px; left:400px;}
+.xianfu{ width:43px; height:43px;  float:left;}
+.dsaia{ width:250px; height:60px; float:left;}
+.diern1{ width:250px; height:21px; line-height:21px; color:#F00; font-size:16px; margin-top:0px; text-indent:0.5em;}
+.deiwq2{ width:250px; height:21px; line-height:21px; color:#F00; font-size:16px; text-indent:0.5em;}
+.yijiasnd{ width:120px; height:30px; background:#000; position:absolute; right:240px; top:225px; cursor:pointer;}
+
+#footer{ width:100%; height:48px; line-height:48px;background:url(../images/fool.png); text-align:center; color:#FFF;}
+
+   

@@ -1,0 +1,61 @@
+﻿@charset "utf-8";
+@import url(base.css);
+/* CSS Document */
+body{
+	background:#f6f6f6 url(../images/bj.jpg) left top repeat;
+	margin:0;
+	text-align:center;
+}
+body,td,th,div,ul,li,a,font,a:link,a:visited,a:hover{
+	font-family:'Arial', 'Verdana', '微软雅黑', '宋体';
+	font-size:12px;
+	line-height:200%;
+}
+body,td,th,div,ul,li,a{
+	color:#676767;
+}
+input,select,textarea{
+	font-family:'Arial', 'Verdana', '微软雅黑', '宋体';
+	color:#676767;
+	font-size:12px;
+}
+*:focus {outline: none}
+div,ul,li{
+	margin:0;
+	padding:0;
+	text-align: left;
+}
+ul,li{
+	list-style:none;
+}
+form,img{
+	border:0;
+	margin:0;
+}
+a,img {
+    star:expression(this.onFocus=this.blur()); 
+    outline:none;
+}
+a{
+	text-decoration: none;
+	outline:none;
+}
+a:hover{
+	color:#ca1b28;
+	background:none;
+}
+.txt{
+	width:100%;
+	height:24px;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+.txt,.txt a{
+	white-space:nowrap;
+}
+.span{
+	font-family:'宋体';
+}
+#icp_con{
+	display:none;
+}
