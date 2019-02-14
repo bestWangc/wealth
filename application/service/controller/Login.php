@@ -1,7 +1,6 @@
 <?php
 namespace app\service\controller;
 
-use app\tools\M3result;
 use think\facade\Request;
 use think\facade\Session;
 use think\Db;

@@ -3,53 +3,24 @@
 {block name="title"}会员登录-{$siteName}{/block}
 
 {block name="main"}
-
-<div class="main">
-    <div class="denglu">
-        <div class="dlk">
-            <!--<form method='post' name="login" id="form1" action="{:url('/index/check_login')}" >-->
-            <form action="" onsubmit="return false;">
-                <table width="292" border="0" align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td height="76" colspan="3"></td>
-                    </tr>
-                    <tr>
-                        <td width="65" style="font-size:14px;">用户名</td>
-                        <td colspan="2"><input name="user_name" type="text" class="dlinput" /></td>
-                    </tr>
-                    <tr>
-                        <td height="16" colspan="3"></td>
-                    </tr>
-                    <tr>
-                        <td>登录密码</td>
-                        <td colspan="2"><input name="user_pwd" type="password" class="dlinput" /></td>
-                    </tr>
-                    <tr>
-                        <td height="16" colspan="3"></td>
-                    </tr>
-                    <tr height='20'>
-                    </tr>
-                    <tr>
-                        <td height="16" colspan="3"></td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td colspan="2"><input type="submit" value="登 录" class="loginbtn" /></td>
-                    </tr>
-
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td colspan="2">
-                            </br><table width="224" border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td align="right"><a href="{:url('index/reg')}" class="zc" style="font-size:13px;">立即网上注册</a></td>
-                            </tr>
-                        </table></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    </div>
+<link rel="stylesheet" href="/static/index/login/css/style.css">
+<div class="container">
+    <section id="content">
+        <form action="" onsubmit="return false;">
+            <h1>投资理财专家</h1>
+            <div>
+                <input type="text" placeholder="用户名" required="" id="username" />
+            </div>
+            <div>
+                <input type="password" placeholder="用户密码" required="" id="password" />
+            </div>
+            <div>
+                <input class="submit_btn" type="submit" value="登录" />
+                <a href="#">忘记密码?</a>
+                <a href="#">注册</a>
+            </div>
+        </form>
+    </section>
 </div>
 
 {/block}
@@ -57,12 +28,12 @@
 {block name="my-js"}
 <script>
     $(function () {
-        $("input[name='user_account']").keydown(function(){
+        $("#username").keydown(function(){
             this.value = this.value.replace(/[^A-Za-z0-9]/i,'');
         });
         $('.submit_btn').click(function () {
-            var user_name = $('input[name="user_account"]').val();
-            var user_pwd = $('input[name="user_pwd"]').val();
+            var user_name = $("#username").val();
+            var user_pwd = $("#password").val();
             if(user_name == ''){
                 layer.msg('请填写用户名',{time: 1000});
                 return false;
