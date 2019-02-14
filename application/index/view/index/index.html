@@ -1,0 +1,60 @@
+{extend name="Public/base" /}
+
+{block name="title"}会员登录-{$siteName}{/block}
+
+{block name="main"}
+
+<div class="main">
+    <div class="denglu">
+        <div class="dlk">
+            <form method='post' name="login" id="form1" action="{:url('index/check_login')}" >
+                <table width="292" border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td height="76" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td width="65" style="font-size:14px;">用户名</td>
+                        <td colspan="2"><input name="user_name" type="text" class="dlinput" /></td>
+                    </tr>
+                    <tr>
+                        <td height="16" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>登录密码</td>
+                        <td colspan="2"><input name="user_pwd" type="password" class="dlinput" /></td>
+                    </tr>
+                    <tr>
+                        <td height="16" colspan="3"></td>
+                    </tr>
+                    <tr height='20'>
+                    </tr>
+                    <tr>
+                        <td height="16" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="2"><input type="submit" value="登 录" class="loginbtn" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="2">
+                            </br><table width="224" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td align="right"><a href="{:url('index/reg')}" class="zc" style="font-size:13px;">立即网上注册</a></td>
+                            </tr>
+                        </table></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    {include file="Public/footer"}
+</div>
+
+{/block}
+
+{block name="my-js"}
+
+{/block}
+
