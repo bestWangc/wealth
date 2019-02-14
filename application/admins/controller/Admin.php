@@ -1,18 +1,23 @@
 <?php
 namespace app\admins;
 
+use think\Db;
+use think\facade\Request;
+
 //系统管理控制器
 class Admin extends Base
 {
     
-    function index(){
+    function index()
+    {
         parent::index(20, 'ly_id desc');
     }
     
     /**
      * 保存修改密码操作 
      */
-    function update() {
+    function update()
+    {
         if ($this->isAjax()) {
             $admin_id = intval($_POST['admin_id']);
             $admin_pwd = md5($_POST['admin_pwd']);
@@ -20,9 +25,8 @@ class Admin extends Base
                 'ly_id' => $admin_id,
                 'ly_pwd' => $admin_pwd
             );
-            $M = M(MODULE_NAME);
-            $id = $M->save($data);
-            unset($M);
+            $id = Db::name(MODULE_NAME)->save($data);
+
             if ($id)
                 $this->ajaxReturn(1);
             else
@@ -35,24 +39,23 @@ class Admin extends Base
 
 
     /*检测用户名是否存在*/
-    function check_admin_name(){
+    function check_admin_name()
+    {
         if($this->isAjax()){
             $admin_name=addslashes($_POST['admin_name']);
-            $M=M(MODULE_NAME);
+            $M=Db::name(MODULE_NAME);
             if($M->where("ly_name='{$admin_name}'")->count()>0)
                 $this->ajaxReturn(1);  //用户存在
             else       
                 $this->ajaxReturn(2);  //用户不存在
-        }
-        else
-            {
+        } else {
             echo '<font color="red">请求错误！请正确进行数据提交！</font>';
         }
 
     }
 
-
-    function save_add_admin(){
+    function save_add_admin()
+    {
         if($this->isAjax()){
             $admin_name=addslashes($_POST['admin_name']);
             $admin_pwd=md5($_POST['admin_pwd']);
@@ -61,16 +64,15 @@ class Admin extends Base
                 $this->ajaxReturn(0);
             }
             else{
-                $M=M(MODULE_NAME);
+                $M=Db::name(MODULE_NAME);
                 if($M->where("ly_name='{$admin_name}'")->count()>0){
                     //用户已经存在
                     $this->ajaxReturn(1);
-                }
-                else{
-                    $data=array(
+                } else {
+                    $data = [
                         'ly_name'=>$admin_name,
                         'ly_pwd'=>$admin_pwd
-                    );
+                    ];
                     $id=$M->add($data);
                     unset($M);
                     if($id){
@@ -90,7 +92,7 @@ class Admin extends Base
 
     //删除管理员
     function del_admin(){
-        $Admin=M(MODULE_NAME);
+        $Admin=Db::name(MODULE_NAME);
         $count=$Admin->count();
         if($this->isAjax()){
             $admin_id=addslashes($_POST['admin_id']);
