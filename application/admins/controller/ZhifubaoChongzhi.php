@@ -1,5 +1,6 @@
 <?php
-namespace app\admins;
+namespace app\admins\controller;
+
 
 /**
  * 支付宝充值管理

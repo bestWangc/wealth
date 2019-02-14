@@ -1,5 +1,6 @@
 <?php
-namespace app\admins;
+namespace app\admins\controller;
+
 /**
  * 系统缓存管理类
  *

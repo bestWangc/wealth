@@ -1,5 +1,5 @@
 <?php
-namespace app\admins;
+namespace app\admins\controller;
 
 /**
  * 充值管理
