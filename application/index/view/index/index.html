@@ -1,4 +1,4 @@
-{extend name="Public/base" /}
+{extend name="base/base" /}
 
 {block name="title"}会员登录-{$siteName}{/block}
 
@@ -7,7 +7,7 @@
 <div class="main">
     <div class="denglu">
         <div class="dlk">
-            <form method='post' name="login" id="form1" action="{:url('index/check_login')}" >
+            <form method='post' name="login" id="form1" action="{:url('/index/check_login')}" >
                 <table width="292" border="0" align="center" cellpadding="0" cellspacing="0">
                     <tr>
                         <td height="76" colspan="3"></td>
@@ -49,7 +49,7 @@
             </form>
         </div>
     </div>
-    {include file="Public/footer"}
+    {include file="base/footer"}
 </div>
 
 {/block}

@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Db;
+use think\facade\Request;
 use think\facade\Session;
 
 class Index extends Controller
@@ -127,11 +128,15 @@ class Index extends Controller
 
     /**
      * 登录逻辑
+     * @param Request $request
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function check_login()
+    public function check_login(Request $request)
     {
-        $user_name = $_POST['user_name'];
-        $user_pwd = $_POST['user_pwd'];
+        $user_name = $request::param('user_name');
+        $user_name = $request::param('user_pwd');
 
         if ($user_name == '') {
             $this->error("请填写用户名！");
