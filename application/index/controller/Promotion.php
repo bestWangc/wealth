@@ -1,14 +1,19 @@
 <?php
 namespace app\index;
 
-class Promotion extends Base {
+use think\Db;
+use think\facade\Request;
 
-    public function index() {
+class Promotion extends Base
+{
+
+    public function index()
+    {
         $this->nav = 8;
         $this->jibie_array = $this->get_jibie_array();
 
-        $this->shenqing_array = M("JibieApply")
-                ->where(array("uid" => $this->user_id))
+        $this->shenqing_array = Db::name("JibieApply")
+                ->where("uid", $this->user_id)
                 ->order("id desc")
                 ->limit(10)
                 ->select();
@@ -16,25 +21,24 @@ class Promotion extends Base {
         $this->zhitui_num = $this->get_zhitui();
         $this->team_num = $this->get_sum();
 
-        $this->display();
+        return $this->fetch();
     }
 
     /**
      * 申请操作
      */
-    public function index_action() {
+    public function index_action()
+    {
         $jibie_id = intval($_POST['jibie_id']);
         $text = $_POST['remark'];
 
-
-        if (M("JibieApply")->where(array("uid" => $this->user_id, "status" => 0))->count() > 0) {
+        if (Db::name("JibieApply")->where(array("uid" => $this->user_id, "status" => 0))->count() > 0) {
             $this->error("您有一个晋级申请正在审核中，无法再次提交！");
         }
 
+        $jibie = Db::name("Jibie")->where(array("id" => $this->user_info['jibie_id']))->find();
 
-        $jibie = M("Jibie")->where(array("id" => $this->user_info['jibie_id']))->find();
-
-        $jibie_info = M("Jibie")->where(array("id" => $jibie_id, "sort" => array("gt", $jibie['sort'])))->find();
+        $jibie_info = Db::name("Jibie")->where(array("id" => $jibie_id, "sort" => array("gt", $jibie['sort'])))->find();
 
         if (empty($jibie_info)) {
             $this->error("申请的级别不存在或者不满足条件！");
@@ -51,29 +55,31 @@ class Promotion extends Base {
             $this->error("您不满足该级别要求的团队人数！");
         }
 
-        $data = array(
+        $data = [
             "uid" => $this->user_id,
             "jibie_id" => $jibie_id,
             "text" => $text,
             "create_time" => time()
-        );
+        ];
 
-        M("JibieApply")->add($data);
+        Db::name("JibieApply")->add($data);
     }
 
     /**
      * 获取直推人数
      * @return type
      */
-    private function get_zhitui() {
-        return M("Users")->where(array("main" => $this->user_id))->count();
+    private function get_zhitui()
+    {
+        return Db::name("Users")->where(array("main" => $this->user_id))->count();
     }
 
     /**
      * 获取团队人数
      */
-    private function get_sum() {
-        $sum_num = M("Users")->where("path like '%-{$this->user_id}-%'")->count();
+    private function get_sum()
+    {
+        $sum_num = Db::name("Users")->where("path like '%-{$this->user_id}-%'")->count();
         $sum_num+=1;
         return $sum_num;
     }
@@ -81,10 +87,11 @@ class Promotion extends Base {
     /**
      * 获取级别数组
      */
-    private function get_jibie_array() {
-        $jibie = M("Jibie")->where(array("id" => $this->user_info['jibie_id']))->find();
+    private function get_jibie_array()
+    {
+        $jibie = Db::name("Jibie")->where(array("id" => $this->user_info['jibie_id']))->find();
 
-        return M("Jibie")->where(array("sort" => array("gt", intval($jibie['sort']))))->order("sort,id desc")->select();
+        return Db::name("Jibie")->where(array("sort" => array("gt", intval($jibie['sort']))))->order("sort,id desc")->select();
     }
 
 }
@@ -93,7 +100,8 @@ class Promotion extends Base {
  * 获取级别的名称
  * @param type $id
  */
-function get_jibie_title($id) {
+function get_jibie_title($id)
+{
     return M("Jibie")->where(array("id" => $id))->getField("title");
 }
 
@@ -101,7 +109,8 @@ function get_jibie_title($id) {
  * 获取状态
  * @param type $id
  */
-function get_status($id) {
+function get_status($id)
+{
     switch ($id) {
         case 1:
             return '审核通过';
@@ -119,7 +128,8 @@ function get_status($id) {
  * 获取奖金发放情况
  * @param type $id
  */
-function get_jiangjin_status($id) {
+function get_jiangjin_status($id)
+{
     switch ($id) {
         case 1:
             return '已发放';

@@ -1,8 +1,12 @@
 <?php
 namespace app\index;
+
+use think\Db;
+
 /**
  * 财务中心
- *
+ * Class Finance
+ * @package app\index
  */
 class Finance extends Base
 {
@@ -13,28 +17,27 @@ class Finance extends Base
         $this->btn = $id;
         switch ($id) {
             case 1: //收入
-                $where = array(
+                $where = [
                     "uid" => $this->user_id,
                     "epoints" => array("egt", 0)
-                );
+                ];
                 break;
             case 2: //支出
-                $where = array(
+                $where = [
                     "uid" => $this->user_id,
                     "epoints" => array("lt", 0)
-                );
+                ];
                 break;
             default: //全部
-                $where = array(
+                $where = [
                     "uid" => $this->user_id,
-                );
+                ];
                 break;
         }
 
         import('ORG.Util.Page'); // 导入分页类
 
-
-        $count = M("Moneyhistory")->where($where)->count();
+        $count = Db::name("Moneyhistory")->where($where)->count();
 
         $Page = new Page($count, 15);
 
@@ -42,24 +45,26 @@ class Finance extends Base
 
         $this->page = $Page->show();
 
-        $this->list = M("Moneyhistory")
+        $this->list = Db::name("Moneyhistory")
                 ->where($where)
                 ->order("id desc")
                 ->limit($Page->firstRow . ',' . $Page->listRows)
                 ->select();
 
-        $this->display();
+        return $this->fetch();
     }
 
-    public function buy() {
+    public function buy()
+    {
         $this->nav = 7;
-        $this->display();
+        return $this->fetch();
     }
 
     /**
      * 购买收益币
      */
-    public function buy_action() {
+    public function buy_action()
+    {
         $num = intval($_POST['num']);
 
         if ($num <= 0) {
@@ -72,32 +77,44 @@ class Finance extends Base
             $this->error("钱包余额不足！请充值");
         }
 
-        M("Users")->where(array("id" => $this->user_id))->setField("bi", $this->user_info['bi'] + $num);
+        Db::name("Users")
+            ->where("id", $this->user_id)
+            ->setField("bi", $this->user_info['bi'] + $num);
         write_money($this->user_id, -$price, "购买收益币", 0);
 
-        $this->success("购买收益币成功！", U("/main"));
+        $this->success("购买收益币成功！", url("/main"));
     }
 
-    public function alipay() {
+    public function alipay()
+    {
         $this->nav = 5;
 
-        $this->list = M("ZhifubaoChongzhi")->where(array("uid" => $this->user_id))->order("id desc")->limit(10)->select();
+        $this->list = Db::name("ZhifubaoChongzhi")
+            ->where(array("uid" => $this->user_id))
+            ->order("id desc")->limit(10)
+            ->select();
 
-        $this->display();
+        return $this->fetch();
     }
 
-    public function cashing() {
+    public function cashing()
+    {
         $this->nav = 6;
 
-        $this->list = M("TixianApply")->where(array("uid" => $this->user_id))->order("id desc")->limit(10)->select();
+        $this->list = Db::name("TixianApply")
+            ->where(array("uid" => $this->user_id))
+            ->order("id desc")
+            ->limit(10)
+            ->select();
 
-        $this->display();
+        return $this->fetch();
     }
 
     /**
      * 支付宝充值申请操作
      */
-    public function alipay_action() {
+    public function alipay_action()
+    {
         $epoints = intval($_POST['epoints']);
 
         if ($epoints < MC("bi_price")) {
@@ -117,26 +134,33 @@ class Finance extends Base
             "status" => 0
         );
 
-        M("ZhifubaoChongzhi")->add($data);
+        Db::name("ZhifubaoChongzhi")->add($data);
 
-        $this->success("充值申请提交成功！", U("finance/alipay"));
+        $this->success("充值申请提交成功！", url("finance/alipay"));
     }
 
-    public function delete_alipay() {
+    public function delete_alipay()
+    {
         $id = intval($_GET['id']);
 
-        M("ZhifubaoChongzhi")->where(array("uid" => $this->user_id, "id" => $id, "status" => 0))->delete();
+        Db::name("ZhifubaoChongzhi")
+            ->where(["uid" => $this->user_id, "id" => $id, "status" => 0])
+            ->delete();
 
-        $this->success("删除成功！", U("alipay"));
+        $this->success("删除成功！", url("alipay"));
     }
 
-    public function delete_cash() {
+    public function delete_cash()
+    {
         $id = intval($_GET['id']);
 
+        $info = Db::name("TixianApply")
+            ->where(["uid" => $this->user_id, "id" => $id, "status" => 0])
+            ->find();
 
-        $info = M("TixianApply")->where(array("uid" => $this->user_id, "id" => $id, "status" => 0))->find();
-
-        M("TixianApply")->where(array("uid" => $this->user_id, "id" => $id, "status" => 0))->delete();
+        Db::name("TixianApply")
+            ->where(["uid" => $this->user_id, "id" => $id, "status" => 0])
+            ->delete();
 
         $fee = round($info['epoints'] * MC('cash_fee'), 2);
 
@@ -145,22 +169,21 @@ class Finance extends Base
             write_money($this->user_id, $fee, "取消提现手续费返还", 6);
         }
 
-        $this->success("删除成功！", U("cashing"));
+        $this->success("删除成功！", url("cashing"));
     }
 
     /**
      * 提现申请
      */
-    public function cash_action() {
+    public function cash_action()
+    {
         $epoints = intval($_POST['epoints']);
 
-        $money = array(50, 100, 200, 500, 1000,3000);
-
+        $money = [50, 100, 200, 500, 1000,3000];
 
         if (!in_array($epoints, $money)) {
             $this->error("提现金额错误！");
         }
-
 
         if ($epoints < MC("cash_min")) {
             $this->error("提现金额必须大于最小提现金额！");
@@ -172,13 +195,13 @@ class Finance extends Base
             $this->error("钱包余额不足！");
         }
 
-        $count = M("TixianApply")->where(array("uid" => $this->user_id, "create_date" => get_date()))->count();
+        $count = Db::name("TixianApply")
+            ->where(["uid" => $this->user_id, "create_date" => get_date()])
+            ->count();
 
         if ($count >= MC('cash_num')) {
             $this->error("超过每日提现限制！");
         }
-
-
 
         $data = array(
             "uid" => $this->user_id,
@@ -188,15 +211,14 @@ class Finance extends Base
             "status" => 0
         );
 
-        M("TixianApply")->add($data);
+        Db::name("TixianApply")->add($data);
 
         write_money($this->user_id, -$epoints, "提现", 2);
         if($fee>0){
             write_money($this->user_id, -$fee, "提现手续费" . MC('cash_fee'), 2);
         }
-        
 
-        $this->success("提现申请提交成功！", U("finance/cashing"));
+        $this->success("提现申请提交成功！", url("finance/cashing"));
     }
 
 }

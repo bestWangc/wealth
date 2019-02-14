@@ -1,44 +1,49 @@
 <?php
 namespace app\index;
 
+use think\Db;
+use think\facade\Request;
+
 /**
  * 用户中心
  */
 class User extends Base
 {
 
-    public function index() {
+    public function index()
+    {
         $this->nav = 2;
-        $this->display();
+        return $this->fetch();
     }
 
-    public function edit() {
+    public function edit()
+    {
         $this->nav = 2;
-        $this->display();
+        return $this->fetch();
     }
     
-    public function edit_pwd() {
+    public function edit_pwd()
+    {
         $this->nav = 3;
-        $this->display();
+        return $this->fetch();
     }
 
-    public function edit_action() {
-        $M = M("Users");
-
-        $data = array(
+    public function edit_action()
+    {
+        $data = [
             "real_name" => $_POST['real_name'],
             "zhifubao_no" => $_POST['zhifubao_no'],
             "nick_name" => $_POST['nick_name'],
             "mobile" => $_POST['mobile'],
-        );
+        ];
 
+        $status = DnDb::name('users')->where(array("id" => $this->user_id))->save($data);
 
-        $status = $M->where(array("id" => $this->user_id))->save($data);
-
-        $this->success("修改成功！", U("user/index"));
+        $this->success("修改成功！", url("user/index"));
     }
 
-    public function edit_pwd_action() {
+    public function edit_pwd_action()
+    {
         $type = intval($_POST['type']);
 
         switch ($type) {
@@ -67,8 +72,8 @@ class User extends Base
         $data=array(
             $field=>md5($_POST['new_pwd'])
         );
-        
-        M("Users")->where(array("id"=>  $this->user_id))->save($data);
+
+        Db::name("Users")->where(array("id"=>  $this->user_id))->save($data);
         
         $this->success("密码修改成功，请牢记您的新密码！",U("user/edit_pwd"));
     }

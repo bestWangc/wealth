@@ -2,26 +2,31 @@
 namespace app\index;
 
 use think\Controller;
+use think\facade\Session;
+use think\Db;
 
+class Base extends Controller
+{
 
-class Base extends Controller {
+    protected static $user_id;
 
-    public function _initialize() {
-        $user_id = session("user_id");
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->checkLogin();
 
-        if (empty($user_id)) {
-            $this->error("请正确登录系统！", U("/"));
-        }
-
-        $this->user_id = $user_id;
-
-        $user_info = M("Users")->where(array("id" => $user_id))->find();
-
-        $jibie = get_jibie($user_info['jibie_id']);
-
+        $user_id = Session::get('user_id');
+        $this::$user_id = $user_id;
+        $user_info = Db::name("Users")->where(array("id" => $user_id))->find();
+        $jibie = getJibie($user_info['jibie_id']);
         $user_info['jibie_name'] = is_array($jibie) ? $jibie['title'] : $jibie;
 
         $this->user_info = $user_info;
+    }
+
+    public function checkLogin(){
+        //seeion没有user_id 重新登录
+        if(!session('user_id')) $this->redirect('/index/login');
     }
 
 }
