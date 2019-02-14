@@ -7,7 +7,8 @@
 <div class="main">
     <div class="denglu">
         <div class="dlk">
-            <form method='post' name="login" id="form1" action="{:url('/index/check_login')}" >
+            <!--<form method='post' name="login" id="form1" action="{:url('/index/check_login')}" >-->
+            <form action="" onsubmit="return false;">
                 <table width="292" border="0" align="center" cellpadding="0" cellspacing="0">
                     <tr>
                         <td height="76" colspan="3"></td>
@@ -49,12 +50,53 @@
             </form>
         </div>
     </div>
-    {include file="base/footer"}
 </div>
 
 {/block}
 
 {block name="my-js"}
-
+<script>
+    $(function () {
+        $("input[name='user_account']").keydown(function(){
+            this.value = this.value.replace(/[^A-Za-z0-9]/i,'');
+        });
+        $('.submit_btn').click(function () {
+            var user_name = $('input[name="user_account"]').val();
+            var user_pwd = $('input[name="user_pwd"]').val();
+            if(user_name == ''){
+                layer.msg('请填写用户名',{time: 1000});
+                return false;
+            }
+            if(user_pwd == ''){
+                layer.msg('请填写密码',{time: 1000});
+                return false;
+            }
+            $.ajax({
+                url : '/service/login/index',
+                type : "POST",
+                dataType : "json",
+                cache : false,
+                data : {
+                    username : user_name,
+                    userpwd : user_pwd,
+                    type:3
+                },
+                success : function(data){
+                    var callBack = '';
+                    if(data.code == 0){
+                        callBack = function(){
+                            location.href='/manage/index';
+                        };
+                    }
+                    layer.msg(data.msg,{time: 1000},callBack);
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+            return false;
+        });
+    });
+</script>
 {/block}
 

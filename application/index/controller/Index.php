@@ -136,7 +136,7 @@ class Index extends Controller
     public function check_login(Request $request)
     {
         $user_name = $request::param('user_name');
-        $user_name = $request::param('user_pwd');
+        $user_pwd = $request::param('user_pwd');
 
         if ($user_name == '') {
             $this->error("请填写用户名！");
