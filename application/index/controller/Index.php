@@ -10,6 +10,8 @@ class Index extends Controller
 
     public function index()
     {
+        $siteName = MC('site_name');
+        $this->assign('siteName',$siteName);
         return $this->fetch();
     }
 

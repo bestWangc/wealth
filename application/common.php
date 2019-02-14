@@ -85,27 +85,34 @@ function write_money($uid, $money, $text = "", $type = 0) {
  * 由数据库取出系统的配置
  *
  * @access  public
- * @param   mix     $name
- *
+ * @param   mix
  * @return  mix
  */
 function MC($name) {
     //检测session缓存以及是否开启系统配置缓存
-    if (session('?config_cache') && C('Cache_config')) {
+    if (session('?config_cache') && config('Cache_config')) {
         $sys_conf = session('config_cache');
         //检测S缓存状态以及是否开启系统配置缓存
-    } elseif (S('config_cache') && C('Cache_config')) {
-        $sys_conf = S('config_cache');
+    } elseif (cache('config_cache') && config('Cache_config')) {
+        $sys_conf = cache('config_cache');
         session('config_cache', $sys_conf);
     } else {
-        $sys_conf = M("Config")->where("status=1")->getField("name,val");
+        $sys_conf = db("config")
+            ->where('status',1)
+            ->field("name,val")
+            ->select();
+        $sys_conf_new = [];
+        foreach ($sys_conf as $key => $value){
+            $sys_conf_new[$value['name']] = $value['val'];
+        }
+
         //检测是否开启缓存  开启则进行缓存
-        if (C('Cache_config')) {
-            S('config_cache', $sys_conf, C('Cache_config_time'));
-            session('config_cache', $sys_conf);
+        if (config('Cache_config')) {
+            cache('config_cache', $sys_conf_new, config('Cache_config_time'));
+            session('config_cache', $sys_conf_new);
         }
     }
-    return $sys_conf[$name];
+    return $sys_conf_new[$name];
 }
 
 /**
