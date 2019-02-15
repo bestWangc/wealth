@@ -1,0 +1,72 @@
+{extend name="base/base" /}
+
+{block name="title"}会员登录-{$siteName}{/block}
+
+{block name="main"}
+<link rel="stylesheet" href="/static/index/login/css/style.css">
+<div class="container">
+    <section id="content">
+        <form action="" onsubmit="return false;">
+            <h1>金上添金</h1>
+            <div>
+                <input type="text" placeholder="用户名" required="" id="username" />
+            </div>
+            <div>
+                <input type="password" placeholder="用户密码" required="" id="password" />
+            </div>
+            <div>
+                <input class="submit_btn" type="submit" value="登录" />
+                <a href="#">忘记密码?</a>
+                <a href="#">注册</a>
+            </div>
+        </form>
+    </section>
+</div>
+
+{/block}
+
+{block name="my-js"}
+<script>
+    $(function () {
+        $("#username").keydown(function(){
+            this.value = this.value.replace(/[^A-Za-z0-9]/i,'');
+        });
+        $('.submit_btn').click(function () {
+            var user_name = $("#username").val();
+            var user_pwd = $("#password").val();
+            if(user_name == ''){
+                layer.msg('请填写用户名',{time: 1000});
+                return false;
+            }
+            if(user_pwd == ''){
+                layer.msg('请填写密码',{time: 1000});
+                return false;
+            }
+            $.ajax({
+                url : '/service/login/index',
+                type : "POST",
+                dataType : "json",
+                cache : false,
+                data : {
+                    username : user_name,
+                    userpwd : user_pwd,
+                    type:2
+                },
+                success : function(data){
+                    var callBack = '';
+                    if(data.code == 0){
+                        callBack = function(){
+                            location.href='/index/main';
+                        };
+                    }
+                    layer.msg(data.msg,{time: 1000},callBack);
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
+{/block}
+
