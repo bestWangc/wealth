@@ -26,7 +26,7 @@ class Base extends Controller
 
     public function checkLogin(){
         //seeion没有u_id 重新登录
-        //if(!session('u_id')) $this->redirect('/index/login');
+        if(!session('u_id')) $this->redirect('/index/login');
     }
 
 }

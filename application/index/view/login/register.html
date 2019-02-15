@@ -34,7 +34,7 @@
             </div>
             <div>
                 <input class="submit_btn" type="submit" value="立即注册" />
-                <a href="#">已有账户？请登录</a>
+                <a href="{:url('/login')}">已有账户？请登录</a>
             </div>
         </form>
     </section>
@@ -103,13 +103,14 @@ $(function () {
                 username : user_name,
                 userpwd : user_pwd,
                 secondPwd : secondPwd,
+                phone : phone,
                 parent_id: parent_id
             },
             success : function(data){
                 var callingBack = '';
                 if(data.code == 0){
                     callingBack = function(){
-                        location.href='/index/login';
+                        location.href='/login';
                     };
                 }
                 layer.msg(data.msg,{time: 1000},callingBack);

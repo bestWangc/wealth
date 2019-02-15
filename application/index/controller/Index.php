@@ -1,119 +1,171 @@
 <?php
 namespace app\index\controller;
 
-use think\Controller;
 use think\Db;
 use think\facade\Request;
-use think\facade\Session;
 
 class Index extends Base
 {
 
     public function index()
     {
-        $siteName = MC('site_name');
-        $this->assign('siteName',$siteName);
+        $this->nav = 1;
+        $this->yesterday_income = $this->get_yesterday_income();
+        $this->sign_status = $this->get_sign_status();
+        $this->list = $this->get_list();
         return $this->fetch();
     }
 
     /**
-     * 注册操作
+     * 下线推广
      */
-    public function reg_action()
+    public function extend()
     {
-        $tuijian_switch = MC("tuijian_switch");
+        $this->nav = 12;
 
-        $tj_uid = $_POST['tj_name'];
+        if (!empty($this->user_info['main'])) {
+            $this->main_user_info = Db::name("Users")->where(array("id" => $this->user_info['main']))->find();
+        } else {
+            $this->main_user_info = array();
+        }
 
+
+        $this->first_list = Db::name("Users")->where(array("main" => $this->user_info["id"]))->order("id")->select();
+
+        
+        $sum_bi = Db::name("Users")
+                ->where(array("path" => array("like", "%-{$this->user_info["id"]}-%")))
+                ->sum("bi");
+        $this->sum_bi=$sum_bi;
+        
+        $sum_money=Db::name("Users")
+                ->where(array("path" => array("like", "%-{$this->user_info["id"]}-%")))
+                ->sum("money");
+        $this->sum_money=$sum_money;
+        
+        
+        
+        $tuijian_list = Db::name("Users")
+                ->where(array("path" => array("like", "%-{$this->user_info["id"]}-%")))
+                ->order("id")
+                ->select();
+        //二级推荐列表
+        $second_list = [];
+        //三级推荐列表
+        $three_list = [];
+
+        $user_id = $this->user_info['id'];
+
+        foreach ($tuijian_list as $key => $value) {
+            $path_str=  str_replace("-", '', $value['path']);
+            $path_array=  explode(",", $path_str);
+            if($path_array[1]==$user_id){
+                $second_list[]=$value;
+            }
+            if($path_array[2]==$user_id){
+                $three_list[]=$value;
+            }
+        }
+        
+        $this->second_list=$second_list;
+        $this->three_list=$three_list;
+
+        return $this->fetch();
+    }
+
+    public function help()
+    {
+        $this->nav = 11;
+        $this->content = Db::name("Article")
+            ->where("kind_id", 2)
+            ->getField("content");
+        return $this->fetch();
+    }
+
+    public function about() {
+        $this->nav = 9;
+        $this->content = M("Article")
+            ->where("kind_id", 1)
+            ->getField("content");
+        return $this->fetch();
+    }
+
+    public function news() {
+        $this->nav = 10;
+        $this->content = Db::name("Article")
+            ->where("kind_id", 3)
+            ->getField("content");
+        return $this->fetch();
+    }
+
+    /**
+     * 获取最近10笔收支记录
+     */
+    private function get_list() {
         $where = array(
-            "status" => 1,
-            "user_name" => $tj_uid
+            "uid" => $this->user_id,
         );
-        $tuijian_info = Db::name("Users")->where($where)->find();
+        return Db::name("Moneyhistory")->where($where)->order("id desc")->limit(10)->select();
+    }
 
-
-        if ($tuijian_switch) {
-            if (empty($tuijian_info)) {
-                $this->error('推荐人不存在！');
-            }
-
-            if ($tuijian_info['mobile'] != $_POST['tj_mobile']) {
-                $this->error('推荐人手机号码错误！');
-            }
-        }
-
-        if (empty($_POST['user_name'])) {
-            $this->error('请填写用户名！');
-        }
-
-        if (Db::name("Users")->where(array("user_name" => $_POST['user_name']))->count() > 0) {
-            $this->error('该用户名已经被注册，请重新填写用户名！');
-        }
-
-        if (empty($_POST['mobile'])) {
-            $this->error('请填写手机号码！');
-        }
-
-        if (Db::name("Users")->where(array("mobile" => $_POST['mobile']))->count() > 0) {
-            $this->error('该手机号码已经被注册，请重新填写手机号码！');
-        }
-
-        if (empty($_POST['user_pwd'])) {
-            $this->error('请填写登录密码！');
-        }
-
-        if (empty($_POST['user_pwd_1'])) {
-            $this->error('请填写登录密码的确认密码！');
-        }
-
-        if ($_POST['user_pwd'] != $_POST['user_pwd_1']) {
-            $this->error('登录密码两次输入的不一致！');
-        }
-
-        if (empty($_POST['user_pwd1'])) {
-            $this->error('请填写二级密码！');
-        }
-        if (empty($_POST['user_pwd1_1'])) {
-            $this->error('请填写二级密码确认密码！');
-        }
-
-        if ($_POST['user_pwd1'] != $_POST['user_pwd1_1']) {
-            $this->error('二次密码两次输入的不一致！');
-        }
-
-
-        $path = empty($tuijian_info['id']) ? "" : "-{$tuijian_info['id']}-";
-        if (!empty($tj_uid) && !empty($tuijian_info['path'])) {
-            $path.=',' . $tuijian_info['path'];
+    /**
+     * 每日签到
+     */
+    public function sign() {
+        $status = $this->get_sign_status();
+        if ($status != 0) {
+            $this->error("今日已经签到过！");
         }
 
         $data = array(
-            "user_name" => $_POST['user_name'],
-            "user_pwd" => md5($_POST['user_pwd']),
-            "user_pwd1" => md5($_POST['user_pwd1']),
-            "mobile" => $_POST['mobile'],
-            "main" => $tuijian_info['id']? : 0,
-            "path" => $path,
+            "uid" => $this->user_id,
             "create_time" => time(),
-            "last_login_time" => time(),
-            "update_time" => time(),
-            "create_ip" => get_client_ip(),
-            "login_count" => 1,
-            "last_login_ip" => get_client_ip()
+            "sign_date" => get_date()
         );
+        Db::name("DaySign")->add($data);
 
-        $uid = Db::name("Users")->add($data);
+        write_money($this->user_id, MC("sign_income"), "每日签到奖励", 5);
 
-        Session::get("user_id", $uid);
-
-        $this->success("注册成功！", U("/main"));
+        $this->success("签到成功!", url("/main"));
     }
 
-
-    public function out()
+    /**
+     * 获取昨日收益
+     */
+    private function get_yesterday_income()
     {
-        session("user_id", NULL);
-        $this->success("退出成功!", url("/"));
+        $where = array(
+            "create_date" => date("Y-m-d", strtotime("-1 day")),
+            "uid" => $this->user_id,
+        );
+
+        $info = Db::name("DailyExecute")->where($where)->sum("epoints");
+
+        if (empty($info)) {
+            return '未分红';
+        } else {
+            return $info;
+        }
+    }
+
+    /**
+     * 获取当日签到的状态
+     * 
+     * 0-未签到
+     * 1-已签到
+     */
+    private function get_sign_status()
+    {
+        $where = array(
+            "uid" => $this->user_id,
+            "sign_date" => get_date()
+        );
+
+        if (Db::name("DaySign")->where($where)->count() >= 1) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
 }

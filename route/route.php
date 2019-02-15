@@ -14,6 +14,7 @@ Route::get('think', function () {
 });
 
 Route::get('/register', 'index/login/register');
+Route::get('/login', 'index/login/index');
 
 return [
 

@@ -9,10 +9,10 @@
         <form action="" onsubmit="return false;">
             <h1>金上添金</h1>
             <div>
-                <input type="text" placeholder="用户名" required="" id="username" />
+                <input type="text" placeholder="用户名" id="username" />
             </div>
             <div>
-                <input type="password" placeholder="用户密码" required="" id="password" />
+                <input type="password" placeholder="用户密码" id="password" />
             </div>
             <div>
                 <input class="submit_btn" type="submit" value="登录" />
@@ -34,6 +34,7 @@
         $('.submit_btn').click(function () {
             var user_name = $("#username").val();
             var user_pwd = $("#password").val();
+
             if(user_name == ''){
                 layer.msg('请填写用户名',{time: 1000});
                 return false;
@@ -56,7 +57,7 @@
                     var callBack = '';
                     if(data.code == 0){
                         callBack = function(){
-                            location.href='/index/main';
+                            location.href='/index/index';
                         };
                     }
                     layer.msg(data.msg,{time: 1000},callBack);

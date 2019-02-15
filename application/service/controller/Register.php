@@ -36,10 +36,19 @@ class Register extends Base
         $userName = $request::param('username', "");
         $userPwd = $request::param('userpwd', "");
         $secondPwd = $request::param('secondPwd', "");
+        $phone = $request::param('phone', "");
 
         if(empty($userName) || empty($userPwd) || empty($secondPwd)){
             return jsonRes(1,'信息填写不全，请重试');
         }
+        if(empty($phone)){
+            return jsonRes(1,'手机号不能为空');
+        }
+        $pattern = '/^1[34578]\d{9}$/';
+        if(!preg_match($pattern,$phone)){
+            return jsonRes(1,'请填写正确的手机号');
+        }
+
         $oldUserInfo = Db::name('users')
             ->where('user_name',$userName)
             ->count('id');
@@ -48,41 +57,29 @@ class Register extends Base
             return jsonRes(1,'帐号已存在，请重新填写');
         }
 
+        $path = empty($parentInfo['id']) ? "" : "{$parentInfo['id']}";
+        if (!empty($parent_id) && !empty($parentInfo['path'])) {
+            $path .= ',' . $parentInfo['path'];
+        }
+
         $data = [
-            'name' => $userName,
-            'passwd' => md5($userPwd.'jfn'),
-            'role' => 2,
-            'email' => $email,
-            'photo' => '/uploads/photo_1.jpg',
-            'parent_id' => $parent_id ? $parent_id : 1,
-            'created_date' => time()
+            'user_name' => $userName,
+            'user_pwd' => md5($userPwd.'jstj'),
+            'user_pwd1' => md5($secondPwd.'jstj'),
+            'mobile' => $phone,
+            "main" => $parentInfo['id'],
+            "path" => $path,
+            "last_login_time" => time(),
+            "update_time" => time(),
+            'create_time' => time(),
+            "create_ip" => get_client_ip(),
+            "login_count" => 1,
+            "last_login_ip" => get_client_ip()
         ];
+
         $creatUser = Db::name('users')->insert($data);
 
-        if($creatUser){
-            if(!empty($parent_id) && $parent_id != 1){
-                $role = 0;
-                $parentCount = Db::name('users')
-                    ->where('parent_id',$parent_id)
-                    ->count('id');
-                if($parentCount > 5 && $parentCount <= 15){
-                    $role = 3;
-                }
-                if($parentCount > 15 && $parentCount <= 30){
-                    $role = 4;
-                }
-                if($parentCount > 30 && $parentCount <= 50){
-                    $role = 5;
-                }
-                if($role){
-                    Db::name('users')
-                        ->where('id',$parent_id)
-                        ->update(['role'=>$role]);
-                }
-            }
-
-            return jsonRes(0,'注册成功');
-        }
+        if($creatUser) return jsonRes(0,'注册成功');
 
         return jsonRes(1,'注册失败，请重试');
     }
