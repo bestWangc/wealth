@@ -16,16 +16,32 @@ class Register extends Base
 {
     public function index(Request $request)
     {
+        $tuijian_switch = MC("tuijian_switch");
+
+        $parent_id = $request::param('parent_id');
+
+        if(empty($parent_id)){
+            return jsonRes(1,'推荐人不正确或不存在');
+        }
+        $parentInfo = Db::name("users")
+            ->where('status',1)
+            ->where('id',$parent_id)
+            ->find();
+        if ($tuijian_switch) {
+            if (empty($parentInfo)) {
+                return jsonRes(1,'推荐人不正确或不存在');
+            }
+        }
+
         $userName = $request::param('username', "");
         $userPwd = $request::param('userpwd', "");
-        $email = $request::param('email', "");
-        $parent_id = $request::param('parent', 1);
+        $secondPwd = $request::param('secondPwd', "");
 
-        if(empty($userName) || empty($userPwd) || empty($email)){
+        if(empty($userName) || empty($userPwd) || empty($secondPwd)){
             return jsonRes(1,'信息填写不全，请重试');
         }
         $oldUserInfo = Db::name('users')
-            ->where('name',$userName)
+            ->where('user_name',$userName)
             ->count('id');
 
         if(!!$oldUserInfo){

@@ -6,13 +6,44 @@ use think\Db;
 use think\facade\Request;
 use think\facade\Session;
 
-class Index extends Base
+class Login extends Controller
 {
 
     public function index()
     {
         $siteName = MC('site_name');
         $this->assign('siteName',$siteName);
+        return $this->fetch();
+    }
+
+    /**
+     * 注册
+     * @param Request $request
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function register(Request $request)
+    {
+        $uid = intval($request::param('uuu989uid'));
+        $pName = '';
+        $pId = 0;
+        if (!empty($uid)) {
+            $info = Db::name("users")
+                ->where('id',$uid)
+                ->field('id,user_name')
+                ->find();
+            $pName = $info['user_name'];
+            $pId = $info['id'];
+        }
+        $siteName = MC('site_name');
+        $this->assign([
+            'siteName' => $siteName,
+            'pName' => $pName,
+            'pId' => $pId
+        ]);
+
         return $this->fetch();
     }
 

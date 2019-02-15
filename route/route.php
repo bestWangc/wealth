@@ -13,8 +13,7 @@ Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });
 
-Route::get('/register', 'index/register');
-Route::get('/login', 'index/index');
+Route::get('/register', 'index/login/register');
 
 return [
 

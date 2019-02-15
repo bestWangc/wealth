@@ -1,0 +1,125 @@
+{extend name="base/base" /}
+
+{block name="title"}会员注册-{$siteName}{/block}
+
+{block name="main"}
+<link rel="stylesheet" href="/static/index/login/css/style.css">
+<div class="container">
+    <section id="content">
+        <form action="" onsubmit="return false;">
+            <h1>金上添金</h1>
+            <div>
+                <label>推荐人用户名：
+                    <input type="text" value="{$pName}" disabled />
+                    <input type="hidden"  value="{$pId}" class="parent_id" />
+                </label>
+            </div>
+            <div>
+                <input type="text" placeholder="用户名" class="user_name"/>
+            </div>
+            <div>
+                <input type="text" placeholder="手机号" class="phone"/>
+            </div>
+            <div>
+                <input type="password" placeholder="登录密码" class="password" />
+            </div>
+            <div>
+                <input type="password" placeholder="确认密码" class="re_password" />
+            </div>
+            <div>
+                <input type="password" placeholder="二级密码" class="second_pwd" />
+            </div>
+            <div>
+                <input type="password" placeholder="确认二级密码" class="re_second_pwd" />
+            </div>
+            <div>
+                <input class="submit_btn" type="submit" value="立即注册" />
+                <a href="#">已有账户？请登录</a>
+            </div>
+        </form>
+    </section>
+</div>
+
+{/block}
+
+{block name="my-js"}
+<script>
+$(function () {
+    $('.user_name').focus(function () {
+        layer.tips('推荐使用手机号码', '.user_name');
+    });
+    $('.phone').focus(function () {
+        layer.tips('手机号码是您身份的唯一凭证', '.phone');
+    });
+    $(".user_name").keydown(function(){
+        this.value = this.value.replace(/[^A-Za-z0-9]/i,'');
+    });
+
+    $('.submit_btn').click(function () {
+        let user_name = $('.user_name').val();
+        let user_pwd = $('.password').val();
+        let re_user_pwd = $('.re_password').val();
+        let secondPwd = $('.second_pwd').val();
+        let reSecondPwd = $('.re_second_pwd').val();
+        let parent_id = $('.parent_id').val();
+        let phone = $('.phone').val();
+        let pattern = /^1[34578]\d{9}$/;
+        if(!pattern.test(phone)){
+            layer.msg('请填写正确的手机号',{time:1000});
+            return false;
+        }
+
+        if(user_name == ''){
+            layer.msg('帐号不能为空',{time:1000});
+            return false;
+        }
+        if(user_name.length < 8){
+            layer.msg('帐号不能少于8位',{time:1000});
+            return false;
+        }
+        if(user_pwd == ''){
+            layer.msg('密码不能为空',{time:1000});
+            return false;
+        }
+        if(secondPwd == ''){
+            layer.msg('二级密码不能为空',{time:1000});
+            return false;
+        }
+        if(user_pwd != re_user_pwd){
+            layer.msg('两次密码输入不一致',{time:1000});
+            return false;
+        }
+        if(secondPwd != reSecondPwd){
+            layer.msg('两次二级密码输入不一致',{time:1000});
+            return false;
+        }
+
+        $.ajax({
+            url : '/service/register/index',
+            type : "POST",
+            dataType : "json",
+            cache : false,
+            data : {
+                username : user_name,
+                userpwd : user_pwd,
+                secondPwd : secondPwd,
+                parent_id: parent_id
+            },
+            success : function(data){
+                var callingBack = '';
+                if(data.code == 0){
+                    callingBack = function(){
+                        location.href='/index/login';
+                    };
+                }
+                layer.msg(data.msg,{time: 1000},callingBack);
+            },
+            error : function(data){
+                console.log(data);
+            }
+        });
+    });
+
+});
+</script>
+{/block}
