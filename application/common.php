@@ -10,6 +10,23 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+/**
+ * josn 返回函数
+ * @param int $code
+ * @param $msg
+ * @param array $data
+ * @return \think\response\Json
+ */
+function jsonRes($code, $msg, $data = []){
+    $data = [
+        'code' => $code,
+        'msg' => $msg,
+        'data' => $data
+    ];
+    return json($data);
+}
+
 /**
  * 获取钱包历史记录类别
  * @param type $id
@@ -122,7 +139,9 @@ function get_jibie($id) {
     if ($id == 1) {
         return "普通会员";
     }
-    $info = M("Jibie")->where(array("id" => $id))->find();
+    $info = db("jibie")
+        ->where("id", $id)
+        ->find();
     if (empty($info)) {
         return "普通会员";
     }
@@ -220,4 +239,23 @@ function rmdirr($dirname) {
     }
     $dir->close();
     return rmdir($dirname);
+}
+
+// 获取客户端IP地址
+function get_client_ip() {
+    static $ip = NULL;
+    if ($ip !== NULL) return $ip;
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $arr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $pos =  array_search('unknown',$arr);
+        if(false !== $pos) unset($arr[$pos]);
+        $ip   =  trim($arr[0]);
+    }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    // IP地址合法验证
+    $ip = (false !== ip2long($ip)) ? $ip : '0.0.0.0';
+    return $ip;
 }

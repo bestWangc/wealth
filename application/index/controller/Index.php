@@ -6,7 +6,7 @@ use think\Db;
 use think\facade\Request;
 use think\facade\Session;
 
-class Index extends Controller
+class Index extends Base
 {
 
     public function index()
@@ -17,18 +17,33 @@ class Index extends Controller
     }
 
     /**
-     * 注册界面
+     * 注册
+     * @param Request $request
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function reg()
+    public function register(Request $request)
     {
-        $uid = intval($_GET['uuu989uid']);
 
+        $uid = intval($request::param('uuu989uid'));
+        $pName = '';
+        $pId = 0;
         if (!empty($uid)) {
-            $info = Db::name("Users")->where("id={$uid}")->find();
-            $this->mobile = $info['mobile'];
-            $this->user_name = $info['user_name'];
-            $this->uid = $uid;
+            $info = Db::name("users")
+                ->where('id',$uid)
+                ->field('id,user_name')
+                ->find();
+            $pName = $info['user_name'];
+            $pId = $info['id'];
         }
+        $siteName = MC('site_name');
+        $this->assign([
+            'siteName' => $siteName,
+            'pName' => $pName,
+            'pId' => $pId
+        ]);
 
         return $this->fetch();
     }
@@ -126,51 +141,6 @@ class Index extends Controller
         $this->success("注册成功！", U("/main"));
     }
 
-    /**
-     * 登录逻辑
-     * @param Request $request
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public function check_login(Request $request)
-    {
-        $user_name = $request::param('user_name');
-        $user_pwd = $request::param('user_pwd');
-
-        if ($user_name == '') {
-            $this->error("请填写用户名！");
-        }
-
-        if ($user_pwd == '') {
-            $this->error('请填写登录密码！');
-        }
-
-        $user_pwd = md5($user_pwd);
-
-        $user_info = Db::name("Users")
-            ->where(["user_name" => $user_name, "status" => 1])
-            ->find();
-
-        if (empty($user_info)) {
-            $this->error('用户不存在或者被系统禁用！请重新登录！');
-        }
-
-        if ($user_info['user_pwd'] != $user_pwd) {
-            $this->error('登录密码错误！请重新登录！');
-        }
-
-        session("user_id", $user_info['id']);
-
-        $data = [
-            "last_login_time" => time(),
-            "last_login_ip" => get_client_ip(),
-            "login_count" => $user_info['login_count'] + 1,
-        ];
-        Db::name("Users")->where(array("id" => $user_info['id']))->save($data);
-
-        $this->success("登录成功！", url("/main"));
-    }
 
     public function out()
     {

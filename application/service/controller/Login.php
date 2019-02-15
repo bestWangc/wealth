@@ -14,21 +14,20 @@ class Login extends Base
         $type = $request::param('type',0);
 
         if(empty($userName) || empty($userPwd)){
-            return jsonRes(1,'用户名或者密码不能为空');
+            return jsonRes(1,'用户名或密码不能为空');
         }
+
         $userArr = Db::name('users')
-            ->where('name',$userName)
-            ->whereOr('email',$userName)
-            ->field('id,name,passwd,role,status')
+            ->where('user_name',$userName)
+            ->where('status',1)
+            ->field('id,user_name,user_pwd,login_count')
             ->find();
 
-        if(empty($userArr['id'])){
-            return jsonRes(1,'用户名不存在');
+        if(empty($userArr)){
+            return jsonRes(1,'用户名不存在或被禁用！请重新登录');
         }
-        if(!$userArr['status']){
-            return jsonRes(1,'用户未激活');
-        }
-        if($userPwd = md5($userPwd.'jfn') == $userArr['passwd']){
+
+        if($userPwd = md5($userPwd.'jstj') == $userArr['user_pwd']){
             //将user id 存入session中
             /*
              * mapp  user_id 1
@@ -42,8 +41,18 @@ class Login extends Base
             } elseif ($type == 3){
                 Session::set('uid',$userArr['id']);
             }
-            Session::set('user_role',$userArr['role']);
-            Session::set('user_name',$userArr['name']);
+
+            Session::set('user_name',$userArr['user_name']);
+
+            $data = [
+                "last_login_time" => time(),
+                "last_login_ip" => get_client_ip(),
+                "login_count" => $userArr['login_count'] + 1,
+            ];
+            Db::name("users")
+                ->where("id", $userArr['id'])
+                ->lock()
+                ->update($data);
 
             return jsonRes(0,'登录成功');
         }else{
