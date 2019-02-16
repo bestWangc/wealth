@@ -9,37 +9,53 @@ use think\facade\Request;
  */
 class User extends Base
 {
-
     public function index()
     {
-        $this->nav = 2;
+        $this->assign('nav',2);
         return $this->fetch();
     }
 
     public function edit()
     {
-        $this->nav = 2;
+        $this->assign('nav',2);
         return $this->fetch();
     }
-    
+
+    public function doEdit(Request $request)
+    {
+        $data = [];
+        $realName = $request::post('real_name');
+        if(!empty($realName)){
+            $data['real_name'] = $realName;
+        }
+        $alipayNo = $request::post('alipay_no');
+        if(!empty($alipayNo)){
+            $data['alipay_no'] = $alipayNo;
+        }
+        $nickName = $request::post('nick_name');
+        if(!empty($nickName)){
+            $data['nick_name'] = $nickName;
+        }
+        $phone = $request::post('phone');
+        if(!empty($phone)){
+            $data['mobile'] = $phone;
+        }
+
+        if(!empty($data)){
+            $res = Db::name('users')
+                ->where(array("id" => $this::$user_id))
+                ->update($data);
+            if($res){
+                return jsonRes(0,'修改成功');
+            }
+        }
+        return jsonRes(1,'修改失败，请重试');
+    }
+
     public function edit_pwd()
     {
-        $this->nav = 3;
+        $this->assign('nav',3);
         return $this->fetch();
-    }
-
-    public function edit_action()
-    {
-        $data = [
-            "real_name" => $_POST['real_name'],
-            "zhifubao_no" => $_POST['zhifubao_no'],
-            "nick_name" => $_POST['nick_name'],
-            "mobile" => $_POST['mobile'],
-        ];
-
-        $status = DnDb::name('users')->where(array("id" => $this->user_id))->save($data);
-
-        $this->success("修改成功！", url("user/index"));
     }
 
     public function edit_pwd_action()

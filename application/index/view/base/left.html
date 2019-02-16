@@ -2,46 +2,46 @@
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
             <li>
-                <a href="{:url('index')}" class="{$nav == 1 ? 'active-menu' : ''}"><i class="fa fa-dashboard"></i>后台首页</a>
+                <a href="{:url('/index/index')}" class="{$nav == 1 ? 'active-menu' : ''}"><i class="fa fa-dashboard"></i>后台首页</a>
             </li>
             <li>
-                <a href="{:url('user/index')}" class="{$nav == 2 ? 'active-menu' : ''}"><i class="fa fa-desktop"></i>个人资料</a>
+                <a href="{:url('/index/user/index')}" class="{$nav == 2 ? 'active-menu' : ''}"><i class="fa fa-desktop"></i>个人资料</a>
             </li>
             <li>
-                <a href="{:url('user/edit_pwd')}" class="{$nav == 3 ? 'active-menu' : ''}"><i class="fa fa-bar-chart-o"></i>修改密码</a>
+                <a href="{:url('/index/user/edit_pwd')}" class="{$nav == 3 ? 'active-menu' : ''}"><i class="fa fa-bar-chart-o"></i>修改密码</a>
             </li>
 
             <li class="{:in_array($nav,[4,5,6,7]) ? 'active' : ''}">
                 <a href="#"><i class="fa fa-sitemap"></i>财务中心<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li class="{$nav == 4 ? 'active-menu' : ''}">
-                        <a href="{:url('finance/index')}">财务中心</a>
+                        <a href="{:url('/index/finance/index')}">财务中心</a>
                     </li>
                     <li class="{$nav == 5 ? 'active-menu' : ''}">
-                        <a href="{:url('finance/alipay')}">支付宝钱包充值</a>
+                        <a href="{:url('/index/finance/alipay')}">支付宝钱包充值</a>
                     </li>
                     <li class="{$nav == 6 ? 'active-menu' : ''}">
-                        <a href="{:url('finance/cashing')}">提现申请</a>
+                        <a href="{:url('/index/finance/cashing')}">提现申请</a>
                     </li>
                     <li class="{$nav == 7 ? 'active-menu' : ''}">
-                        <a href="{:url('finance/buy')}">购买收益币</a>
+                        <a href="{:url('/index/finance/buy')}">购买收益币</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="{:url('promotion/index')}" class="{$nav == 8 ? 'active-menu' : ''}"><i class="fa fa-table"></i>申请晋级</a>
+                <a href="{:url('/index/promotion/index')}" class="{$nav == 8 ? 'active-menu' : ''}"><i class="fa fa-table"></i>申请晋级</a>
             </li>
             <li>
-                <a href="{:url('main/extend')}" class="{$nav == 12 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>下线推广</a>
+                <a href="{:url('/index/main/extend')}" class="{$nav == 12 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>下线推广</a>
             </li>
             <li>
-                <a href="{:url('main/about')}" class="{$nav == 9 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>关于我们</a>
+                <a href="{:url('/index/main/about')}" class="{$nav == 9 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>关于我们</a>
             </li>
             <li>
-                <a href="{:url('main/news')}" class="{$nav == 10 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>系统公告</a>
+                <a href="{:url('/index/main/news')}" class="{$nav == 10 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>系统公告</a>
             </li>
             <li>
-                <a href="{:url('main/help')}" class="{$nav == 11 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>帮助中心</a>
+                <a href="{:url('/index/main/help')}" class="{$nav == 11 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>帮助中心</a>
             </li>
         </ul>
     </div>
