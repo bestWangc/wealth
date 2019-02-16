@@ -3,7 +3,7 @@ namespace app\index\controller;
 
 use think\Db;
 use think\facade\Request;
-
+use ORG\Util\Page;
 /**
  * 财务中心
  * Class Finance
@@ -14,19 +14,20 @@ class Finance extends Base
 
     public function index(Request $request)
     {
-        $id = intval($request::param('id'));
-        
+        $id = $request::param('id/d');
+        $page = $request::param('page',1);
+
         switch ($id) {
             case 1: //收入
                 $where = [
-                    "uid" => $this::$user_id,
-                    "epoints" => array("egt", 0)
+                    ['uid','=',$this::$user_id],
+                    ['epoints', '>=', 0]
                 ];
                 break;
             case 2: //支出
                 $where = [
-                    "uid" => $this::$user_id,
-                    "epoints" => array("lt", 0)
+                    ['uid','=',$this::$user_id],
+                    ['epoints', '<', 0]
                 ];
                 break;
             default: //全部
@@ -36,22 +37,14 @@ class Finance extends Base
                 break;
         }
 
-        import('ORG.Util.Page'); // 导入分页类
-
-        $count = Db::name("moneyhistory")
-            ->where($where)
-            ->count();
-
-        $Page = new Page($count, 15);
-
-        $Page->parameter = "&id={$id}";
-        $page = $Page->show();
         $list = Db::name("moneyhistory")
                 ->where($where)
                 ->order("id desc")
-                ->limit($Page->firstRow . ',' . $Page->listRows)
-                ->select();
+                ->paginate(15,false,[
+                    'page' => $page
+                ]);
 
+        $page = $list->render();
         $this->assign([
             'nav' => 4,
             'btn' => $id,

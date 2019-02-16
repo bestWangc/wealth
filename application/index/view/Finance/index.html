@@ -22,7 +22,7 @@
                             &nbsp;&nbsp;
                             <a href="{:url('index')}" class="btn btn-default {$btn == 0 ? 'btn-primary' : ''}">全 部</a>&nbsp;&nbsp;
                             <a href="{:url('index?id=1')}" class="btn btn-default {$btn == 1 ? 'btn-primary' : ''}">收 入</a>&nbsp;&nbsp;
-                            <a href="{:url('index?id=2')}" class="btn btn-default {$btn == 2)? 'btn-primary' : ''}">支 出</a>
+                            <a href="{:url('index?id=2')}" class="btn btn-default {$btn == 2 ? 'btn-primary' : ''}">支 出</a>
                         </div>
                         <div class="panel-body">
                             <!--面板内容 start-->
@@ -57,21 +57,21 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <foreach name='list' item='vo'>
-                                        <tr>
-                                            <td>{:get_date_full($vo['create_time'])}</td>
-                                            <td><php>if($vo['epoints']>=0) echo '<font color="red">收入</font>'; else echo '支出';</php></td>
-                                            <td>{:get_main_last_status($vo['action_type'])}</td>
-                                            <td>{$vo.epoints}</td>
-                                            <td>{$vo.text}</td>
-                                            <td>{$vo.original}</td>
-                                            <td>{$vo.after}</td>
-                                        </tr>
-                                    </foreach>
-                                    </tbody>
+                                    {volist name="list" id="vo"}
                                     <tr>
-                                        <td colspan="7" style='text-align:right'>{$page}</td>
+                                        <td>{:get_date_full($vo.create_time)}</td>
+                                        <td>{$vo.epoints >= 0 ? '<font color="red">收入</font>' : '支出'}</td>
+                                        <td>{:get_main_last_status($vo.action_type)}</td>
+                                        <td>{$vo.epoints}</td>
+                                        <td>{$vo.text}</td>
+                                        <td>{$vo.original}</td>
+                                        <td>{$vo.after}</td>
                                     </tr>
+                                    {/volist}
+                                    <tr>
+                                        <td colspan="7" style='text-align:right'>{$page|raw}</td>
+                                    </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -84,9 +84,7 @@
                 {include file="base/footer"}
             </footer>
         </div>
-        <!-- /. PAGE INNER  -->
     </div>
-    <!-- /. PAGE WRAPPER  -->
 </div>
 
 {/block}
