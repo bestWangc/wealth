@@ -130,22 +130,24 @@ class Index extends Base
     /**
      * 每日签到
      */
-    public function sign() {
+    public function sign()
+    {
         $status = $this->getSignStatus($this::$user_id);
         if ($status != 0) {
-            $this->error("今日已经签到过！");
+            $this->error("今日已签到");
         }
 
-        $data = array(
-            "uid" => $this->user_id,
+        $data = [
+            "uid" => $this::$user_id,
             "create_time" => time(),
             "sign_date" => get_date()
-        );
-        Db::name("DaySign")->add($data);
+        ];
+        $res = Db::name('daySign')->insert($data);
 
-        write_money($this->user_id, MC("sign_income"), "每日签到奖励", 5);
+        $this->writeMoney($this::$user_id, $this::$signIncome, "每日签到奖励", 5);
 
-        $this->success("签到成功!", url("/main"));
+        if($res) return jsonRes(0,'签到成功');
+        return jsonRes(0,'签到失败，请重试');
     }
 
     /**
@@ -180,7 +182,7 @@ class Index extends Base
     {
         $where = [
             "uid" => $uid,
-            "sign_date" => getDate()
+            "sign_date" => get_date()
         ];
 
         $count = Db::name("daySign")->where($where)->count();

@@ -61,42 +61,6 @@ function get_main_last_status($id) {
     }
 }
 
-/**
- * 写入用户财务记录
- * @param type $uid 用户id
- * @param type $money 金额
- * @param string $text 说明
- * @param type $type 类型 0-其他 1-利息 2-提现 3-充值 4-奖励 5-签到 6-返还
- */
-function write_money($uid, $money, $text = "", $type = 0) {
-    $Users = M("Users");
-    $Moneyhistory = M("Moneyhistory");
-
-    $user_info = $Users->where(array("id" => $uid))->find();
-
-    if ($user_info) {
-        $old_money = $user_info['money'];
-        $new_money = $old_money + $money;
-
-        $user_data = array(
-            "money" => $new_money
-        );
-
-        $data = array(
-            "uid" => $uid,
-            "action_type" => $type,
-            "create_time" => time(),
-            "epoints" => $money,
-            "original" => $old_money,
-            "after" => $new_money,
-            "text" => $text
-        );
-
-        $Users->where(array("id" => $uid))->save($user_data);
-
-        $Moneyhistory->add($data);
-    }
-}
 
 /**
  * 由数据库取出系统的配置
@@ -206,10 +170,11 @@ function get_date_full($time) {
 
 /**
  * 传递秒数 获取Y-m-d格式的时间
- * @var Int $time 距离1970的秒数
+ * @param $time
+ * @return false|string
  */
-function get_date($time) {
-    $time = $time? : time();
+function get_date($time = '') {
+    $time = $time ? : time();
     return date('Y-m-d', $time);
 }
 

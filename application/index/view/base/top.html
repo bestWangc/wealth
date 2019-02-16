@@ -12,13 +12,49 @@
             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            <li><a href="{:url('user/index')}"><i class="fa fa-user fa-fw"></i> 个人资料</a>
+            <li>
+                <a href="{:url('user/index')}"><i class="fa fa-user fa-fw"></i> 个人资料</a>
             </li>
-            <li><a href="{:url('user/edit_pwd')}"><i class="fa fa-gear fa-fw"></i> 修改密码</a>
+            <li>
+                <a href="{:url('user/edit_pwd')}"><i class="fa fa-gear fa-fw"></i> 修改密码</a>
             </li>
             <li class="divider"></li>
-            <li><a href="{:url('index/out')}"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
+            <li>
+                <a href="javascript:;" id="logout"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
             </li>
         </ul>
     </li>
 </ul>
+<script>
+    $(function () {
+        $('#logout').click(function () {
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
+            $.ajax({
+                url : '/service/logout/index',
+                type : "GET",
+                dataType : "json",
+                data:{
+                    type:2
+                },
+                cache : false,
+                success : function(data){
+                    var callingBack = '';
+                    if(data.code == 0){
+                        callingBack = function () {
+                            window.location.reload();
+                        };
+                    }
+                    layer.closeAll('loading');
+                    layer.msg(data.msg,{time: 1000},callingBack);
+                },
+                error : function(data){
+                    layer.closeAll('loading');
+                    console.log(data);
+                }
+            });
+        });
+
+    });
+</script>

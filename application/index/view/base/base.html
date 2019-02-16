@@ -15,18 +15,14 @@
     <link rel="stylesheet" href="/static/common/css/font-awesome.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/static/common/js/layer/layer.js"></script>
+    <script src="/static/common/js/bootstrap.min.js"></script>
+    <script src="/static/common/js/check.js"></script>
 </head>
 <body>
 
 {block name="main"}{/block}
 
-<script src="/static/common/js/layui/layui.js"></script>
-<script src="/static/common/js/bootstrap.min.js"></script>
-<script>
-    layui.use('layer', function(){
-        var layer = layui.layer;
-    });
-</script>
 {block name="my-js"}{/block}
 </body>
 </html>

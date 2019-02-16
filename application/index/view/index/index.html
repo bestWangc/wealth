@@ -76,7 +76,7 @@
                                 {if($signStatus)}
                                 <button class='btn btn-default'>已签到</button>
                                 {else /}
-                                <a class="btn btn-primary" href="{:url('index/sign')}">签 到</a>
+                                <a class="btn btn-primary singBtn" href="javascript:;">签 到</a>
                                 {/if}
                             </strong>
                             <br>
@@ -137,5 +137,35 @@
 {/block}
 
 {block name="my-js"}
+<script>
+    $(function () {
+        $('.singBtn').click(function () {
+            //加载遮罩层
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
 
+            $.ajax({
+                url : '/index/index/sign',
+                type : "GET",
+                dataType : "json",
+                cache : false,
+                success : function(res){
+                    var callingBack = '';
+                    layer.closeAll('loading');
+                    if(res.code == 0){
+                        callingBack = function () {
+                            window.location.reload();
+                        };
+                    }
+                    layer.msg(res.msg,{time: 1000},callingBack);
+                },
+                error : function(data){
+                    layer.closeAll('loading');
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
 {/block}

@@ -29,6 +29,6 @@ class Logout extends Base
         }
         session(null);
 
-        return jsonRes(0,'注销成功');
+        return jsonRes(0,'退出成功');
     }
 }
