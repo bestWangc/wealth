@@ -100,7 +100,6 @@ class Finance extends Base
             Db::commit();
             return jsonRes(0,'购买收益币成功');
         } catch (\Exception $e) {
-            var_dump($e->getMessage());
             // 回滚事务
             Db::rollback();
             return jsonRes(0,$e->getMessage());
