@@ -1,130 +1,157 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>提现申请-{:MC('site_name')}</title>
-        <link href="__PUBLIC__/main/css/bootstrap.css" rel="stylesheet" />
-        <!-- FontAwesome Styles-->
-        <link href="__PUBLIC__/main/css/font-awesome.css" rel="stylesheet" />
-        <!-- Custom Styles-->
-        <link href="__PUBLIC__/main/css/custom-styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div id="wrapper">
-            <nav class="navbar navbar-default top-navbar" role="navigation">
-                <include file='Public:top' />
-            </nav>
-            <!--/. NAV TOP  -->
-                <include file="Public:left" />
+﻿{extend name="base/base" /}
 
+{block name="title"}提现申请-{$siteName}{/block}
 
-            <!-- /. NAV SIDE  -->
-            <div id="page-wrapper" class="col-sm-9 col-md-10 col-xs-12" style="float:right">
-                <div id="page-inner">
+{block name="main"}
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        {include file="base/top"}
+    </nav>
+    <!--/. NAV TOP  -->
+    {include file="base/left"}
 
-                    <!-- /. ROW  -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    提现申请
-                                </div>
-                                <div class="panel-body">
-                                    <!--面板内容 start-->
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <form role="form" action="{:U('cash_action')}" method="post">
-
-                                                <div class="form-group">
-                                                    <label>提现金额</label>
-                                                    <select name='epoints' class="form-control">
-                                                        <option value="50">50元</option>
-                                                        <option value="100">100元</option>
-                                                        <option value="200">200元</option>
-                                                        <option value="500">500元</option>
-                                                        <option value="1000">1000元</option>
-                                                        <option value="3000">3000元</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>说明</label>
-                                                    <textarea class="form-control" rows="3" name="remark"></textarea>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>普通会员每日可提现[{:MC('cash_num')}]次，提现提交后系统将按照顺序打款</label>
-                                                </div>
-
-
-                                                <button type="submit" class="btn btn-primary" value="submit">确认提交</button>
-                                            </form>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper" class="col-sm-9 col-md-10 col-xs-12" style="float:right">
+        <div id="page-inner">
+            <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            提现申请
+                        </div>
+                        <div class="panel-body">
+                            <!--面板内容 start-->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form" action="" method="post" onsubmit="return false;">
+                                        <div class="form-group">
+                                            <label>提现金额</label>
+                                            <select name='epoints' class="form-control epoints">
+                                                <option value="50">50元</option>
+                                                <option value="100">100元</option>
+                                                <option value="200">200元</option>
+                                                <option value="500">500元</option>
+                                                <option value="1000">1000元</option>
+                                                <option value="3000">3000元</option>
+                                            </select>
                                         </div>
-                                    </div>
 
-                                    <!--面板内容 end-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        <div class="form-group">
+                                            <label>说明</label>
+                                            <textarea class="form-control remark" rows="3" name="remark"></textarea>
+                                        </div>
 
+                                        <div class="form-group">
+                                            <label>普通会员每日可提现[{$cashNum}]次，提现提交后系统将按照顺序打款</label>
+                                        </div>
 
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    最近10笔提现记录
-                                </div> 
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>申请时间</th>
-                                                    <th>提现金额</th>
-                                                    <th>状态</th>
-                                                    <th>打款时间</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <foreach name='list' item='vo'>
-                                                    <tr>
-                                                        <td>{:get_date_full($vo['create_time'])}</td>
-                                                        <td>{$vo.epoints}</td>
-                                                        <td>{:get_cash_status($vo['status'])}</td>
-                                                        <td>{:get_action_time($vo['update_time'])}</td>
-                                                        <td><php>if($vo['status']==0){</php><a href="{:U('delete_cash?id='.$vo['id'])}">删除</a><php>}</php></td>
-                                                    </tr>
-                                                </foreach>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <button type="submit" class="btn btn-primary submitBtn" value="submit">确认提交</button>
+                                    </form>
                                 </div>
                             </div>
 
+                            <!--面板内容 end-->
                         </div>
                     </div>
-
-
-
-
-                    <footer>
-                        <include file='Public:footer' />
-                    </footer>
                 </div>
-                <!-- /. PAGE INNER  -->
             </div>
-            <!-- /. PAGE WRAPPER  -->
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            最近10笔提现记录
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>申请时间</th>
+                                        <th>提现金额</th>
+                                        <th>状态</th>
+                                        <th>打款时间</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="list" id="vo"}
+                                    <tr>
+                                        <td>{$vo.create_time}</td>
+                                        <td>{$vo.epoints}</td>
+                                        <td>{$vo.status == 1 ? '提现完成' : '未审核'}</td>
+                                        <td>{$vo.update_time}</td>
+                                        <!--a href="{:url('delete_cash?id='.$vo['id'])}-->
+                                        <td>{$vo.status == 0 ? '<a href="#">删除</a>' : ''}</td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                {include file="base/footer"}
+            </footer>
         </div>
+    </div>
 
-        <script src="__PUBLIC__/main/js/jquery-1.10.2.js"></script>
-        <script src="__PUBLIC__/main/js/bootstrap.min.js"></script>
-        <script src="__PUBLIC__/main/js/jquery.metisMenu.js"></script>
-        <script src="__PUBLIC__/main/js/custom-scripts.js"></script>
+</div>
 
+<script src="/static/index/js/jquery.metisMenu.js"></script>
+<script src="/static/index/js/custom-scripts.js"></script>
+{/block}
 
-    </body>
-</html>
+{block name="my-js"}
+<script>
+    $(function () {
+        $('.submitBtn').click(function () {
+            let epoints = $('.epoints').val();
+            let remark = $('.remark').val();
+
+            if(epoints == ''){
+                layer.msg('请选择提现金额',{time:1000});
+                return false;
+            }
+
+            epoints = parseInt(epoints);
+            if(isNaN(epoints)){
+                layer.msg('提现金额只能为数字',{time:1000});
+                return false;
+            }
+
+            layer.load(0, {
+                shade: [0.1,'#fff']
+            });
+            $.ajax({
+                url : '/index/finance/doCashing',
+                type : "POST",
+                dataType : "json",
+                cache : false,
+                data : {
+                    epoints : epoints,
+                    remark : remark
+                },
+                success : function(res){
+                    layer.closeAll('loading');
+                    let callBack = '';
+                    if(res.code == 0){
+                        msg = res.msg;
+                        callBack = function () {
+                            window.location.reload();
+                        };
+                    }
+                    layer.msg(res.msg,{time: 1500},callBack);
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
+{/block}

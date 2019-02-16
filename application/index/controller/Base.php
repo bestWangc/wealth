@@ -27,6 +27,7 @@ class Base extends Controller
         $siteName = MC('site_name');
         $signIncome = MC('sign_income');
         $coinPrice = MC('coin_price');
+        $cashNum = MC('cash_num');
         self::$coinPrice = $coinPrice;
 
         $userInfo = Db::name("users")
@@ -41,7 +42,8 @@ class Base extends Controller
             'user_info' => $userInfo,
             'siteName' => $siteName,
             'signIncome' => $signIncome,
-            'coinPrice' => $coinPrice
+            'coinPrice' => $coinPrice,
+            'cashNum' => $cashNum
         ]);
     }
 
@@ -52,10 +54,14 @@ class Base extends Controller
 
     /**
      * 写入用户财务记录
-     * @param type $uid 用户id
-     * @param type $money 金额
+     * @param $uid
+     * @param $money 金额
      * @param string $text 说明
-     * @param type $type 类型 0-其他 1-利息 2-提现 3-充值 4-奖励 5-签到 6-返还
+     * @param int $type 类型 0-其他 1-利息 2-提现 3-充值 4-奖励 5-签到 6-返还
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function writeMoney($uid, $money, $text = "", $type = 0) {
 

@@ -3,8 +3,6 @@
 {block name="title"}购买收益币-{$siteName}{/block}
 
 {block name="main"}
-<link href="/static/index/css/custom-styles.css" rel="stylesheet" />
-
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         {include file="base/top"}
@@ -59,7 +57,6 @@
 {block name="my-js"}
 <script>
     $(function () {
-
         $('.buyBtn').click(function () {
             let coinNum = $('.coin_num').val();
             let errorNum = textChecked(coinNum);
