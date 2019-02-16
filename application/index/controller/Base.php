@@ -10,18 +10,31 @@ class Base extends Controller
 
     protected static $user_id;
 
+    //网站配置
+    public static $siteName;
+    public static $signIncome;
+
     protected function initialize()
     {
         parent::initialize();
         $this->checkLogin();
 
         $user_id = Session::get('u_id');
-        $this::$user_id = $user_id;
-        $user_info = Db::name("Users")->where(array("id" => $user_id))->find();
-        $jibie = get_jibie($user_info['jibie_id']);
-        $user_info['jibie_name'] = is_array($jibie) ? $jibie['title'] : $jibie;
 
-        $this->user_info = $user_info;
+        self::$user_id = $user_id;
+        $siteName = MC('site_name');
+        $signIncome = MC('sign_income');
+
+        $userInfo = Db::name("users")
+            ->where("id", $user_id)
+            ->find();
+        $jibie = get_jibie($userInfo['jibie_id']);
+        $userInfo['jibie_name'] = is_array($jibie) ? $jibie['title'] : $jibie;
+        $this->assign([
+            'user_info' => $userInfo,
+            'siteName' => $siteName,
+            'signIncome' => $signIncome
+        ]);
     }
 
     public function checkLogin(){

@@ -1,50 +1,48 @@
 <nav class="navbar-default navbar-side col-sm-3 col-md-2 col-xs-12" role="navigation">
-    <!--<div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>-->
     <div class="sidebar-collapse">
         <ul class="nav" id="main-menu">
+            <li>
+                <a href="{:url('index')}" class="{$nav == 1 ? 'active-menu' : ''}"><i class="fa fa-dashboard"></i>后台首页</a>
+            </li>
+            <li>
+                <a href="{:url('user/index')}" class="{$nav == 2 ? 'active-menu' : ''}"><i class="fa fa-desktop"></i>个人资料</a>
+            </li>
+            <li>
+                <a href="{:url('user/edit_pwd')}" class="{$nav == 3 ? 'active-menu' : ''}"><i class="fa fa-bar-chart-o"></i>修改密码</a>
+            </li>
 
-            <li>
-                <a href="{:U('/main')}"<php>if($nav==1) echo ' class="active-menu"';</php>><i class="fa fa-dashboard"></i>后台首页</a>
+            <li class="{:in_array($nav,[4,5,6,7]) ? 'active' : ''}">
+                <a href="#"><i class="fa fa-sitemap"></i>财务中心<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{$nav == 4 ? 'active-menu' : ''}">
+                        <a href="{:url('finance/index')}">财务中心</a>
+                    </li>
+                    <li class="{$nav == 5 ? 'active-menu' : ''}">
+                        <a href="{:url('finance/alipay')}">支付宝钱包充值</a>
+                    </li>
+                    <li class="{$nav == 6 ? 'active-menu' : ''}">
+                        <a href="{:url('finance/cashing')}">提现申请</a>
+                    </li>
+                    <li class="{$nav == 7 ? 'active-menu' : ''}">
+                        <a href="{:url('finance/buy')}">购买收益币</a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a href="{:U('user/index')}"<php>if($nav==2) echo ' class="active-menu"';</php>><i class="fa fa-desktop"></i>个人资料</a>
+                <a href="{:url('promotion/index')}" class="{$nav == 8 ? 'active-menu' : ''}"><i class="fa fa-table"></i>申请晋级</a>
             </li>
             <li>
-                <a href="{:U('user/edit_pwd')}"<php>if($nav==3) echo ' class="active-menu"';</php>><i class="fa fa-bar-chart-o"></i>修改密码</a>
-            </li>
-            <li<php>if(in_array($nav,array(4,5,6,7))) echo ' class="active"';</php>>
-            <a href="#"><i class="fa fa-sitemap"></i>财务中心<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-                <li<php>if($nav==4) echo ' class="active-menu"';</php>>
-                <a href="{:U('finance/index')}">财务中心</a>
-                </li>
-                <li<php>if($nav==5) echo ' class="active-menu"';</php>>
-                <a href="{:U('finance/alipay')}">支付宝钱包充值</a>
-                </li>
-                <li<php>if($nav==6) echo ' class="active-menu"';</php>>
-                <a href="{:U('finance/cashing')}">提现申请</a>
-                </li>
-                <li<php>if($nav==7) echo ' class="active-menu"';</php>>
-                <a href="{:U('finance/buy')}">购买收益币</a>
-                </li>
-            </ul>
+                <a href="{:url('main/extend')}" class="{$nav == 12 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>下线推广</a>
             </li>
             <li>
-                <a href="{:U('promotion/index')}"<php>if($nav==8) echo ' class="active-menu"';</php>><i class="fa fa-table"></i>申请晋级</a>
+                <a href="{:url('main/about')}" class="{$nav == 9 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>关于我们</a>
             </li>
             <li>
-                <a href="{:U('main/extend')}"<php>if($nav==12) echo ' class="active-menu"';</php>><i class="fa fa-edit"></i>下线推广</a>
+                <a href="{:url('main/news')}" class="{$nav == 10 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>系统公告</a>
             </li>
             <li>
-                <a href="{:U('main/about')}"<php>if($nav==9) echo ' class="active-menu"';</php>><i class="fa fa-edit"></i>关于我们</a>
-            </li>
-            <li>
-                <a href="{:U('main/news')}"<php>if($nav==10) echo ' class="active-menu"';</php>><i class="fa fa-edit"></i>系统公告</a>
-            </li>
-            <li>
-                <a href="{:U('main/help')}"<php>if($nav==11) echo ' class="active-menu"';</php>><i class="fa fa-edit"></i>帮助中心</a>
+                <a href="{:url('main/help')}" class="{$nav == 11 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>帮助中心</a>
             </li>
         </ul>
-
     </div>
 </nav>

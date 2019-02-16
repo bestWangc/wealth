@@ -9,10 +9,22 @@ class Index extends Base
 
     public function index()
     {
-        $this->nav = 1;
-        $this->yesterday_income = $this->get_yesterday_income();
-        $this->sign_status = $this->get_sign_status();
-        $this->list = $this->get_list();
+        $yesterdayIncome = $this->getYesterdayIncome($this::$user_id);
+        $signStatus = $this->getSignStatus($this::$user_id);
+        $list = $this->getList($this::$user_id);
+
+        $userInfo = Db::name("users")
+            ->where("id", $this::$user_id)
+            ->find();
+        $jibie = get_jibie($userInfo['jibie_id']);
+        $userInfo['jibie_name'] = is_array($jibie) ? $jibie['title'] : $jibie;
+
+        $this->assign([
+            'nav' => 1,
+            'yesterdayIncome' => $yesterdayIncome,
+            'signStatus' => $signStatus,
+            'list' => $list
+        ]);
         return $this->fetch();
     }
 
@@ -100,19 +112,26 @@ class Index extends Base
 
     /**
      * 获取最近10笔收支记录
+     * @param $uid
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    private function get_list() {
-        $where = array(
-            "uid" => $this->user_id,
-        );
-        return Db::name("Moneyhistory")->where($where)->order("id desc")->limit(10)->select();
+    private function getList($uid) {
+        $res = Db::name("moneyhistory")
+            ->where('uid',$uid)
+            ->order("id desc")
+            ->limit(10)
+            ->select();
+        return $res;
     }
 
     /**
      * 每日签到
      */
     public function sign() {
-        $status = $this->get_sign_status();
+        $status = $this->getSignStatus($this::$user_id);
         if ($status != 0) {
             $this->error("今日已经签到过！");
         }
@@ -131,41 +150,46 @@ class Index extends Base
 
     /**
      * 获取昨日收益
+     * @param $uid
+     * @return float|string
      */
-    private function get_yesterday_income()
+    private function getYesterdayIncome($uid)
     {
-        $where = array(
+        $where = [
             "create_date" => date("Y-m-d", strtotime("-1 day")),
-            "uid" => $this->user_id,
-        );
+            "uid" => $uid,
+        ];
 
-        $info = Db::name("DailyExecute")->where($where)->sum("epoints");
+        $info = Db::name("dailyExecute")->where($where)->sum("epoints");
 
-        if (empty($info)) {
-            return '未分红';
-        } else {
-            return $info;
+        $res = '未分红';
+        if (!empty($info)) {
+            $res = $info;
         }
+        return $res;
     }
 
-    /**
-     * 获取当日签到的状态
-     * 
-     * 0-未签到
-     * 1-已签到
-     */
-    private function get_sign_status()
-    {
-        $where = array(
-            "uid" => $this->user_id,
-            "sign_date" => get_date()
-        );
 
-        if (Db::name("DaySign")->where($where)->count() >= 1) {
-            return 1;
+    /**
+     * 获取当日签到的状态,0-未签到 1-已签到
+     *
+     * @param $uid
+     * @return int
+     */
+    private function getSignStatus($uid)
+    {
+        $where = [
+            "uid" => $uid,
+            "sign_date" => getDate()
+        ];
+
+        $count = Db::name("daySign")->where($where)->count();
+        if ($count >= 1) {
+            $status = 1;
         } else {
-            return 0;
+            $status = 0;
         }
+        return $status;
     }
 
 }
