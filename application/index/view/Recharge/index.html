@@ -1,0 +1,120 @@
+﻿{extend name="base/base" /}
+
+{block name="title"}系统公告-{$siteName}{/block}
+
+{block name="main"}
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        {include file="base/top"}
+    </nav>
+    {include file="base/left"}
+
+    <div id="page-wrapper" class="col-sm-9 col-md-10 col-xs-12" style="float:right">
+        <div id="page-inner">
+            <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3>支付宝/微信</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <!--面板内容 start-->
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+                                    <div class="tab-content dashboard-content" id="recharge">
+
+                                        <div class="row">
+                                            <div class="form-group col-12 col-sm-12 col-md-6">
+                                                <label for="recharge_money">充值金额 <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="recharge_money" placeholder="最低充值10元">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-12 col-sm-12 col-md-12">
+                                                <label>充值方式 <span class="text-danger">*</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="row rechargeWay">
+                                            <div class="col-6 col-sm-6 col-md-6">
+                                                <span data-val="1"><img src="/static/index/images/recharge/zhifubao.png" alt="">支付宝</span>
+                                            </div>
+                                            <div class="col-6 col-sm-6 col-md-6">
+                                                <span data-val="0"><img src="/static/index/images/recharge/weixin.png" alt="">微信</span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary btn-lg pull-right rechargeBtn">充值</button>
+                                        <div class="clearfix"> </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--面板内容 end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            最近10笔充值记录
+                        </div>
+                        <a href="#" class="pull-right" style="margin-right: 1rem;">充值记录</a>
+                        <div class="clearfix"></div>
+
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>提交时间</th>
+                                        <th>金额</th>
+                                        <th>流水号</th>
+                                        <th>状态</th>
+                                        <th>操作时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="list" id="vo"}
+                                    <tr>
+                                        <td>{:get_date_full($vo.create_time)}</td>
+                                        <td>{$vo.epoints}</td>
+                                        <td>{$vo.liushui_no}</td>
+                                        <td>{$vo.status == 1 ? '提现完成' : '未审核'}</td>
+                                        <td>{$vo.action_time = 0 ? '未操作' : get_date_full($vo.action_time)}</td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer>
+                {include file="base/footer"}
+            </footer>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+
+{/block}
+
+{block name="my-js"}
+<script>
+    $(function () {
+        $('.rechargeWay div').click(function () {
+            $(this).addClass('active').siblings('div').removeClass('active');
+        });
+    });
+</script>
+{/block}

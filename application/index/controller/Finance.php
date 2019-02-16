@@ -99,18 +99,6 @@ class Finance extends Base
         }
     }
 
-    public function alipay()
-    {
-        $this->nav = 5;
-
-        $this->list = Db::name("ZhifubaoChongzhi")
-            ->where(array("uid" => $this::$user_id))
-            ->order("id desc")->limit(10)
-            ->select();
-
-        return $this->fetch();
-    }
-
     public function cashing()
     {
         $list = Db::name("tixianApply")
