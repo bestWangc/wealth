@@ -52,46 +52,56 @@ class User extends Base
         return jsonRes(1,'修改失败，请重试');
     }
 
+    //修改密码
     public function edit_pwd()
     {
         $this->assign('nav',3);
         return $this->fetch();
     }
 
-    public function edit_pwd_action()
+    public function doEditPwd(Request $request)
     {
-        $type = intval($_POST['type']);
+        $type = $request::post('type/d');
+
+        $userInfo = $this::$userInfo;
+        if(empty($type)){
+            return jsonRes(1,'未知错误，请重试');
+        }
 
         switch ($type) {
             case 1:  //登录密码
-                $sys_old_pwd = $this->user_info['user_pwd'];
+                $sys_old_pwd = $userInfo['user_pwd'];
                 $field="user_pwd";
                 break;
             case 2: //二次密码
-                $sys_old_pwd = $this->user_info['user_pwd1'];
+                $sys_old_pwd = $userInfo['user_pwd1'];
                 $field="user_pwd1";
                 break;
         }
-        
-        if($sys_old_pwd!=md5($_POST['old_pwd'])){
-            $this->error("原密码不正确！");
-        }
-        
-        if($_POST['new_pwd']==''){
-            $this->error("请填写新密码！");
-        }
-        
-        if($_POST['new_pwd']!=$_POST['new_pwd1']){
-            $this->error("新密码两次填写不一致！");
-        }
-        
-        $data=array(
-            $field=>md5($_POST['new_pwd'])
-        );
+        $oldPWD = $request::post('old_pwd');
+        $newPWD = $request::post('new_pwd');
+        $reNewPWD = $request::post('re_new_pwd');
 
-        Db::name("Users")->where(array("id"=>  $this->user_id))->save($data);
+        if(empty($oldPWD)) return jsonRes(1,'原密码密码不能为空');
+        if(empty($newPWD)) return jsonRes(1,'新密码密码不能为空');
+        if($newPWD != $reNewPWD) return jsonRes(1,'两次密码输入不一致');
+
+        if($sys_old_pwd != md5($oldPWD.'jstj')){
+            return jsonRes(1,'原密码不正确');
+        }
         
-        $this->success("密码修改成功，请牢记您的新密码！",U("user/edit_pwd"));
+        $data = [
+            $field => md5($newPWD.'jstj')
+        ];
+
+        $res = Db::name("users")
+            ->lock()
+            ->where("id", $this::$user_id)
+            ->update($data);
+        if($res){
+            return jsonRes(0,'密码修改成功，请牢记您的新密码');
+        }
+        return jsonRes(1,'密码修改失败，请稍后再试');
     }
 
 }
