@@ -5,6 +5,9 @@
                 <a href="{:url('/index/index')}" class="{$nav == 1 ? 'active-menu' : ''}"><i class="fa fa-dashboard"></i>后台首页</a>
             </li>
             <li>
+                <a href="{:url('/index/index/news')}" class="{$nav == 10 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>系统公告</a>
+            </li>
+            <li>
                 <a href="{:url('/index/user/index')}" class="{$nav == 2 ? 'active-menu' : ''}"><i class="fa fa-desktop"></i>个人资料</a>
             </li>
             <li>
@@ -21,7 +24,7 @@
                         <a href="{:url('/index/finance/alipay')}">支付宝钱包充值</a>
                     </li>
                     <li class="{$nav == 6 ? 'active-menu' : ''}">
-                        <a href="{:url('/index/finance/cashing')}">提现申请</a>
+                        <a href="{:url('/index/finance/cashing')}">申请提现</a>
                     </li>
                     <li class="{$nav == 7 ? 'active-menu' : ''}">
                         <a href="{:url('/index/finance/buy')}">购买收益币</a>
@@ -29,19 +32,16 @@
                 </ul>
             </li>
             <li>
-                <a href="{:url('/index/promotion/index')}" class="{$nav == 8 ? 'active-menu' : ''}"><i class="fa fa-table"></i>申请晋级</a>
+                <a href="{:url('/index/promotion/index')}" class="{$nav == 8 ? 'active-menu' : ''}"><i class="fa fa-table"></i>晋级</a>
             </li>
             <li>
-                <a href="{:url('/index/main/extend')}" class="{$nav == 12 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>下线推广</a>
+                <a href="{:url('/index/main/extend')}" class="{$nav == 12 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>推广</a>
             </li>
             <li>
-                <a href="{:url('/index/main/about')}" class="{$nav == 9 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>关于我们</a>
+                <a href="{:url('/index/index/about')}" class="{$nav == 9 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>关于</a>
             </li>
             <li>
-                <a href="{:url('/index/main/news')}" class="{$nav == 10 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>系统公告</a>
-            </li>
-            <li>
-                <a href="{:url('/index/main/help')}" class="{$nav == 11 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>帮助中心</a>
+                <a href="{:url('/index/index/help')}" class="{$nav == 11 ? 'active-menu' : ''}"><i class="fa fa-edit"></i>帮助</a>
             </li>
         </ul>
     </div>

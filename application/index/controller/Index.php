@@ -87,26 +87,35 @@ class Index extends Base
 
     public function help()
     {
-        $this->nav = 11;
-        $this->content = Db::name("Article")
-            ->where("kind_id", 2)
-            ->getField("content");
-        return $this->fetch();
+        $content = Article::getContentByID(2);
+        $this->assign([
+            'nav' => 11,
+            'content' => $content,
+            'panelName' => '帮助'
+        ]);
+        return $this->fetch('news');
     }
 
-    public function about() {
-        $this->nav = 9;
-        $this->content = M("Article")
-            ->where("kind_id", 1)
-            ->getField("content");
-        return $this->fetch();
+    public function about()
+    {
+        $content = Article::getContentByID(1);
+        $this->assign([
+            'nav' => 9,
+            'content' => $content,
+            'panelName' => '关于'
+        ]);
+        return $this->fetch('news');
     }
 
-    public function news() {
-        $this->nav = 10;
-        $this->content = Db::name("Article")
-            ->where("kind_id", 3)
-            ->getField("content");
+    //系统公告
+    public function news()
+    {
+        $content = Article::getContentByID(3);
+        $this->assign([
+            'nav' => 10,
+            'content' => $content,
+            'panelName' => '公告'
+        ]);
         return $this->fetch();
     }
 
