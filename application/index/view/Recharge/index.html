@@ -85,7 +85,7 @@
                                         <td>{:get_date_full($vo.create_time)}</td>
                                         <td>{$vo.epoints}</td>
                                         <td>{$vo.liushui_no}</td>
-                                        <td>{$vo.status == 1 ? '提现完成' : '未审核'}</td>
+                                        <td>{$vo.status == 1 ? '充值成功' : '充值中'}</td>
                                         <td>{$vo.action_time = 0 ? '未操作' : get_date_full($vo.action_time)}</td>
                                     </tr>
                                     {/volist}
