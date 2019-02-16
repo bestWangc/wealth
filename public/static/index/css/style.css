@@ -5,8 +5,8 @@
     background-position: right bottom;
 }
 
-.rechargeWay div{
-    height: 6rem;
+.rechargeWay {
+    padding: 0 .8rem;
 }
 .rechargeWay span{
     display: inline-block;
@@ -16,6 +16,7 @@
 
 .rechargeWay img{
     margin-right: 1.8rem;
+    /*margin-bottom: .5rem;*/
 }
 
 #recharge button{
