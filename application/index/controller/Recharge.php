@@ -13,8 +13,9 @@ class Recharge extends Base
     public function index()
     {
         $list = Db::name("recharge")
-            ->where(array("uid" => $this::$user_id))
-            ->order("id desc")->limit(10)
+            ->where("user_id", $this::$user_id)
+            ->order("id desc")
+            ->limit(10)
             ->select();
 
         $this->assign([
@@ -34,7 +35,7 @@ class Recharge extends Base
             return jsonRes(1,'最少充值{$this::$coinPrice}元');
         }
 
-        $res = sRecharge::createRecharge($this::$uid,$rMoney,$rWay);
+        $res = sRecharge::createRecharge($this::$user_id,$rMoney,$rWay);
         return $res;
     }
 }

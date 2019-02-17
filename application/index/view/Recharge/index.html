@@ -73,21 +73,21 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>提交时间</th>
-                                        <th>金额</th>
                                         <th>流水号</th>
+                                        <th>金额</th>
                                         <th>状态</th>
-                                        <th>操作时间</th>
+                                        <th>提交时间</th>
+                                        <th>到账时间</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {volist name="list" id="vo"}
                                     <tr>
-                                        <td>{:get_date_full($vo.create_time)}</td>
-                                        <td>{$vo.epoints}</td>
-                                        <td>{$vo.liushui_no}</td>
+                                        <td>{$vo.order_no}</td>
+                                        <td>{$vo.amount}</td>
                                         <td>{$vo.status == 1 ? '充值成功' : '充值中'}</td>
-                                        <td>{$vo.action_time = 0 ? '未操作' : get_date_full($vo.action_time)}</td>
+                                        <td>{:get_date_full($vo.created_date)}</td>
+                                        <td>{:empty($vo.updated_date) ? '' : get_date_full($vo.updated_date)}</td>
                                     </tr>
                                     {/volist}
                                     </tbody>
@@ -113,6 +113,7 @@
     <p class="text-muted">付款成功后10分钟内到账，请刷新查看余额。</p>
 </div>
 
+<script src="/static/common/js/jquery-qrcode/jquery.qrcode.min.js"></script>
 {/block}
 
 {block name="my-js"}
@@ -182,7 +183,7 @@
                             layer.open({
                                 type: 1,
                                 title:title,
-                                area: ['40rem', '25rem'], //宽高
+                                area: ['40rem', '29rem'], //宽高
                                 content: $('.rechargeModal')
                             });
                         }else{
