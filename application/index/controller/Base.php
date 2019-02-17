@@ -2,16 +2,18 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Db;
 
 class Base extends Controller
 {
-    protected $uid;
+    protected static $uid;
+    protected static $userInfo;
     protected function initialize()
     {
         parent::initialize();
         $this->checkLogin();
-        $this->checkRole();
-        $this->uid = session('u_id');
+        self::$uid = session('u_id');
+        self::$userInfo = $this->getUserInfo(self::$uid);
     }
 
     public function checkLogin(){
@@ -19,10 +21,11 @@ class Base extends Controller
         if(!session('u_id')) $this->redirect('/index/login');
     }
 
-    //禁止翻墙登录
-    public function checkRole(){
-        //seeion没有user_id 重新登录
-        if(is_null(session('user_role'))) abort(403,'权限不够');
+    public function getUserInfo($uid)
+    {
+        $res = $userInfo = Db::name("users")
+            ->where("id", $uid)
+            ->find();
+        return $res;
     }
-
 }

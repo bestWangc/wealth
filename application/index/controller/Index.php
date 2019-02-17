@@ -1,7 +1,6 @@
 <?php
 namespace app\index\controller;
 
-use app\manage\model\UserRole;
 use think\facade\Session;
 use think\Db;
 
@@ -14,44 +13,21 @@ class Index extends Base
         $this->assign([
             'uname' => Session::get('user_name'),
             'roleName' => $role_name,
-            // 'urole' => $user_role
         ]);
         return $this->fetch();
     }
 
     public function indexMain()
     {
-        $userName = Session::get('user_name');
 
-        $field = 'su.created_date,su.email,sa.alipay_name,alipay_account,sad.`name`,sad.phone,sad.details';
-        $info = Db::name('users')
-            ->alias('su')
-            ->join('alipay sa','sa.user_id = su.id','left')
-            ->join('address sad','sad.user_id = su.id','left')
-            ->where('su.parent_id',$this->uid)
-            ->field($field)
-            ->find();
-        //团队成员数量
-        $count = $this->getTeamInfo($this->uid);
-
-        list($teamAllNum,$teamNewNum,$teamActiveNum) = $count;
-
-        $orderCountInfo = $this->getTeamOrderCount($this->uid);
-
+        $signStatus = $this->getSignStatus($this::$uid);
+        $userInfo = $this::$userInfo;
+        $yesterdayIncome = $this->getYesterdayIncome($this::$uid);
         $this->assign([
-            'userName' => $userName,
-            'createdDate' => $info['created_date'] ?? '未设置',
-            'email' => $info['email'] ?? '未设置',
-            'alipayName' => $info['alipay_name'] ?? '未设置',
-            'alipayAccount' => $info['alipay_account'] ?? '未设置',
-            'name' => $info['name'] ?? '未设置',
-            'phone' => $info['phone'] ?? '未设置',
-            'details' => $info['details'] ?? '未设置',
-            'teamAllNum' => $teamAllNum,
-            'teamNewNum' => $teamNewNum,
-            'teamActiveNum' => $teamActiveNum,
-            'orderTotal' => $orderCountInfo['total'],
-            'moneyTotal' => $orderCountInfo['amount']
+            'coin' => $userInfo['coin'],
+            'money' => $userInfo['money'],
+            'signStatus' => $signStatus,
+            'yesterdayIncome' => $yesterdayIncome,
         ]);
         return $this->fetch();
     }
@@ -62,8 +38,10 @@ class Index extends Base
         $user_role = Db::name('users')
             ->where('id',$uid)
             ->value('level_id');
-        $roleName = UserRole::where('id',$user_role)->field('role_name')->find();
-        return $roleName['role_name'];
+        $roleName = Db::name('level')
+            ->where('id',$user_role)
+            ->value('title');
+        return $roleName;
     }
 
     //计算团队成员数量
@@ -102,4 +80,45 @@ class Index extends Base
         return $result;
     }
 
+    /**
+     * 获取当日签到的状态,0-未签到 1-已签到
+     *
+     * @param $uid
+     * @return int
+     */
+    private function getSignStatus($uid)
+    {
+        $where = [
+            "uid" => $uid,
+            "sign_date" => get_date()
+        ];
+
+        $count = Db::name("day_sign")->where($where)->count();
+        if ($count >= 1) {
+            $status = 1;
+        } else {
+            $status = 0;
+        }
+        return $status;
+    }
+
+    /**
+     * 获取昨日收益
+     * @param $uid
+     * @return float|string
+     */
+    private function getYesterdayIncome($uid)
+    {
+        $where = [
+            "create_date" => date("Y-m-d", strtotime("-1 day")),
+            "uid" => $uid,
+        ];
+        $info = Db::name("daily_execute")->where($where)->sum("epoints");
+
+        $res = '未分红';
+        if (!empty($info)) {
+            $res = $info;
+        }
+        return $res;
+    }
 }

@@ -7,7 +7,7 @@
             <div>
                 <h1 class="logo-name">金+</h1>
             </div>
-            <h3 style="color: #f8fff7">金上添金 -投资理财专家</h3>
+            <h3>金上添金 -投资理财专家</h3>
 
             <form class="m-t" role="form" action="" onsubmit="return false;">
                 <div class="form-group">
@@ -18,8 +18,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b submit_btn">登 录</button>
 
-                <p class="text-center" style="color: #f8fff7">天天返利&nbsp;|&nbsp;天天分红</p>
-
+                <p class="text-muted text-center">
+                    <a href="javascript:;"><small>忘记密码了？</small></a> | &nbsp; <a href="/register">注册一个新账号</a>
+                </p>
             </form>
         </div>
     </div>
@@ -50,13 +51,13 @@
                 data : {
                     username : user_name,
                     userpwd : user_pwd,
-                    type:3
+                    type:2
                 },
                 success : function(data){
                     var callBack = '';
                     if(data.code == 0){
                         callBack = function(){
-                            location.href='/manage/index';
+                            location.href='/index/index';
                         };
                     }
                     layer.msg(data.msg,{time: 1000},callBack);

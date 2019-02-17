@@ -1,6 +1,5 @@
 <?php
-namespace app\index\controller;
-
+namespace app\index_old\controller;
 use think\Db;
 use think\facade\Request;
 use app\service\controller\Recharge as sRecharge;

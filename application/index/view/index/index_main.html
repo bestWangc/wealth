@@ -5,60 +5,95 @@
 <body class="gray-bg">
     <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>个人信息</h5>
+                        <h5>收益币</h5>
                     </div>
                     <div class="ibox-content">
-                        <p>金丰年账号 ： {$userName}</p>
-                        <ol>
-                            <li>支付宝姓名： {$alipayName}</li>
-                            <li>支付宝账号： {$alipayAccount}</li>
-                            <li>注册时间： {$createdDate}</li>
-                        </ol>
-                    </div>
-                    <div class="ibox-content">
-                        <p>收货信息 ：</p>
-                        <ol>
-                            <li>收货人姓名： {$name}</li>
-                            <li>收货人手机： {$phone}</li>
-                            <li>收货地址：{$details}</li>
-                        </ol>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="pull-right white bg-green left-radius" >
+                                    <i class="fa fa-eye fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <h4>共&nbsp;{$coin}&nbsp;个</h4>
+                                <a class="btn btn-success btn-sm" href="{:url('/index/finance/buy')}" role="button">购买</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>团队信息</h5>
-                    </div>
-                    <div class="ibox-content no-padding">
-                        <ul class="list">
-                            <li title="团队所有成员人数">团队成员 ：{$teamAllNum}</li>
-                            <li title="今日新增团队成员人数">今日新增成员 ：{$teamNewNum}</li>
-                            <li title="今日参与抢购成员人数">今日活跃成员 ：{$teamActiveNum}</li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>分红信息</h5>
+                        <h5>钱包</h5>
                     </div>
                     <div class="ibox-content">
-                        <ul class="list bg_color_orange_red">
-                            <li>今日订单总量：{$orderTotal}</li>
-                            <li>今日订单总额：{$moneyTotal}</li>
-                            <li>上次分红： <span class="yesBonus">0</span></li>
-                            <li>本月分红：<span class="monthBonus">0</span></li>
-                        </ul>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="pull-right white bg-blue left-radius" >
+                                    <i class="fa fa-credit-card fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <h4>共&nbsp;{$money}&nbsp;元</h4>
+                                <a class="btn btn-success btn-sm" href="{:url('/index/recharge/index')}" role="button">充值</a>
+                                <a class="btn btn-warning btn-sm" href="{:url('/index/finance/cashing')}" role="button">提现</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>昨日利息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="pull-right white bg-red left-radius" >
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <h4>{$yesterdayIncome}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>签到</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="pull-right white bg-brown left-radius" >
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <strong>
+                                    {if($signStatus)}
+                                    <button class='btn btn-default'>已签到</button>
+                                    {else /}
+                                    <a class="btn btn-primary singBtn" href="javascript:;">签 到</a>
+                                    {/if}
+                                </strong>
+                                <br>
+                                <strong>每日签到赠送0.2元</strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -68,15 +103,6 @@
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
                             </a>
-                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="graph_flot.html#">近一年</a>
-                                </li>
-                                <li><a href="graph_flot.html#">近一月</a>
-                                </li>
-                            </ul>-->
                         </div>
                     </div>
                     <div class="ibox-content" style="height: 30rem;">
@@ -92,4 +118,38 @@
     <!-- ECharts demo data -->
     <script src="/static/manage/js/data/index_chart.js"></script>
 </body>
+{/block}
+
+{block name="my-js"}
+<script>
+    $(function () {
+        $('.singBtn').click(function () {
+            //加载遮罩层
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
+
+            $.ajax({
+                url : '/index/index/sign',
+                type : "GET",
+                dataType : "json",
+                cache : false,
+                success : function(res){
+                    var callingBack = '';
+                    layer.closeAll('loading');
+                    if(res.code == 0){
+                        callingBack = function () {
+                            window.location.reload();
+                        };
+                    }
+                    layer.msg(res.msg,{time: 1000},callingBack);
+                },
+                error : function(data){
+                    layer.closeAll('loading');
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
 {/block}

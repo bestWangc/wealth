@@ -14,16 +14,22 @@
                             <span><img alt="image" class="img-circle" src="/static/manage/images/profile_small.jpg" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">{$uname}</strong></span>
+                               <span class="block m-t-xs"><strong class="font-bold">欢迎，{$uname}</strong></span>
                                 <span class="text-muted text-xs block">{$roleName}<b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="login.html">安全退出</a>
+                                <li><a href="javascript:;">当前级别：{$roleName}</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="logo-element navbar-min">金</div>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('/index/index/news')}">
+                            <i class="fa fa-exchange"></i>
+                            <span class="nav-label">系统公告</span>
+                        </a>
                     </li>
                     <li>
                         <a href="#">
@@ -33,61 +39,68 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                               <a class="J_menuItem" href="{:url('user/changePwd')}">修改密码</a>
+                               <a class="J_menuItem" href="{:url('/index/user/index')}">基本资料</a>
+                               <a class="J_menuItem" href="{:url('/index/user/changePwd')}">修改密码</a>
                             </li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="user_list.html"><i class="fa fa-envelope"></i> <span class="nav-label">团队管理</span><span class="fa arrow"></span></a>
+                        <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">财务中心</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="{:url('user/index')}">成员列表</a>
-                            </li>
-                            {if ($urole === 1)}
-                            <li>
-                                <a class="J_menuItem" href="{:url('user/buyLog')}">抢购记录</a>
+                                <a class="J_menuItem" href="{:url('/index/finance/index')}">财务记录</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="{:url('extract/index')}">提现记录</a>
+                                <a class="J_menuItem" href="{:url('/index/recharge/index')}">钱包充值</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="{:url('recharge/index')}">充值记录</a>
+                                <a class="J_menuItem" href="{:url('/index/extract/index')}">申请提现</a>
                             </li>
-                            {/if}
+                            <li>
+                                <a class="J_menuItem" href="{:url('/index/finance/buy')}">购买收益币</a>
+                            </li>
                         </ul>
                     </li>
-
-                    {if $urole === 1}
-                        <li>
-                            <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">申请审核</span><span class="fa arrow"></span><span class="label label-warning pull-right">16</span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="{:url('recharge/applyFor')}">充值申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('extract/applyFor')}">提现申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('apply/goldApply')}">金币兑换申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('apply/backGoodsApply')}">退款申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('apply/takeGoodsApply')}">提货申请</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="{:url('income/settleBonus')}">
-                                <i class="fa fa-exchange"></i>
-                                <span class="nav-label">结算分红</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="{:url('income/index')}">
-                                <i class="fa fa-magic"></i>
-                                <span class="nav-label">资金详情</span>
-                            </a>
-                        </li>
-                    {/if}
+                    <li>
+                        <a class="J_menuItem" href="{:url('/index/level/index')}">
+                            <i class="fa fa-exchange"></i>
+                            <span class="nav-label">提升等级</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('/index/index/extend')}">
+                            <i class="fa fa-magic"></i>
+                            <span class="nav-label">推广</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('/index/index/about')}">
+                            <i class="fa fa-magic"></i>
+                            <span class="nav-label">关于我们</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('/index/index/help')}">
+                            <i class="fa fa-magic"></i>
+                            <span class="nav-label">帮助手册</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <h2 style="margin-left: 15rem;margin-top: 15px;">金上添金 -投资理财专家</h2>
+                    </div>
+                </nav>
+            </div>
+
             <div class="row content-tabs">
                 <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
                 </button>
@@ -115,7 +128,8 @@
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{:url('index/indexMain')}" frameborder="0" data-id="index_main.html" seamless></iframe>
             </div>
             <div class="footer">
-                <div class="pull-right">&copy; 2014-2015 <a href="javascript:;" target="_blank">xxxxxxxxxx</a>
+                <div class="pull-right">&copy; 2017-2019 <a href="javascript:;" target="_blank">xxxxxxxxxx</a>
+                <div class="pull-right">&copy; 2017-2019 Copyright © 2017 金上添金 版权所有</a>
                 </div>
             </div>
         </div>

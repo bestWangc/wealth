@@ -1,0 +1,19 @@
+.white{
+    color: #FFFFFF;
+}
+.bg-blue{
+    background-color : #32CEE4;
+}
+.bg-green{
+    background-color: #1CC09F;
+}
+.bg-red{
+    background-color: #FB6E51;
+}
+.bg-brown{
+    background-color: #F5B252;
+}
+
+.left-radius{
+    border-radius : 50%;
+}

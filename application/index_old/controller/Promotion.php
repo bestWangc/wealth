@@ -1,6 +1,5 @@
 <?php
-namespace app\index\controller;
-
+namespace app\index_old\controller;
 use think\Db;
 use think\db\Where;
 use think\facade\Request;
