@@ -13,12 +13,6 @@ class Index extends Base
         $signStatus = $this->getSignStatus($this::$user_id);
         $list = $this->getList($this::$user_id);
 
-        $userInfo = Db::name("users")
-            ->where("id", $this::$user_id)
-            ->find();
-        $jibie = get_jibie($userInfo['jibie_id']);
-        $userInfo['jibie_name'] = is_array($jibie) ? $jibie['title'] : $jibie;
-
         $this->assign([
             'nav' => 1,
             'yesterdayIncome' => $yesterdayIncome,

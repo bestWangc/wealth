@@ -33,8 +33,8 @@ class Base extends Controller
         $userInfo = Db::name("users")
             ->where("id", $user_id)
             ->find();
-        $jibie = get_jibie($userInfo['jibie_id']);
-        $userInfo['jibie_name'] = is_array($jibie) ? $jibie['title'] : $jibie;
+        $level = getLevelById($userInfo['level_id']);
+        $userInfo['level_name'] = is_array($level) ? $level['title'] : $level;
 
         self::$userInfo = $userInfo;
         self::$signIncome = $signIncome;
@@ -94,14 +94,13 @@ class Base extends Controller
                     "after" => $new_money,
                     "text" => $text
                 ];
-                $res = Db::name('moneyhistory')->insert($data);
+                $res = Db::name('money_history')->insert($data);
 
                 if(!$res) throw new Exception('新建记录错误');
                 // 提交事务
                 Db::commit();
                 return true;
             } catch (\Exception $e) {
-                var_dump($e->getMessage());
                 // 回滚事务
                 Db::rollback();
                 return false;

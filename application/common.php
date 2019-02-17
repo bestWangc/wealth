@@ -98,12 +98,17 @@ function MC($name) {
 
 /**
  * 传递级别ID获取级别信息 其他级别获取数组
+ * @param $id
+ * @return array|PDOStatement|string|\think\Model|null
+ * @throws \think\db\exception\DataNotFoundException
+ * @throws \think\db\exception\ModelNotFoundException
+ * @throws \think\exception\DbException
  */
-function get_jibie($id) {
+function getLevelById($id) {
     if ($id == 1) {
         return "普通会员";
     }
-    $info = db("jibie")
+    $info = db("level")
         ->where("id", $id)
         ->find();
     if (empty($info)) {

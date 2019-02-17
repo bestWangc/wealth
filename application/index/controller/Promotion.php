@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Db;
+use think\db\Where;
 use think\facade\Request;
 
 class Promotion extends Base
@@ -9,133 +10,134 @@ class Promotion extends Base
 
     public function index()
     {
-        $this->nav = 8;
-        $this->jibie_array = $this->get_jibie_array();
+        $userInfo = $this::$userInfo;
+        $level = $this->getLevel($userInfo['level_id']);
 
-        $this->shenqing_array = Db::name("JibieApply")
-                ->where("uid", $this->user_id)
-                ->order("id desc")
+        $apply = Db::name("level_apply")
+                ->alias('la')
+                ->join('level l','l.id = la.level_id')
+                ->where("uid", $this::$user_id)
+                ->field('la.create_time,la.status,la.action_status,l.title')
+                ->order("la.id desc")
                 ->limit(10)
                 ->select();
 
-        $this->zhitui_num = $this->get_zhitui();
-        $this->team_num = $this->get_sum();
+        $firstChildCount = $this->getFirstChild($this::$user_id);
+        $teamPersonCount = $this->getTeamPersonCount($this::$user_id);
 
+        $this->assign([
+            'nav' => 8,
+            'apply' => $apply,
+            'level' => $level,
+            'firstChildCount' => $firstChildCount,
+            'teamPersonCount' => $teamPersonCount
+        ]);
         return $this->fetch();
     }
 
     /**
      * 申请操作
      */
-    public function index_action()
+    public function doApply(Request $request)
     {
-        $jibie_id = intval($_POST['jibie_id']);
-        $text = $_POST['remark'];
+        $level_id = $request::post('level_id/d');
+        $remark = $request::post('remark');
+        if(empty($level_id)){
+            return jsonRes(1,'请选择级别');
+        }
+        $isHasApply = Db::name("level_apply")
+            ->where("uid", $this::$user_id)
+            ->where('status',0)
+            ->count('id');
 
-        if (Db::name("JibieApply")->where(array("uid" => $this->user_id, "status" => 0))->count() > 0) {
-            $this->error("您有一个晋级申请正在审核中，无法再次提交！");
+        if ($isHasApply > 0) {
+            return jsonRes(1,'您有一个晋级申请正在审核中，请稍候提交');
         }
 
-        $jibie = Db::name("Jibie")->where(array("id" => $this->user_info['jibie_id']))->find();
+        $userInfo = $this::$userInfo;
+        $currentLevel = Db::name("level")
+            ->where("id", $userInfo['level_id'])
+            ->value('sort');
 
-        $jibie_info = Db::name("Jibie")->where(array("id" => $jibie_id, "sort" => array("gt", $jibie['sort'])))->find();
+        $levelInfo = Db::name("level")
+            ->where("id", $level_id)
+            ->where("sort",">",$currentLevel)
+            ->find();
 
-        if (empty($jibie_info)) {
-            $this->error("申请的级别不存在或者不满足条件！");
+        if (empty($levelInfo)) {
+            return jsonRes(1,'申请的级别不存在或者不满足条件');
         }
 
-        $zhitui_num = $this->get_zhitui();
-        $team_num = $this->get_sum();
+        $firstChildCount = $this->getFirstChild($this::$user_id);
+        $teamPersonCount = $this->getTeamPersonCount($this::$user_id);
 
-        if ($zhitui_num < $jibie_info['zhitui_num']) {
-            $this->error("您不满足该级别要求的直推人数！");
+        if ($firstChildCount < $levelInfo['first_num']) {
+            return jsonRes(1,'您不满足该级别要求的直推人数');
         }
 
-        if ($team_num < $jibie_info['team_num']) {
-            $this->error("您不满足该级别要求的团队人数！");
+        if ($teamPersonCount < $levelInfo['team_num']) {
+            return jsonRes(1,'您不满足该级别要求的团队人数');
         }
 
         $data = [
-            "uid" => $this->user_id,
-            "jibie_id" => $jibie_id,
-            "text" => $text,
+            "uid" => $this::$user_id,
+            "level_id" => $level_id,
+            "text" => $remark,
             "create_time" => time()
         ];
 
-        Db::name("JibieApply")->add($data);
+        $res = Db::name("level_apply")->insert($data);
+        if($res){
+            return jsonRes(0,'申请成功，请等待审核');
+        }
+        return jsonRes(1,'位置错误，请重试');
     }
 
     /**
      * 获取直推人数
-     * @return type
+     * @param $uid
+     * @return float|string
      */
-    private function get_zhitui()
+    private function getFirstChild($uid)
     {
-        return Db::name("Users")->where(array("main" => $this->user_id))->count();
+        $res = Db::name("users")
+            ->where("main", $uid)
+            ->count();
+        return $res;
     }
 
     /**
      * 获取团队人数
+     * @param $uid
+     * @return float|int|string
      */
-    private function get_sum()
+    private function getTeamPersonCount($uid)
     {
-        $sum_num = Db::name("Users")->where("path like '%-{$this->user_id}-%'")->count();
-        $sum_num+=1;
+        $sum_num = Db::name("users")
+            ->where("path", "like", "%{$uid}%")
+            ->count();
+        $sum_num += 1;
         return $sum_num;
     }
 
     /**
      * 获取级别数组
+     * @param $levelID
+     * @return array|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    private function get_jibie_array()
+    private function getLevel($levelID)
     {
-        $jibie = Db::name("Jibie")->where(array("id" => $this->user_info['jibie_id']))->find();
-
-        return Db::name("Jibie")->where(array("sort" => array("gt", intval($jibie['sort']))))->order("sort,id desc")->select();
+        $level = Db::name("level")
+            ->where("id", $levelID)
+            ->value('sort');
+        $res = Db::name("level")
+            ->where("sort",'>' , intval($level))
+            ->order("sort,id desc")
+            ->select();
+        return $res;
     }
 
-}
-
-/**
- * 获取级别的名称
- * @param type $id
- */
-function get_jibie_title($id)
-{
-    return M("Jibie")->where(array("id" => $id))->getField("title");
-}
-
-/**
- * 获取状态
- * @param type $id
- */
-function get_status($id)
-{
-    switch ($id) {
-        case 1:
-            return '审核通过';
-            break;
-        case 2:
-            return '审核被拒绝';
-            break;
-        default:
-            return '未审核';
-            break;
-    }
-}
-
-/**
- * 获取奖金发放情况
- * @param type $id
- */
-function get_jiangjin_status($id)
-{
-    switch ($id) {
-        case 1:
-            return '已发放';
-            break;
-        default:
-            return '未发放';
-            break;
-    }
 }
