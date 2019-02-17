@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 17/02/2019 09:04:51
+ Date: 17/02/2019 09:07:04
 */
 
 SET NAMES utf8mb4;
@@ -125,7 +125,7 @@ CREATE TABLE `xx_config`  (
 INSERT INTO `xx_config` VALUES ('daily_income', '每日收益系数', '收益币的每日收益，默认每天1个收益币获取1元', '1', 1, 4, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('sign_income', '每日签到收益', '每日签到可以获得的收益', '0.2', 1, 4, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('site_name', '网站名称', '网站的名称', '金上添金', 1, 1, 0, '', 1, 1);
-INSERT INTO `xx_config` VALUES ('bi_price', '收益币的价格', '收益币对应的价格', '30', 1, 6, 0, '', 1, 1);
+INSERT INTO `xx_config` VALUES ('coin_price', '收益币的价格', '收益币对应的价格', '30', 1, 6, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('site_switch', '网站开关', '当为1的时候为开，0为关闭', '1', 1, 2, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('qq', '客服QQ', '客户QQ号码', '993424780', 1, 3, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('first_level', '一级会员收益', '推荐的一级会员每日收益', '0.2', 1, 5, 0, '', 1, 1);
@@ -400,6 +400,6 @@ CREATE TABLE `xx_users`  (
 -- Records of xx_users
 -- ----------------------------
 INSERT INTO `xx_users` VALUES (12, 'lanfengye', '1', '1', 0, 0, '', '', 0, 1482841001, 1, '', '', '', '110', 1, 0, '', 26.70, 0);
-INSERT INTO `xx_users` VALUES (13, 'test', 'cc375e34b98c8b4c47e94d4a32295908', 'c81e728d9d4c2f636f067f89cc14862c', 0, 1550190445, '127.0.0.1', '127.0.0.1', 18, 1482751964, 1, '张三12', '123456', '1234', '1', 3, 12, '12', 100920.80, 12);
+INSERT INTO `xx_users` VALUES (13, 'test', 'cc375e34b98c8b4c47e94d4a32295908', 'c81e728d9d4c2f636f067f89cc14862c', 0, 1550365579, '127.0.0.1', '127.0.0.1', 19, 1482751964, 1, '张三12', '123456', '1234', '1', 3, 12, '12', 100920.80, 12);
 
 SET FOREIGN_KEY_CHECKS = 1;
