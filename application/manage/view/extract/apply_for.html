@@ -1,0 +1,145 @@
+{extend name="layout/layout"}
+{block name="title"}提现申请{/block}
+{block name="body"}
+<body class="gray-bg" style="height: 100%">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>提现申请</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="extractApply"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Basic -->
+</div>
+<script src="/static/manage/js/innerCommon.js"></script>
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $.ajax({
+            url: 'applyDetails',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            success: function (res) {
+                if (res.code == 0) {
+                    var btt_data = res.data;
+
+                    $('#extractApply').bootstrapTable({
+                        data: btt_data,
+                        columns: [{
+                            field:"id",
+                            title:"编号"
+                        }, {
+                            field:"user_id",
+                            title:"用户ID"
+                        }, {
+                            field:"name",
+                            title:"用户帐号"
+                        }, {
+                            field:"amount",
+                            title:"提现金额"
+                        }, {
+                            field:"real_amount",
+                            title:"到账金额"
+                        }, {
+                            field:"way",
+                            title:"提现方式"
+                        }, {
+                            field:"alipay_account",
+                            title:"支付宝账号"
+                        }, {
+                            field:"alipay_name",
+                            title:"支付宝姓名"
+                        }, {
+                            field:"status",
+                            title:"状态"
+                        }, {
+                            field:"created_date",
+                            title:"提现时间"
+                        }, {
+                            field: 'operate',
+                            title: '操作',
+                            align: 'center',
+                            events: operateEvents,
+                            formatter: operateFormatter
+                        }]
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1500});
+                }
+            },
+            error: function () {
+                console.log(res);
+            }
+        });
+
+        window.operateEvents = {
+            'click .agree': function (e, value, row) {
+                console.log(row);
+                let imgStr = '<img src="'+row.alipay_pic+'" style="width: 22rem">';
+                layer.confirm(imgStr, {
+                    btn: ['已支付','关闭'],
+                    offset: '5rem' //距离顶部
+                }, function(){
+                    commonOperate(row.id,row.user_id,row.amount,1);
+                });
+            },
+            'click .refuse': function (e, value, row) {
+                layer.prompt({title: '拒绝原因', formType: 2}, function(text, index){
+                    layer.close(index);
+                    commonOperate(row.id,row.user_id,row.amount,0,text);
+                });
+            }
+        };
+
+        var commonOperate = function (id,user_id,amount,operate,reason) {
+            //加载遮罩层
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
+            $.ajax({
+                url: 'operation',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id : id,
+                    user_id : user_id,
+                    amount : amount,
+                    reason : reason,
+                    operate : operate
+                },
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    var callBack = '';
+                    if(res.code == 0){
+                        callBack = function () {
+                            parent.refreshIframe();
+                        };
+                    }
+                    layer.closeAll('loading');
+                    layer.msg(res.msg,{time:1500},callBack);
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    console.log(res);
+                }
+            });
+        };
+
+    });
+</script>
+{/block}

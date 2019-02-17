@@ -1,0 +1,158 @@
+{extend name="layout/layout"}
+{block name="title"}金丰年{/block}
+{block name="body"}
+<body class="fixed-sidebar full-height-layout gray-bg pace-done skin-1" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span><img alt="image" class="img-circle" src="/static/manage/images/profile_small.jpg" /></span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold">{$uname}</strong></span>
+                                <span class="text-muted text-xs block">{$roleName}<b class="caret"></b></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="login.html">安全退出</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="logo-element navbar-min">金</div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-bar-chart-o"></i>
+                            <span class="nav-label">个人信息</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                               <a class="J_menuItem" href="{:url('user/changePwd')}">修改密码</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="user_list.html"><i class="fa fa-envelope"></i> <span class="nav-label">团队管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('user/index')}">成员列表</a>
+                            </li>
+                            {if ($urole === 1)}
+                            <li>
+                                <a class="J_menuItem" href="{:url('user/buyLog')}">抢购记录</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('extract/index')}">提现记录</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('recharge/index')}">充值记录</a>
+                            </li>
+                            {/if}
+                        </ul>
+                    </li>
+
+                    {if $urole === 1}
+                        <li>
+                            <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">申请审核</span><span class="fa arrow"></span><span class="label label-warning pull-right">16</span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="{:url('recharge/applyFor')}">充值申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('extract/applyFor')}">提现申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('apply/goldApply')}">金币兑换申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('apply/backGoodsApply')}">退款申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('apply/takeGoodsApply')}">提货申请</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="{:url('income/settleBonus')}">
+                                <i class="fa fa-exchange"></i>
+                                <span class="nav-label">结算分红</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="{:url('income/index')}">
+                                <i class="fa fa-magic"></i>
+                                <span class="nav-label">资金详情</span>
+                            </a>
+                        </li>
+                    {/if}
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row content-tabs">
+                <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+                </button>
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="index_main.html">首页</a>
+                    </div>
+                </nav>
+                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+                </button>
+                <div class="btn-group roll-nav roll-right">
+                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                        </li>
+                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="javascript:;" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{:url('index/indexMain')}" frameborder="0" data-id="index_main.html" seamless></iframe>
+            </div>
+            <div class="footer">
+                <div class="pull-right">&copy; 2014-2015 <a href="javascript:;" target="_blank">xxxxxxxxxx</a>
+                </div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+    <!-- 自定义js -->
+    <script src="/static/manage/js/hplus.js?v=4.1.0"></script>
+
+</body>
+{/block}
+
+{block name="my-js"}
+<script>
+    $('.navbar-min').click(function () {
+        $("body").toggleClass("mini-navbar");
+        SmoothlyMenu();
+    });
+    $('.J_tabExit').click(function () {
+        $.ajax({
+            url : '/service/logout/index',
+            type : "GET",
+            dataType : "json",
+            cache : false,
+            success : function(data){
+                var callBack = '';
+                if(data.code == 0){
+                    callBack = function () {
+                        window.location.reload();
+                    };
+                }
+                layer.msg(data.msg,{time: 1000},callBack);
+            },
+            error : function(data){
+                console.log(data);
+            }
+        });
+    });
+
+</script>
+{/block}

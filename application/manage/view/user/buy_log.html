@@ -1,0 +1,83 @@
+{extend name="layout/layout"}
+{block name="title"}抢购列表{/block}
+{block name="body"}
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>抢购列表</h5>
+            </div>
+            <input type="hidden" class="choseUid" value="{$choseUid}">
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="example-wrap">
+                            <div class="example">
+                                <table id="buyLog"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Basic -->
+    </div>
+
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $.ajax({
+            url: 'buyLogDetails',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                choseUid : $('.choseUid').val()
+            },
+            cache: false,
+            success: function (res) {
+                console.log(res);
+                if (res.code == 0) {
+                    var btt_data = res.data;
+
+                    $('#buyLog').bootstrapTable({
+                        data: btt_data,
+                        columns: [{
+                            field:"order_id",
+                            title:"编号"
+                        }, {
+                            field:"name",
+                            title:"用户帐号"
+                        },{
+                            field:"good_name",
+                            title:"购买商品名称"
+                        },{
+                            field:"goods_num",
+                            title:"数量"
+                        },{
+                            field:"amount",
+                            title:"金额"
+                        }, {
+                            field:"guessing",
+                            title:"升级选择"
+                        }, {
+                            field:"term_num",
+                            title:"升级期号"
+                        }, {
+                            field:"created_date",
+                            title:"抢购时间"
+                        }]
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1500});
+                }
+            },
+            error: function () {
+                console.log(res);
+            }
+        });
+    });
+</script>
+{/block}

@@ -1,0 +1,24 @@
+.list{
+    display: block;
+    padding: 0.6em;
+    margin: 0;
+    list-style: none;
+    }
+.list li{
+    margin: 0.3em 3em;
+    padding: 0.7em 1.25em;
+    border: 0.06em #eee solid;
+    border-radius: 0.25em;
+    background: #0ae;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+.list li+li{
+    margin-top: 0.7em;
+}
+
+.bg_color_orange_red li{
+    background: #ff7f50;
+}
+

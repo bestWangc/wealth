@@ -1,0 +1,115 @@
+{extend name="layout/layout"}
+{block name="title"}成员列表{/block}
+{block name="body"}
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>成员列表</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="example-wrap">
+                            <div class="example">
+                                <table id="usersTableFromData"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Basic -->
+    </div>
+
+    <script src="/static/manage/js/common.js"></script>
+
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $.ajax({
+            url: 'userDetails',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            success: function (res) {
+                if (res.code == 0) {
+                    var btt_data = res.data;
+
+                    $('#usersTableFromData').bootstrapTable({
+                        data: btt_data,
+                        columns: [{
+                            field: "uid",
+                            title: "用户ID"
+                        }, {
+                            field: "name",
+                            title: "用户帐号"
+                        }, {
+                            field: "tel",
+                            title: "绑定手机"
+                        }, {
+                            field: "email",
+                            title: "绑定邮箱"
+                        }, {
+                            field: "status",
+                            title: "状态"
+                        }, {
+                            field: "created_date",
+                            title: "创建时间"
+                        }, {
+                            field: 'operate',
+                            title: '操作',
+                            align: 'center',
+                            formatter: operateFormatter,
+                            events: operateEvents
+                        }]
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1500});
+                }
+            },
+            error: function () {
+                console.log(res);
+            }
+        });
+
+        var operateFormatter = function() {
+            return [
+                '<a href="#" class="buyLog btn btn-xs btn-info btn-sm" style="margin-right:10px;">抢购记录</a>',
+                '<a href="#" class="extractLog btn btn-xs btn-info btn-sm" style="margin-right:10px;">提现记录</a>',
+                '<a href="#" class="rechargeLog btn btn-xs btn-info btn-sm" style="margin-right:10px;">充值记录</a>',
+            ].join('');
+        };
+        window.operateEvents = {
+            'click .buyLog': function (e, value, row) {
+                commonClick(3,row.uid);
+            },
+            'click .extractLog': function (e, value, row) {
+                commonClick(4,row.uid);
+            },
+            'click .rechargeLog': function (e, value, row) {
+                commonClick(5,row.uid);
+            }
+        };
+        var commonClick = function (index,uid) {
+            $(".J_menuItem" , parent.document).each(function () {
+                if($(this).data('index') == index){
+                    var oldHref = $(this).attr('href');
+
+                    //url加上choseUid,并模拟点击
+                    oldHref += '?choseUid='+uid;
+                    $(this).attr('href', oldHref);
+                    $(this)[0].click();
+
+                    //url改回原来的
+                    oldHref = oldHref.substr(0,oldHref.indexOf('?'));
+                    $(this).attr('href', oldHref);
+                }
+            });
+        }
+    });
+</script>
+{/block}

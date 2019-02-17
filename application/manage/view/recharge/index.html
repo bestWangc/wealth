@@ -1,0 +1,98 @@
+{extend name="layout/layout"}
+{block name="title"}充值记录{/block}
+{block name="body"}
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>充值记录</h5>
+        </div>
+        <input type="hidden" class="choseUid" value="{$choseUid}">
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="rechargeLog"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Basic -->
+</div>
+
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $.ajax({
+            url: 'rechargeLog',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                choseUid : $('.choseUid').val()
+            },
+            cache: false,
+            success: function (res) {
+                if (res.code == 0) {
+                    var btt_data = res.data;
+
+                    $('#rechargeLog').bootstrapTable({
+                        data: btt_data,
+                        columns: [{
+                            field:"recharge_id",
+                            title:"编号"
+                        }, {
+                            field:"name",
+                            title:"用户帐号"
+                        },{
+                            field:"amount",
+                            title:"充值金额"
+                        }, {
+                            field:"way",
+                            title:"充值方式"
+                        }, {
+                            field:"status",
+                            title:"状态"
+                        }, {
+                            field:"created_date",
+                            title:"充值时间"
+                        }]
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1500});
+                }
+            },
+            error: function () {
+                console.log(res);
+            }
+        });
+        var btt_data = [{
+            "extract_id": "1",
+            "name": "奔波儿灞",
+            "amount": "300",
+            "way": "支付宝",
+            "status": "成功",
+            "created_date" : "2018-09-07 17:20"
+        }, {
+            "extract_id": "1",
+            "name": "奔波儿灞",
+            "amount": "300",
+            "way": "支付宝",
+            "status": "成功",
+            "created_date" : "2018-09-07 17:20"
+        }, {
+            "extract_id": "1",
+            "name": "奔波儿灞",
+            "amount": "300",
+            "way": "支付宝",
+            "status": "失败",
+            "created_date" : "2018-09-07 17:20"
+        }];
+    });
+</script>
+{/block}
