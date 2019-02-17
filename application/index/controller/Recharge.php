@@ -12,7 +12,7 @@ class Recharge extends Base
 {
     public function index()
     {
-        $list = Db::name("ZhifubaoChongzhi")
+        $list = Db::name("recharge")
             ->where(array("uid" => $this::$user_id))
             ->order("id desc")->limit(10)
             ->select();
