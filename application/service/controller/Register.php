@@ -57,7 +57,7 @@ class Register extends Base
             return jsonRes(1,'帐号已存在，请重新填写');
         }
 
-        $path = empty($parentInfo['id']) ? "" : "-{$parentInfo['id']}-";
+        $path = empty($parentInfo['id']) ? "" : "{$parentInfo['id']}";
         if (!empty($parent_id) && !empty($parentInfo['path'])) {
             $path .= ',' . $parentInfo['path'];
         }

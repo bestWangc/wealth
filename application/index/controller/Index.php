@@ -48,15 +48,15 @@ class Index extends Base
             ->select();
 
         $sum_bi = Db::name("users")
-                ->where("path", "like", "%-{$userInfo["id"]}-%")
+                ->where("path", "like", "%{$userInfo["id"]}%")
                 ->sum("bi");
         
         $sum_money=Db::name("users")
-                ->where("path", "like", "%-{$userInfo["id"]}-%")
+                ->where("path", "like", "%{$userInfo["id"]}%")
                 ->sum("money");
         
         $tuijian_list = Db::name("users")
-                ->where("path", "like", "%-{$userInfo["id"]}-%")
+                ->where("path", "like", "%{$userInfo["id"]}%")
                 ->order("id asc")
                 ->select();
 
@@ -66,12 +66,12 @@ class Index extends Base
         $three_list = [];
 
         foreach ($tuijian_list as $key => $value) {
-            $path_str = str_replace("-", '', $value['path']);
-            $path_array = explode(",", $path_str);
-            if($path_array[1] == $userInfo['id']){
+            // $path_str = str_replace("-", '', $value['path']);
+            $path_array = explode(",", $value['path']);
+            if(isset($path_array[1]) && $path_array[1] == $userInfo['id']){
                 $second_list[] = $value;
             }
-            if($path_array[2] == $userInfo['id']){
+            if(isset($path_array[2]) && $path_array[2] == $userInfo['id']){
                 $three_list[] = $value;
             }
         }
