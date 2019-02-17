@@ -10,7 +10,7 @@ http://creativecommons.org/licenses/by/3.0/
 ------------------------------------------------*/
 body {
     font-family: 'Open Sans', sans-serif;
-    background: #32C2CD url(/static/index/images/background/bg-img.jpg) !important;
+    background: #32C2CD url(../images/background/bg-img.jpg) !important;
 }
 
  #wrapper {

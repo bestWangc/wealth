@@ -33,55 +33,59 @@ class Index extends Base
      */
     public function extend()
     {
-        $this->nav = 12;
-
-        if (!empty($this->user_info['main'])) {
-            $this->main_user_info = Db::name("Users")->where(array("id" => $this->user_info['main']))->find();
+        $userInfo = $this::$userInfo;
+        if (!empty($userInfo['main'])) {
+            $main_user_info = Db::name("users")
+                ->where("id", $userInfo['main'])
+                ->find();
         } else {
-            $this->main_user_info = array();
+            $main_user_info = array();
         }
 
+        $first_list = Db::name("users")
+            ->where("main", $userInfo["id"])
+            ->order("id")
+            ->select();
 
-        $this->first_list = Db::name("Users")->where(array("main" => $this->user_info["id"]))->order("id")->select();
-
-        
-        $sum_bi = Db::name("Users")
-                ->where(array("path" => array("like", "%-{$this->user_info["id"]}-%")))
+        $sum_bi = Db::name("users")
+                ->where("path", "like", "%-{$userInfo["id"]}-%")
                 ->sum("bi");
-        $this->sum_bi=$sum_bi;
         
-        $sum_money=Db::name("Users")
-                ->where(array("path" => array("like", "%-{$this->user_info["id"]}-%")))
+        $sum_money=Db::name("users")
+                ->where("path", "like", "%-{$userInfo["id"]}-%")
                 ->sum("money");
-        $this->sum_money=$sum_money;
         
-        
-        
-        $tuijian_list = Db::name("Users")
-                ->where(array("path" => array("like", "%-{$this->user_info["id"]}-%")))
-                ->order("id")
+        $tuijian_list = Db::name("users")
+                ->where("path", "like", "%-{$userInfo["id"]}-%")
+                ->order("id asc")
                 ->select();
+
         //二级推荐列表
         $second_list = [];
         //三级推荐列表
         $three_list = [];
 
-        $user_id = $this->user_info['id'];
-
         foreach ($tuijian_list as $key => $value) {
-            $path_str=  str_replace("-", '', $value['path']);
-            $path_array=  explode(",", $path_str);
-            if($path_array[1]==$user_id){
-                $second_list[]=$value;
+            $path_str = str_replace("-", '', $value['path']);
+            $path_array = explode(",", $path_str);
+            if($path_array[1] == $userInfo['id']){
+                $second_list[] = $value;
             }
-            if($path_array[2]==$user_id){
-                $three_list[]=$value;
+            if($path_array[2] == $userInfo['id']){
+                $three_list[] = $value;
             }
         }
-        
-        $this->second_list=$second_list;
-        $this->three_list=$three_list;
 
+        $this->assign([
+            'nav' => 12,
+            'user_id' => $userInfo['id'],
+            'main_user_info' => $main_user_info,
+            'first_list' => $first_list,
+            'sum_bi' => $sum_bi,
+            'sum_money' => $sum_money,
+            'second_list' => $second_list,
+            'three_list' => $three_list
+        ]);
         return $this->fetch();
     }
 
