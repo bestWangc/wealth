@@ -1,0 +1,169 @@
+﻿{extend name="base/base" /}
+
+{block name="title"}会员登录-{$siteName}{/block}
+
+{block name="main"}
+<div id="wrapper">
+    <!--顶部导航-->
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        {include file="base/top"}
+    </nav>
+    <!--顶部导航-->
+
+    <!--左侧导航-->
+    {include file="base/left"}
+    <!--左侧导航-->
+
+    <!--右侧内容外框 start-->
+    <div id="page-wrapper" class="col-sm-9 col-md-10 col-xs-12" style="float:right">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        {$siteName} <small>投资理财专家</small>
+                    </h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-green green">
+                        <div class="panel-left pull-left green">
+                            <i class="fa fa-eye fa-5x"></i>
+                        </div>
+                        <div class="panel-right">
+                            <h4>{$user_info.coin}个</h4>
+                            <strong>收益币</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <br><a class="btn btn-primary btn-sm" href="{:url('finance/buy')}" role="button" style="margin-top: 5px;">购买</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-blue">
+                        <div class="panel-left pull-left blue">
+                            <i class="fa fa-shopping-cart fa-5x"></i>
+                        </div>
+                        <div class="panel-right">
+                            <h4>{$user_info.money}</h4>
+                            <strong>钱包</strong>
+                            <br><a class="btn btn-primary btn-sm" href="{:url('/index/recharge/index')}" role="button" style="margin-top: 5px;">充值</a>
+                            <a class="btn btn-default btn-sm" href="{:url('/index/finance/cashing')}" role="button" style="margin-top: 5px;">提现</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-red">
+                        <div class="panel-left pull-left red">
+                            <i class="fa fa fa-comments fa-5x"></i>
+
+                        </div>
+                        <div class="panel-right">
+                            <h4>{$yesterdayIncome}</h4>
+                            <strong>昨日利息</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="panel panel-primary text-center no-boder bg-color-brown">
+                        <div class="panel-left pull-left brown">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <div class="panel-right">
+                            <h3></h3>
+                            <strong>
+                                {if($signStatus)}
+                                <button class='btn btn-default'>已签到</button>
+                                {else /}
+                                <a class="btn btn-primary singBtn" href="javascript:;">签 到</a>
+                                {/if}
+                            </strong>
+                            <br>
+                            <strong>每日签到赠送{$signIncome}元</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            最近10笔收支记录
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>时间</th>
+                                        <th>收入/支出</th>
+                                        <th>类别</th>
+                                        <th>金额</th>
+                                        <th>说明</th>
+                                        <th>之前</th>
+                                        <th>之后</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist name="list" id="vo"}
+                                    <tr>
+                                        <td>{:get_date_full($vo['create_time'])}</td>
+                                        <td>{$vo['epoints'] >= 0 ? '<font color="red">收入</font>' : '支出'}></td>
+                                        <td>{:get_main_last_status($vo['action_type'])}</td>
+                                        <td>{$vo.epoints}</td>
+                                        <td>{$vo.text}</td>
+                                        <td>{$vo.original}</td>
+                                        <td>{$vo.after}</td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer>
+                {include file="base/footer"}
+            </footer>
+        </div>
+    </div>
+    <!--右侧内容外框 end-->
+</div>
+{/block}
+
+{block name="my-js"}
+<script>
+    $(function () {
+        $('.singBtn').click(function () {
+            //加载遮罩层
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
+
+            $.ajax({
+                url : '/index/index/sign',
+                type : "GET",
+                dataType : "json",
+                cache : false,
+                success : function(res){
+                    var callingBack = '';
+                    layer.closeAll('loading');
+                    if(res.code == 0){
+                        callingBack = function () {
+                            window.location.reload();
+                        };
+                    }
+                    layer.msg(res.msg,{time: 1000},callingBack);
+                },
+                error : function(data){
+                    layer.closeAll('loading');
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
+{/block}

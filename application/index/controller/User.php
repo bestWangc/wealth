@@ -2,106 +2,87 @@
 namespace app\index\controller;
 
 use think\Db;
+use think\facade\Session;
 use think\facade\Request;
 
-/**
- * 用户中心
- */
 class User extends Base
 {
+
     public function index()
     {
-        $this->assign('nav',2);
         return $this->fetch();
     }
 
-    public function edit()
+    //用户详细信息
+    public function userDetails()
     {
-        $this->assign('nav',2);
-        return $this->fetch();
-    }
 
-    public function doEdit(Request $request)
-    {
-        $data = [];
-        $realName = $request::post('real_name');
-        if(!empty($realName)){
-            $data['real_name'] = $realName;
+        $useRole = Session::get('user_role');
+        $where = ['parent_id' => $this->uid];
+        if($useRole == 1){
+            $where = '';
         }
-        $alipayNo = $request::post('alipay_no');
-        if(!empty($alipayNo)){
-            $data['alipay_no'] = $alipayNo;
-        }
-        $nickName = $request::post('nick_name');
-        if(!empty($nickName)){
-            $data['nick_name'] = $nickName;
-        }
-        $phone = $request::post('phone');
-        if(!empty($phone)){
-            $data['mobile'] = $phone;
-        }
+        $userInfo = Db::name('users')
+            ->where($where)
+            ->field('id as uid,name,tel,email,status,created_date')
+            ->order('created_date desc')
+            ->select();
 
-        if(!empty($data)){
-            $res = Db::name('users')
-                ->where(array("id" => $this::$user_id))
-                ->update($data);
-            if($res){
-                return jsonRes(0,'修改成功');
+        if(!empty($userInfo)){
+            foreach ($userInfo as $key => &$value){
+                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
+                $value['status'] = $value['status'] ? '启用' : '停用';
             }
+            return jsonRes(0,'成功',$userInfo);
         }
-        return jsonRes(1,'修改失败，请重试');
+        return jsonRes(0,'成功',$userInfo);
     }
 
     //修改密码
-    public function edit_pwd()
+    public function changePwd()
     {
-        $this->assign('nav',3);
+        $this->assign([
+            'uid' => $this->uid,
+            'uname' => Session::get('user_name')
+        ]);
+        return $this->fetch('changePwd');
+    }
+
+    //抢购记录
+    public function buyLog(Request $request)
+    {
+        $choseUid = $request::param('choseUid/d',0);
+
+        $this->assign('choseUid',$choseUid);
         return $this->fetch();
     }
 
-    public function doEditPwd(Request $request)
+    //抢购详细记录
+    public function buyLogDetails(Request $request)
     {
-        $type = $request::post('type/d');
-
-        $userInfo = $this::$userInfo;
-        if(empty($type)){
-            return jsonRes(1,'未知错误，请重试');
+        $uid = $request::post('choseUid/d');
+        $where = ['so.user_id'=>$uid];
+        if(!$uid){
+            $where = ['su.parent_id'=>$this->uid];
         }
 
-        switch ($type) {
-            case 1:  //登录密码
-                $sys_old_pwd = $userInfo['user_pwd'];
-                $field="user_pwd";
-                break;
-            case 2: //二次密码
-                $sys_old_pwd = $userInfo['user_pwd1'];
-                $field="user_pwd1";
-                break;
-        }
-        $oldPWD = $request::post('old_pwd');
-        $newPWD = $request::post('new_pwd');
-        $reNewPWD = $request::post('re_new_pwd');
+        $result = Db::name('order')
+            ->alias('so')
+            ->join('users su','su.id = so.user_id','left')
+            ->join('goods sg','sg.id = so.goods_id','left')
+            ->join('award_info sai','sai.id = so.award_id','left')
+            ->where($where)
+            ->field('so.id as order_id,su.`name`,sg.`name` as good_name,so.goods_num,so.amount,so.guessing,sai.term_num,so.created_date')
+            ->order('so.created_date desc')
+            ->select();
 
-        if(empty($oldPWD)) return jsonRes(1,'原密码密码不能为空');
-        if(empty($newPWD)) return jsonRes(1,'新密码密码不能为空');
-        if($newPWD != $reNewPWD) return jsonRes(1,'两次密码输入不一致');
-
-        if($sys_old_pwd != md5($oldPWD.'jstj')){
-            return jsonRes(1,'原密码不正确');
+        if(!empty($result)){
+            foreach ($result as $key => &$value){
+                $value['guessing'] = $value['guessing'] ? '丰年' : '瑞雪';
+                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
+            }
         }
-        
-        $data = [
-            $field => md5($newPWD.'jstj')
-        ];
-
-        $res = Db::name("users")
-            ->lock()
-            ->where("id", $this::$user_id)
-            ->update($data);
-        if($res){
-            return jsonRes(0,'密码修改成功，请牢记您的新密码');
-        }
-        return jsonRes(1,'密码修改失败，请稍后再试');
+        return jsonRes(0,'成功',$result);
     }
 
 }

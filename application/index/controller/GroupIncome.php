@@ -1,6 +1,5 @@
 <?php
-
-namespace app\manage\controller;
+namespace app\index\controller;
 
 use think\Controller;
 

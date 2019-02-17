@@ -1,169 +1,158 @@
-﻿{extend name="base/base" /}
+{extend name="layout/layout"}
+{block name="title"}金上添金{/block}
+{block name="body"}
+<body class="fixed-sidebar full-height-layout gray-bg pace-done skin-1" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span><img alt="image" class="img-circle" src="/static/manage/images/profile_small.jpg" /></span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold">{$uname}</strong></span>
+                                <span class="text-muted text-xs block">{$roleName}<b class="caret"></b></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="login.html">安全退出</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="logo-element navbar-min">金</div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-bar-chart-o"></i>
+                            <span class="nav-label">个人信息</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                               <a class="J_menuItem" href="{:url('user/changePwd')}">修改密码</a>
+                            </li>
+                        </ul>
+                    </li>
 
-{block name="title"}会员登录-{$siteName}{/block}
+                    <li>
+                        <a href="user_list.html"><i class="fa fa-envelope"></i> <span class="nav-label">团队管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="{:url('user/index')}">成员列表</a>
+                            </li>
+                            {if ($urole === 1)}
+                            <li>
+                                <a class="J_menuItem" href="{:url('user/buyLog')}">抢购记录</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('extract/index')}">提现记录</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('recharge/index')}">充值记录</a>
+                            </li>
+                            {/if}
+                        </ul>
+                    </li>
 
-{block name="main"}
-<div id="wrapper">
-    <!--顶部导航-->
-    <nav class="navbar navbar-default top-navbar" role="navigation">
-        {include file="base/top"}
-    </nav>
-    <!--顶部导航-->
+                    {if $urole === 1}
+                        <li>
+                            <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">申请审核</span><span class="fa arrow"></span><span class="label label-warning pull-right">16</span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a class="J_menuItem" href="{:url('recharge/applyFor')}">充值申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('extract/applyFor')}">提现申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('apply/goldApply')}">金币兑换申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('apply/backGoodsApply')}">退款申请</a></li>
+                                <li><a class="J_menuItem" href="{:url('apply/takeGoodsApply')}">提货申请</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="{:url('income/settleBonus')}">
+                                <i class="fa fa-exchange"></i>
+                                <span class="nav-label">结算分红</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="{:url('income/index')}">
+                                <i class="fa fa-magic"></i>
+                                <span class="nav-label">资金详情</span>
+                            </a>
+                        </li>
+                    {/if}
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row content-tabs">
+                <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+                </button>
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="index_main.html">首页</a>
+                    </div>
+                </nav>
+                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+                </button>
+                <div class="btn-group roll-nav roll-right">
+                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                        </li>
+                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="javascript:;" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
 
-    <!--左侧导航-->
-    {include file="base/left"}
-    <!--左侧导航-->
-
-    <!--右侧内容外框 start-->
-    <div id="page-wrapper" class="col-sm-9 col-md-10 col-xs-12" style="float:right">
-        <div id="page-inner">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="page-header">
-                        {$siteName} <small>投资理财专家</small>
-                    </h1>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{:url('index/indexMain')}" frameborder="0" data-id="index_main.html" seamless></iframe>
+            </div>
+            <div class="footer">
+                <div class="pull-right">&copy; 2014-2015 <a href="javascript:;" target="_blank">xxxxxxxxxx</a>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="panel panel-primary text-center no-boder bg-color-green green">
-                        <div class="panel-left pull-left green">
-                            <i class="fa fa-eye fa-5x"></i>
-                        </div>
-                        <div class="panel-right">
-                            <h4>{$user_info.coin}个</h4>
-                            <strong>收益币</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <br><a class="btn btn-primary btn-sm" href="{:url('finance/buy')}" role="button" style="margin-top: 5px;">购买</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="panel panel-primary text-center no-boder bg-color-blue">
-                        <div class="panel-left pull-left blue">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
-                        </div>
-                        <div class="panel-right">
-                            <h4>{$user_info.money}</h4>
-                            <strong>钱包</strong>
-                            <br><a class="btn btn-primary btn-sm" href="{:url('/index/recharge/index')}" role="button" style="margin-top: 5px;">充值</a>
-                            <a class="btn btn-default btn-sm" href="{:url('/index/finance/cashing')}" role="button" style="margin-top: 5px;">提现</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="panel panel-primary text-center no-boder bg-color-red">
-                        <div class="panel-left pull-left red">
-                            <i class="fa fa fa-comments fa-5x"></i>
-
-                        </div>
-                        <div class="panel-right">
-                            <h4>{$yesterdayIncome}</h4>
-                            <strong>昨日利息</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12">
-                    <div class="panel panel-primary text-center no-boder bg-color-brown">
-                        <div class="panel-left pull-left brown">
-                            <i class="fa fa-users fa-5x"></i>
-                        </div>
-                        <div class="panel-right">
-                            <h3></h3>
-                            <strong>
-                                {if($signStatus)}
-                                <button class='btn btn-default'>已签到</button>
-                                {else /}
-                                <a class="btn btn-primary singBtn" href="javascript:;">签 到</a>
-                                {/if}
-                            </strong>
-                            <br>
-                            <strong>每日签到赠送{$signIncome}元</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            最近10笔收支记录
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>时间</th>
-                                        <th>收入/支出</th>
-                                        <th>类别</th>
-                                        <th>金额</th>
-                                        <th>说明</th>
-                                        <th>之前</th>
-                                        <th>之后</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {volist name="list" id="vo"}
-                                    <tr>
-                                        <td>{:get_date_full($vo['create_time'])}</td>
-                                        <td>{$vo['epoints'] >= 0 ? '<font color="red">收入</font>' : '支出'}></td>
-                                        <td>{:get_main_last_status($vo['action_type'])}</td>
-                                        <td>{$vo.epoints}</td>
-                                        <td>{$vo.text}</td>
-                                        <td>{$vo.original}</td>
-                                        <td>{$vo.after}</td>
-                                    </tr>
-                                    {/volist}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <footer>
-                {include file="base/footer"}
-            </footer>
         </div>
+        <!--右侧部分结束-->
     </div>
-    <!--右侧内容外框 end-->
-</div>
+    <!-- 自定义js -->
+    <script src="/static/manage/js/hplus.js?v=4.1.0"></script>
+
+</body>
 {/block}
 
 {block name="my-js"}
 <script>
-    $(function () {
-        $('.singBtn').click(function () {
-            //加载遮罩层
-            layer.load(1, {
-                shade: [0.5,'#fff']
-            });
-
-            $.ajax({
-                url : '/index/index/sign',
-                type : "GET",
-                dataType : "json",
-                cache : false,
-                success : function(res){
-                    var callingBack = '';
-                    layer.closeAll('loading');
-                    if(res.code == 0){
-                        callingBack = function () {
-                            window.location.reload();
-                        };
-                    }
-                    layer.msg(res.msg,{time: 1000},callingBack);
-                },
-                error : function(data){
-                    layer.closeAll('loading');
-                    console.log(data);
+    $('.navbar-min').click(function () {
+        $("body").toggleClass("mini-navbar");
+        SmoothlyMenu();
+    });
+    $('.J_tabExit').click(function () {
+        $.ajax({
+            url : '/service/logout/index',
+            type : "GET",
+            dataType : "json",
+            cache : false,
+            success : function(data){
+                var callBack = '';
+                if(data.code == 0){
+                    callBack = function () {
+                        window.location.reload();
+                    };
                 }
-            });
+                layer.msg(data.msg,{time: 1000},callBack);
+            },
+            error : function(data){
+                console.log(data);
+            }
         });
     });
+
 </script>
 {/block}
