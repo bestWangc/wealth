@@ -11,7 +11,7 @@ class Base extends Controller
         parent::initialize();
         $this->checkLogin();
         $this->checkRole();
-        $this->uid = session('uid');
+        $this->uid = session('u_id');
     }
 
     public function checkLogin(){

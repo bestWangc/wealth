@@ -10,12 +10,11 @@ class Index extends Base
 
     public function index()
     {
-        $user_role = Session::get('user_role');
-        $role_name = $this->getUserRole($user_role);
+        $role_name = $this->getUserRole($this::$uid);
         $this->assign([
             'uname' => Session::get('user_name'),
             'roleName' => $role_name,
-            'urole' => $user_role
+            // 'urole' => $user_role
         ]);
         return $this->fetch();
     }
@@ -58,8 +57,11 @@ class Index extends Base
     }
 
     //获取角色权限名称
-    public function getUserRole($user_role)
+    public function getUserRole($uid)
     {
+        $user_role = Db::name('users')
+            ->where('id',$uid)
+            ->value('level_id');
         $roleName = UserRole::where('id',$user_role)->field('role_name')->find();
         return $roleName['role_name'];
     }

@@ -4139,7 +4139,8 @@ table.table-mail tr td {
 /* BACKGROUNDS */
 
 .gray-bg {
-    background-color: #f3f3f4;
+    -moz-background-size:100% 100%;
+    background: #f3f3f4 url(../images/login.jpg) no-repeat fixed top;
 }
 
 .white-bg {
