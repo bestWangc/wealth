@@ -115,6 +115,83 @@
         $('.rechargeWay div').click(function () {
             $(this).addClass('active').siblings('div').removeClass('active');
         });
+
+        //充值
+        $('.rechargeBtn').click(function () {
+            let recharge_money = $('#recharge_money').val();
+            if(recharge_money == ''){
+                layer.msg('充值金额不能为空',{time:1000});
+                return false;
+            }
+            let errorNum = textChecked(recharge_money);
+            if(errorNum > 0){
+                layer.msg('充值金额只能为数字',{time:1000});
+                return false;
+            }
+            recharge_money = parseInt(recharge_money);
+            if(recharge_money < 10){
+                layer.msg('最少充值10元',{time:1000});
+                return false;
+            }
+
+            let recharge_way = $('.rechargeWay div.active').children('span').data('val');
+            if(recharge_way == undefined){
+                layer.msg('请选择充值方式',{time:1000});
+                return false;
+            }
+
+            layer.load(0, {
+                shade: [0.1,'#fff']
+            });
+            $.ajax({
+                url : '/index/recharge/createRecharge',
+                type : "POST",
+                dataType : "json",
+                cache : false,
+                data : {
+                    recharge_money : recharge_money,
+                    recharge_way : recharge_way
+                },
+                success : function(res){
+                    layer.closeAll('loading');
+                    if(res.code == 0){
+                        console.log(res.data.url);
+                        //判断是不是web 网站访问
+                        let isWeb = checkAgents();
+                        if(isWeb){
+                            $('#rechargeImg').html('');
+                            $('#rechargeImg').qrcode({
+                                width: 190,
+                                height:190,
+                                text:res.data.url
+                            });
+                            let title = '';
+                            if(res.data.way){
+                                title = '打开支付宝扫一扫';
+                            }else{
+                                title = '打开微信扫一扫';
+                            }
+                            layer.open({
+                                type: 1,
+                                title:title,
+                                area: ['40rem', '25rem'], //宽高
+                                content: $('.rechargeModal')
+                            });
+                        }else{
+                            let activeA = $('<a href="'+res.data.url+'"></a>');
+                            activeA[0].click();
+                        }
+                    }else{
+                        layer.msg(res.msg,{time: 1500});
+                    }
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+
+
+        });
     });
 </script>
 {/block}
