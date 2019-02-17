@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 17/02/2019 15:42:56
+ Date: 17/02/2019 15:49:36
 */
 
 SET NAMES utf8mb4;
@@ -412,7 +412,7 @@ CREATE TABLE `xx_users`  (
   `main` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '直接推荐用户，默认0，为顶级',
   `path` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '推荐路径，最多记录到5级',
   `money` decimal(12, 2) NOT NULL DEFAULT 0.00 COMMENT '钱包金额',
-  `bi` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收益币数量，默认为0 ',
+  `coin` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收益币数量，默认为0 ',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`user_name`, `status`) USING BTREE,
   INDEX `main1`(`id`, `create_time`, `status`, `main`, `path`) USING BTREE
