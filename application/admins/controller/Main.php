@@ -1,6 +1,7 @@
 <?php
 namespace app\admins\controller;
 
+use think\Db;
 
 class Main extends Base
 {

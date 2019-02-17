@@ -3,6 +3,7 @@ namespace app\admins\controller;
 
 
 use think\Controller;
+use think\facade\Request;
 
 /**
  * 系统管理控制器类
@@ -26,22 +27,23 @@ class System extends Controller
 	}
 
 
-        Public function check() {
-        if ($this->isAjax()) {
+	public function check(Request $request)
+    {
+        if ($request::isAjax()) {
             $admin_name = addslashes($_POST['admin_name']);
             $admin_pwd = md5($_POST['admin_pwd']);
-            $M = M('Admin');
-            $info = $M->where("ly_name='{$admin_name}'")->find();
+            $info = db('admin')->where("ly_name='{$admin_name}'")->find();
             unset($M);
             if (empty($info)) {
-                $this->ajaxReturn(1); //用户不存在
+                return json(['data'=>1]); //用户不存在
             } else {
                 if ($admin_pwd == $info['ly_pwd']) {
                     session('ly_name', $info['ly_name']);
                     session('ly_id',$info['ly_id']);
-                    $this->ajaxReturn(2);  //登录成功
+
+                    return json(['data'=>2]);
                 } else {
-                    $this->ajaxReturn(3); //密码错误
+                    return json(['data'=>3]);
                 }
             }
         } else {

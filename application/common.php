@@ -229,3 +229,64 @@ function get_client_ip() {
     $ip = (false !== ip2long($ip)) ? $ip : '0.0.0.0';
     return $ip;
 }
+
+
+/**
+ * 弹出提示框
+ *
+ * @var String $name 提示信息
+ * @var String $url 返回链接
+ *
+ */
+function pop($name,$url){
+    header("Content-Type: text/html; charset=UTF-8");
+    echo '<script language="javascript">';
+    echo "alert('{$name}');";
+    echo "location.href='{$url}'";
+    echo '</script>';
+    exit();
+}
+
+
+/**
+ * 弹出提示框，并执行一个脚本
+ *
+ * @var String $name 提示信息
+ * @var String 其他脚本
+ *
+ */
+function pop_js($name,$js){
+    header("Content-Type: text/html; charset=UTF-8");
+    echo '<script language="javascript">';
+    echo "alert('{$name}');";
+    echo "{$js}";
+    echo '</script>';
+    exit();
+}
+
+/**
+ * 弹出提示框，上级框架跳转
+ *
+ * @var String $name 提示信息
+ * @var String $url 返回链接
+ *
+ */
+function pop_parent($name,$url){
+    header("Content-Type: text/html; charset=UTF-8");
+    echo '<script language="javascript">';
+    echo "alert('{$name}');";
+    echo "parent.location.href='{$url}'";
+    echo '</script>';
+    exit();
+}
+
+
+/**
+ * 管理员登录状态检测
+ */
+function check_admin(){
+    if(session('ly_id')==''||session('ly_name')==''){
+        pop('您尚未登录系统，请正确登录系统！',url("index/index"));
+        exit;
+    }
+}

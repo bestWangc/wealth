@@ -2,6 +2,7 @@
 namespace app\admins\controller;
 
 use think\Controller;
+use think\Db;
 
 /**
  * 控制器基类 
@@ -10,25 +11,28 @@ use think\Controller;
 class Base extends Controller
 {
 
-    function _initialize() {  //初始化
-        $this->assign('module_name', parse_name(MODULE_NAME));
-        $this->assign('action_name', parse_name(ACTION_NAME));
+    function initialize() {  //初始化
+        // $this->assign('module_name', parse_name(MODULE_NAME));
+        // $this->assign('action_name', parse_name(ACTION_NAME));
         check_admin();
     }
 
     public function index($num=20,$sort='sort,id desc') {
-        $M = D(MODULE_NAME);
-        import("ORG.Util.Page");
-        $count = $M->count('id');
-        $Page = new Page($count, $num);
-        $show = $Page->show();
-        $this->assign('page', $show);
-        
-        
-        $list = $M->order($sort)->limit($Page->firstRow.','.$Page->listRows)->select();
-        unset($Page);
-        $this->assign('list', $list);
-        $this->display();
+        // $M = D(MODULE_NAME);
+        // import("ORG.Util.Page");
+        // $count = Db::naame(MODULE_NAME)->count('id');
+        // $Page = new Page($count, $num);
+        // $show = $Page->show();
+        // $this->assign('page', $show);
+
+        /*$list = Db::naame(MODULE_NAME)
+            ->order($sort)
+            // ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();*/
+        // unset($Page);
+        $this->assign('list', []);
+        // $this->assign('list', $list);
+        return $this->fetch();
     }
 
     public function edit() {

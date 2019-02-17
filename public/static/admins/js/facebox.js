@@ -1,4 +1,15 @@
 /*
+ * Facebox (for jQuery)
+ * version: 1.2 (05/05/2008)
+ * @requires jQuery v1.2 or later
+ *
+ * Examples at http://famspam.com/facebox/
+ *
+ * Licensed under the MIT:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Copyright 2007, 2008 Chris Wanstrath [ chris@ozmm.org ]
+ *
  * Usage:
  *  
  *  jQuery(document).ready(function() {
@@ -68,8 +79,8 @@
     settings: {
       opacity      : 0,
       overlay      : true,
-      loadingImage : '/images/facebox/loading.gif',
-      closeImage   : '/images/facebox/closelabel.gif',
+      loadingImage : 'resources/images/loading.gif',
+      closeImage   : 'resources/images/closelabel.gif',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \
@@ -86,7 +97,7 @@
                 </div> \
                 <div class="footer"> \
                   <a href="#" class="close"> \
-                    <img src="/images/facebox/closelabel.gif" title="close" class="close_image" /> \
+                    <img src="resources/images/closelabel.gif" title="close" class="close_image" /> \
                   </a> \
                 </div> \
               </td> \
