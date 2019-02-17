@@ -1,0 +1,133 @@
+{extend name="layout/layout"}
+
+{block name="body"}
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>金币兑换申请</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="goldApplyLog"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Basic -->
+</div>
+<script src="/static/manage/js/innerCommon.js"></script>
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $.ajax({
+            url: 'goldApplyDetails',
+            type: 'POST',
+            dataType: 'json',
+            data:{
+                purpose: 3
+            },
+            cache: false,
+            success: function (res) {
+                if (res.code == 0) {
+                    var btt_data = res.data;
+
+                    $('#goldApplyLog').bootstrapTable({
+                        data: btt_data,
+                        columns: [{
+                            field:"id",
+                            title:"编号"
+                        }, {
+                            field:"user_id",
+                            title:"用户ID"
+                        }, {
+                            field:"name",
+                            title:"用户帐号"
+                        }, {
+                            field:"gold",
+                            title:"兑换金币"
+                        }, {
+                            field:"gold",
+                            title:"到账金额"
+                        }, {
+                            field:"status",
+                            title:"状态"
+                        }, {
+                            field:"created_date",
+                            title:"兑换时间"
+                        }, {
+                            field: 'operate',
+                            title: '操作',
+                            align: 'center',
+                            events: operateEvents,
+                            formatter: operateFormatter
+                        }]
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1500});
+                }
+            },
+            error: function () {
+                console.log(res);
+            }
+        });
+
+        window.operateEvents = {
+            'click .agree': function (e, value, row) {
+                console.log(row);
+                commonOperate(row.id,row.user_id,row.gold,3,1);
+            },
+            'click .refuse': function (e, value, row) {
+                layer.prompt({title: '拒绝原因', formType: 2}, function(text, index){
+                    layer.close(index);
+                    commonOperate(row.id,row.user_id,row.gold,3,0,text);
+                });
+            }
+        };
+
+        var commonOperate = function (id,user_id,gold,purpose,operate,reason) {
+            //加载遮罩层
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
+            $.ajax({
+                url: 'operation',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id : id,
+                    user_id : user_id,
+                    gold : gold,
+                    reason : reason,
+                    purpose : purpose,
+                    operate : operate
+                },
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    var callBack = '';
+                    if(res.code == 0){
+                        callBack = function () {
+                            parent.refreshIframe();
+                        };
+                    }
+                    layer.closeAll('loading');
+                    layer.msg(res.msg,{time:1500},callBack);
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    console.log(res);
+                }
+            });
+        };
+    });
+</script>
+{/block}

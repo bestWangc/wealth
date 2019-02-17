@@ -1,0 +1,113 @@
+{extend name="layout/layout"}
+
+{block name="body"}
+<style>
+    .nav-tabs{
+        border: 0
+    }
+    .nav-tabs > li > a{
+        background: #fff;
+        border-radius: 4PX;
+        border: #f8ac59 1px solid ;
+    }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus,
+    .nav-tabs > li.active > a:active,
+    .nav-tabs > li > a:hover,
+    .nav-tabs > li > a:active{
+        background-color: #f8ac59;
+        border-color: #f8ac59;
+        color: #FFFFFF;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active" data-value="3"><a href="javascript:void(0)" role="tab" data-toggle="tab">金币兑换</a></li>
+                <li role="presentation" data-value="2"><a href="javascript:void(0)"  role="tab" data-toggle="tab">提货申请</a></li>
+                <li role="presentation" data-value="1"><a href="javascript:void(0)"  role="tab" data-toggle="tab">退货申请</a></li>
+            </ul>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="applyLog"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Basic -->
+</div>
+
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $('.nav.nav-tabs li').click(function(){
+            //3=>金币兑换,2=>提货,1=>退货
+            var puroose = $(this).attr('data-value');
+
+            $.ajax({
+                url : 'applyDetails',
+                type : "POST",
+                dataType : "json",
+                data : {
+                    puroose : puroose
+                },
+                cache : false,
+                success : function(data){
+                    if(data.code == 0){
+                        $("#exchargeAlipayTableFromData").bootstrapTable('load', data);
+                    }else if(data.status == 0){
+                        layer.msg(data.message,{time: 1000});
+                    }
+                },
+                error : function(){
+                    layer.msg('出错啦，请重试',{time: 1000});
+                }
+            });
+        });
+        $('#applyLog').bootstrapTable({
+            // mobileResponsive: true,
+            height: "450",
+            columns:[{
+                "field":"apply_id",
+                "title":"编号"
+            },{
+                "field":"name",
+                "title":"用户名"
+            },{
+                "field":"order_id",
+                "title":'订单编号'
+            },{
+                "field":"extract_amount",
+                "title":"提现金额"
+            },{
+                "field":"extract_way",
+                "title":"金额去向"
+            },{
+                "field":"status",
+                "title":"申请状态",
+            },{
+                "field":"created_date",
+                "title":"申请时间"
+            },{
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                events: operateEvents,
+                formatter: operateFormatter
+            }]
+        });
+    });
+</script>
+{/block}
