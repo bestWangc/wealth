@@ -41,9 +41,9 @@ class Index extends Base
             ->order("id")
             ->select();
 
-        $sum_bi = Db::name("users")
+        $sum_coin = Db::name("users")
                 ->where("path", "like", "%{$userInfo["id"]}%")
-                ->sum("bi");
+                ->sum("coin");
         
         $sum_money=Db::name("users")
                 ->where("path", "like", "%{$userInfo["id"]}%")
@@ -75,7 +75,7 @@ class Index extends Base
             'user_id' => $userInfo['id'],
             'main_user_info' => $main_user_info,
             'first_list' => $first_list,
-            'sum_bi' => $sum_bi,
+            'sum_coin' => $sum_coin,
             'sum_money' => $sum_money,
             'second_list' => $second_list,
             'three_list' => $three_list
@@ -83,6 +83,10 @@ class Index extends Base
         return $this->fetch();
     }
 
+    /**
+     * 帮助
+     * @return mixed
+     */
     public function help()
     {
         $content = Article::getContentByID(2);
@@ -94,6 +98,10 @@ class Index extends Base
         return $this->fetch('news');
     }
 
+    /**
+     * 关于
+     * @return mixed
+     */
     public function about()
     {
         $content = Article::getContentByID(1);
@@ -105,7 +113,10 @@ class Index extends Base
         return $this->fetch('news');
     }
 
-    //系统公告
+    /**
+     * 系统公告
+     * @return mixed
+     */
     public function news()
     {
         $content = Article::getContentByID(3);
@@ -126,7 +137,7 @@ class Index extends Base
      * @throws \think\exception\DbException
      */
     private function getList($uid) {
-        $res = Db::name("moneyhistory")
+        $res = Db::name("money_history")
             ->where('uid',$uid)
             ->order("id desc")
             ->limit(10)
@@ -168,8 +179,7 @@ class Index extends Base
             "create_date" => date("Y-m-d", strtotime("-1 day")),
             "uid" => $uid,
         ];
-
-        $info = Db::name("dailyExecute")->where($where)->sum("epoints");
+        $info = Db::name("daily_execute")->where($where)->sum("epoints");
 
         $res = '未分红';
         if (!empty($info)) {
@@ -192,7 +202,7 @@ class Index extends Base
             "sign_date" => get_date()
         ];
 
-        $count = Db::name("daySign")->where($where)->count();
+        $count = Db::name("day_sign")->where($where)->count();
         if ($count >= 1) {
             $status = 1;
         } else {

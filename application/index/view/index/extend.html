@@ -7,7 +7,6 @@
     <nav class="navbar navbar-default top-navbar" role="navigation">
         {include file="base/top"}
     </nav>
-
     {include file="base/left"}
 
     <div id="page-wrapper" class="col-sm-9 col-md-10 col-xs-12" style="float:right">
@@ -33,11 +32,11 @@
 
                                     <p><b>我的上线：</b></p>
                                     <p>用户名：{$main_user_info.user_name}</p>
-                                    <p>收益币数量：{$main_user_info.bi}</p>
+                                    <p>收益币数量：{$main_user_info.coin}</p>
                                     <p>钱包资金：{$main_user_info.money}</p>
 
                                     <p><b>我的团队：</b></p>
-                                    <p>团队总收益币：{$sum_bi}</p>
+                                    <p>团队总收益币：{$sum_coin}</p>
                                     <p>团队钱包合计：{$sum_money}</p>
 
                                     <div class="row">
@@ -63,7 +62,7 @@
                                                                 <td>{$vo.user_name}</td>
                                                                 <td>{:get_date_full($vo.create_time)}</td>
                                                                 <td>{$vo.money}</td>
-                                                                <td>{$vo.bi}</td>
+                                                                <td>{$vo.coin}</td>
                                                             </tr>
                                                             {/volist}
                                                             <tr>
@@ -102,7 +101,7 @@
                                                                 <td>{$vo.user_name}</td>
                                                                 <td>{:get_date_full($vo.create_time)}</td>
                                                                 <td>{$vo.money}</td>
-                                                                <td>{$vo.bi}</td>
+                                                                <td>{$vo.coin}</td>
                                                             </tr>
                                                             {/volist}
                                                             <tr>
@@ -140,7 +139,7 @@
                                                                 <td>{$vo.user_name}</td>
                                                                 <td>{:get_date_full($vo.create_time)}</td>
                                                                 <td>{$vo.money}</td>
-                                                                <td>{$vo.bi}</td>
+                                                                <td>{$vo.coin}</td>
                                                             </tr>
                                                             {/volist}
                                                             <tr>

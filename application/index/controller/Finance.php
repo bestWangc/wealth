@@ -37,7 +37,7 @@ class Finance extends Base
                 break;
         }
 
-        $list = Db::name("moneyhistory")
+        $list = Db::name("money_history")
                 ->where($where)
                 ->order("id desc")
                 ->paginate(15,false,[
@@ -83,7 +83,7 @@ class Finance extends Base
         try {
             $res = Db::name("users")
                 ->where("id", $this::$user_id)
-                ->setInc('bi',$num);
+                ->setInc('coin',$num);
 
             // throw new Exception('收益币错误，请重试');
             if(!$res) throw new Exception('收益币错误，请重试');
@@ -101,7 +101,7 @@ class Finance extends Base
 
     public function cashing()
     {
-        $list = Db::name("tixianApply")
+        $list = Db::name("extract_apply")
             ->where(array("uid" => $this::$user_id))
             ->order("id desc")
             ->limit(10)
@@ -151,7 +151,7 @@ class Finance extends Base
             return jsonRes(1,'钱包余额不足');
         }
 
-        $count = Db::name("tixianApply")
+        $count = Db::name("extract_apply")
             ->where("uid", $this::$user_id)
             ->where("create_date",get_date())
             ->count();
@@ -171,7 +171,7 @@ class Finance extends Base
                 "status" => 0
             ];
 
-            $res = Db::name("tixianApply")->insert($data);
+            $res = Db::name("extract_apply")->insert($data);
 
             if(!$res) throw new Exception('提交错误，请重试');
 
@@ -190,100 +190,5 @@ class Finance extends Base
             Db::rollback();
             return jsonRes(0,$e->getMessage());
         }
-    }
-
-    /**
-     * 支付宝充值申请操作
-     */
-    public function alipay_action()
-    {
-        $epoints = intval($_POST['epoints']);
-
-        if ($epoints < MC("bi_price")) {
-            $this->error("充值金额必须大于收益币的价格！");
-        }
-
-        if ($_POST['liushui_no'] == '') {
-            $this->error("请填写支付宝转账流水号码！");
-        }
-
-        $data = array(
-            "uid" => $this::$user_id,
-            "epoints" => $epoints,
-            "create_time" => time(),
-            "liushui_no" => $_POST['liushui_no'],
-            "text" => $_POST['remark'],
-            "status" => 0
-        );
-
-        Db::name("ZhifubaoChongzhi")->add($data);
-
-        $this->success("充值申请提交成功！", url("finance/alipay"));
-    }
-
-    public function delete_alipay()
-    {
-        $id = intval($_GET['id']);
-
-        Db::name("ZhifubaoChongzhi")
-            ->where(["uid" => $this::$user_id, "id" => $id, "status" => 0])
-            ->delete();
-
-        $this->success("删除成功！", url("alipay"));
-    }
-
-    public function delete_cash()
-    {
-        $id = intval($_GET['id']);
-
-        $info = Db::name("TixianApply")
-            ->where(["uid" => $this::$user_id, "id" => $id, "status" => 0])
-            ->find();
-
-        Db::name("TixianApply")
-            ->where(["uid" => $this::$user_id, "id" => $id, "status" => 0])
-            ->delete();
-
-        $fee = round($info['epoints'] * MC('cash_fee'), 2);
-
-        if ($info['epoints'] > 0) {
-            write_money($this::$user_id, $info['epoints'], "取消提现", 6);
-            write_money($this::$user_id, $fee, "取消提现手续费返还", 6);
-        }
-
-        $this->success("删除成功！", url("cashing"));
-    }
-
-}
-
-function get_action_time($str) {
-    if ($str == 0) {
-        return "未操作";
-    }
-    return get_date_full($str);
-}
-
-function get_status($status) {
-    switch ($status) {
-        case 1:
-            return "已入账";
-            break;
-        case 2:
-            return "拒绝";
-            break;
-        default:
-            return "未审核";
-            break;
-    }
-}
-
-function get_cash_status($status) {
-    switch ($status) {
-        case 1:
-            return "提现完成";
-            break;
-        default:
-            return "未审核";
-            break;
     }
 }
