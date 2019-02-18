@@ -131,7 +131,8 @@ function get_month($str) {
 
 /**
  * 传递秒数 获取Y-m-d H:i:s格式的时间
- * @var Int $time 距离1970的秒数
+ * @param $time
+ * @return false|string
  */
 function get_date_full($time) {
     $time = $time? : time();
@@ -148,33 +149,6 @@ function get_date($time = '') {
     return date('Y-m-d', $time);
 }
 
-/**
- * url 301跳转函数
- * @param String $url 完整的url地址
- */
-function redirect_301($url = '') {
-    header("HTTP/1.1 301 Moved Permanently");
-    header("Location: {$url}");
-    exit();
-}
-
-function rmdirr($dirname) {
-    if (!file_exists($dirname)) {
-        return false;
-    }
-    if (is_file($dirname) || is_link($dirname)) {
-        return unlink($dirname);
-    }
-    $dir = dir($dirname);
-    while (false !== $entry = $dir->read()) {
-        if ($entry == '.' || $entry == '..') {
-            continue;
-        }
-        rmdirr($dirname . DIRECTORY_SEPARATOR . $entry);
-    }
-    $dir->close();
-    return rmdir($dirname);
-}
 
 // 获取客户端IP地址
 function get_client_ip() {
@@ -195,57 +169,6 @@ function get_client_ip() {
     return $ip;
 }
 
-
-/**
- * 弹出提示框
- *
- * @var String $name 提示信息
- * @var String $url 返回链接
- *
- */
-function pop($name,$url){
-    header("Content-Type: text/html; charset=UTF-8");
-    echo '<script language="javascript">';
-    echo "alert('{$name}');";
-    echo "location.href='{$url}'";
-    echo '</script>';
-    exit();
-}
-
-
-/**
- * 弹出提示框，并执行一个脚本
- *
- * @var String $name 提示信息
- * @var String 其他脚本
- *
- */
-function pop_js($name,$js){
-    header("Content-Type: text/html; charset=UTF-8");
-    echo '<script language="javascript">';
-    echo "alert('{$name}');";
-    echo "{$js}";
-    echo '</script>';
-    exit();
-}
-
-/**
- * 弹出提示框，上级框架跳转
- *
- * @var String $name 提示信息
- * @var String $url 返回链接
- *
- */
-function pop_parent($name,$url){
-    header("Content-Type: text/html; charset=UTF-8");
-    echo '<script language="javascript">';
-    echo "alert('{$name}');";
-    echo "parent.location.href='{$url}'";
-    echo '</script>';
-    exit();
-}
-
-
 /**
  * 管理员登录状态检测
  */
@@ -254,4 +177,17 @@ function check_admin(){
         pop('您尚未登录系统，请正确登录系统！',url("index/index"));
         exit;
     }
+}
+
+//上传图片
+function uploadPic($file,$name)
+{
+    $fileName = '/uploads/alipay/';
+    $name = md5($name);
+    $info = $file->validate(['ext'=>'jpg,png'])->move('./uploads/alipay',$name);
+    if($info){
+        $fileName .= $info->getSaveName();
+        return $fileName;
+    }
+    return '';
 }

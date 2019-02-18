@@ -9,7 +9,7 @@ class Index extends Base
 
     public function index()
     {
-        $role_name = $this->getUserRole($this::$uid);
+        $role_name = self::getUserRole($this::$uid);
         $this->assign([
             'uname' => Session::get('user_name'),
             'roleName' => $role_name
@@ -38,7 +38,7 @@ class Index extends Base
     }
 
     //获取角色权限名称
-    public function getUserRole($uid)
+    public static function getUserRole($uid)
     {
         $user_role = Db::name('users')
             ->where('id',$uid)

@@ -10,32 +10,13 @@ class User extends Base
 
     public function index()
     {
+        $role_name = Index::getUserRole($this::$uid);
+        $this->assign([
+            'userInfo' =>$this::$userInfo,
+            'roleName' => $role_name
+        ]);
+
         return $this->fetch();
-    }
-
-    //用户详细信息
-    public function userDetails()
-    {
-
-        $useRole = Session::get('user_role');
-        $where = ['parent_id' => $this->uid];
-        if($useRole == 1){
-            $where = '';
-        }
-        $userInfo = Db::name('users')
-            ->where($where)
-            ->field('id as uid,name,tel,email,status,created_date')
-            ->order('created_date desc')
-            ->select();
-
-        if(!empty($userInfo)){
-            foreach ($userInfo as $key => &$value){
-                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
-                $value['status'] = $value['status'] ? '启用' : '停用';
-            }
-            return jsonRes(0,'成功',$userInfo);
-        }
-        return jsonRes(0,'成功',$userInfo);
     }
 
     //修改密码
@@ -94,8 +75,64 @@ class User extends Base
     }
 
 
+    // 保存用户信息
+    public function saveUserInfo(Request $request)
+    {
+        $tel = $request::post('tel');
+        $pattern = '/^1[34578]\d{9}$/';
+        if(!preg_match($pattern,$tel)){
+            return jsonRes(1,'请填写正确的手机号');
+        }
 
+        $alipayAccount = $request::post('alipayAccount');
+        $realName = $request::post('realName');
+        $alipayPic = $request::file('alipayPic');
 
+        if(empty($realName)){
+            return jsonRes(1,'请填写真实姓名');
+        }
+        if(empty($alipayAccount)){
+            return jsonRes(1,'请填写支付宝收款帐号');
+        }
+
+        if(is_null($alipayPic)){
+            $alipayPic = $request::post('alipayPic');
+            if(empty($alipayPic)){
+                return jsonRes(1,'请上传支付宝收款二维码');
+            }
+        }
+
+        Db::startTrans();
+        try {
+            if(gettype($alipayPic) != 'string'){
+                $upload = uploadPic($alipayPic,$this::$uid.'alipay');
+            }else{
+                $upload = $alipayPic;
+            }
+
+            if(!empty($upload)){
+                $data = [
+                    'real_name' => $realName,
+                    'mobile' => $tel,
+                    'alipay_no' => $alipayAccount,
+                    'alipay_pic' => $upload
+                ];
+
+                Db::name('users')->where('id',$this::$uid)->update($data);
+            }else{
+                throw new Exception('error');
+            }
+            unset($data);
+            // 提交事务
+            Db::commit();
+
+            return jsonRes(0,'保存成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return jsonRes(1,'错误，请重试');
+        }
+    }
 
     //抢购记录
     public function buyLog(Request $request)
