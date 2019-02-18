@@ -118,7 +118,10 @@ class User extends Base
                     'alipay_pic' => $upload
                 ];
 
-                Db::name('users')->where('id',$this::$uid)->update($data);
+                $res = Db::name('users')->where('id',$this::$uid)->update($data);
+                if(!$res){
+                    throw new Exception('error2');
+                }
             }else{
                 throw new Exception('error');
             }
