@@ -42,11 +42,60 @@ class User extends Base
     public function changePwd()
     {
         $this->assign([
-            'uid' => $this->uid,
+            'uid' => $this::$uid,
             'uname' => Session::get('user_name')
         ]);
         return $this->fetch('changePwd');
     }
+
+    public function doChangePwd(Request $request)
+    {
+        $type = $request::post('type/d');
+
+        if(empty($type)){
+            return jsonRes(1,'未知错误，请重试');
+        }
+        $oldPwd = $request::param('oldPwd', "");
+        $newPwd = $request::param('newPwd', "");
+        $reNewPwd = $request::param('reNewPwd', "");
+        if($newPwd != $reNewPwd){
+            return jsonRes(1,'两次新密码不一致');
+        }
+
+        $userInfo = $this::$userInfo;
+        $field = '';
+        switch ($type) {
+            case 1:  //登录密码
+                $sysOldPwd = $userInfo['user_pwd'];
+                $field = "user_pwd";
+                break;
+            case 2: //二次密码
+                $sysOldPwd = $userInfo['user_pwd1'];
+                $field = "user_pwd1";
+                break;
+        }
+
+        if($sysOldPwd != md5($oldPwd.'jstj')){
+            return jsonRes(1,'原密码不正确');
+        }
+
+        $data = [
+            $field => md5($newPwd.'jstj')
+        ];
+
+        $res = Db::name("users")
+            ->lock()
+            ->where("id", $this::$uid)
+            ->update($data);
+        if($res){
+            return jsonRes(0,'密码修改成功，请牢记您的新密码');
+        }
+        return jsonRes(1,'密码修改失败，请稍后再试');
+    }
+
+
+
+
 
     //抢购记录
     public function buyLog(Request $request)

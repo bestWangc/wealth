@@ -80,9 +80,9 @@
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <strong>
                                     {if($signStatus)}
-                                    <button class='btn btn-default'>已签到</button>
+                                    <button class='btn btn-default btn-sm'>已签到</button>
                                     {else /}
-                                    <a class="btn btn-primary singBtn" href="javascript:;">签 到</a>
+                                    <a class="btn btn-success btn-sm singBtn" href="javascript:;">签 到</a>
                                     {/if}
                                 </strong>
                                 <br>
@@ -96,7 +96,9 @@
 
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>最近10笔收支记录</h5>
+                <h4>最近10笔收支记录</h4>
+                <a href="#" class="pull-right" style="margin-right: 1rem;">查看全部</a>
+                <div class="clearfix"></div>
             </div>
             <div class="ibox-content">
                 <div class="row row-lg">
@@ -121,9 +123,7 @@
 <script>
     $(function () {
         var btt_data = $('.data').val();
-        console.log(btt_data);
         btt_data = JSON.parse(btt_data);
-        console.log(btt_data);
         $('#moneyHistory').bootstrapTable({
                 data: btt_data,
                 columns: [{
