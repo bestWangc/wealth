@@ -28,41 +28,6 @@ function jsonRes($code, $msg, $data = []){
 }
 
 /**
- * 获取钱包历史记录类别
- * @param type $id
- */
-function get_main_last_status($id) {
-    switch ($id) {
-        case 1:
-            return '利息';
-            break;
-        case 7:
-            return '购买';
-            break;
-        case 2:
-            return '提现';
-            break;
-        case 3:
-            return '充值';
-            break;
-        case 4:
-            return '奖励';
-            break;
-        case 5:
-            return '签到';
-            break;
-        case 6:
-            return '返还';
-            break;
-
-        default:
-            return '其他';
-            break;
-    }
-}
-
-
-/**
  * 由数据库取出系统的配置
  *
  * @access  public

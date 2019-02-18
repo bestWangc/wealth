@@ -10,3 +10,37 @@ function refreshIframe() {
         }
     });
 }
+
+/**
+ * 获取钱包历史记录类别
+ * @param type $id
+ */
+function getMainLastStatus(id) {
+    let msg = '';
+    switch (id) {
+        case 1:
+            msg = '利息';
+            break;
+        case 7:
+            msg = '购买';
+            break;
+        case 2:
+            msg = '提现';
+            break;
+        case 3:
+            msg = '充值';
+            break;
+        case 4:
+            msg = '奖励';
+            break;
+        case 5:
+            msg = '签到';
+            break;
+        case 6:
+            msg = '返还';
+            break;
+        default:
+            msg = '其他';
+    }
+    return msg;
+}

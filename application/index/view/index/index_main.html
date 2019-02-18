@@ -94,35 +94,72 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>收入统计</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>最近10笔收支记录</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="example-wrap">
+                            <div class="example">
+                                <input type="hidden" class="data" value="{$moneyHistory}">
+                                <table id="moneyHistory"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="ibox-content" style="height: 30rem;">
-                        <div class="echarts" id="incomeChart"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ECharts -->
-    <script src="/static/manage/js/plugins/echarts/echarts.js"></script>
 
-    <!-- ECharts demo data -->
-    <script src="/static/manage/js/data/index_chart.js"></script>
 </body>
 {/block}
 
 {block name="my-js"}
 <script>
     $(function () {
+        var btt_data = $('.data').val();
+        console.log(btt_data);
+        btt_data = JSON.parse(btt_data);
+        console.log(btt_data);
+        $('#moneyHistory').bootstrapTable({
+                data: btt_data,
+                columns: [{
+                    field:"action_type",
+                    title:"类别",
+                    formatter: function (value, row, index) {
+                        return getMainLastStatus(value);
+                    }
+                }, {
+                    field:"epoints",
+                    title:"收入/支出",
+                    formatter: function (value, row, index) {
+                        if (value > 0) {
+                            return '<span style="color: red">收入</span>';
+                        } else {
+                            return "支出";
+                        }
+                    }
+                }, {
+                    field:"epoints",
+                    title:"金额"
+                }, {
+                    field:"create_time",
+                    title:"时间"
+                }, {
+                    field:"text",
+                    title:"说明"
+                }, {
+                    field:"original",
+                    title:"之前"
+                }, {
+                    field:"after",
+                    title:"之后"
+                }]
+        });
+
         $('.singBtn').click(function () {
             //加载遮罩层
             layer.load(1, {
