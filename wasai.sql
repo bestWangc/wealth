@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 19/02/2019 19:43:03
+ Date: 19/02/2019 22:14:27
 */
 
 SET NAMES utf8mb4;
@@ -135,7 +135,7 @@ INSERT INTO `xx_config` VALUES ('tuijian_switch', '推荐开关', '是否必须�
 INSERT INTO `xx_config` VALUES ('system_alipay', '网站支付宝账号', '网站支付宝账号', '123@163.com', 1, 10, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('cash_num', '每日提现次数限制', '每日提现次数限制', '1', 1, 10, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('cash_min', '最小提现金额', '最小提现金额', '50', 1, 10, 0, '', 1, 1);
-INSERT INTO `xx_config` VALUES ('cash_fee', '提现手续费', '提现手续费', '0.05', 1, 10, 0, '', 1, 1);
+INSERT INTO `xx_config` VALUES ('cash_fee', '提现手续费', '提现手续费', '0.1', 1, 10, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('site_url', '网站域名', '域名 如http://www.qq.com', 'http://www.weal.com', 1, 10, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('day_count', '每日发放收益币数量', '每日发放收益币数量上限值', '10000', 1, 9, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('buy_max', '总积分币最大个数', '总积分币最大个数', '30', 1, 10, 0, '', 1, 1);
@@ -204,13 +204,13 @@ CREATE TABLE `xx_extract_apply`  (
   `update_admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作的管理员id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`, `status`, `create_date`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '提现申请表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '提现申请表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_extract_apply
 -- ----------------------------
 INSERT INTO `xx_extract_apply` VALUES (12, 13, 200.00, 1470279729, '2016-08-04', 1, '', 1470291622, 19);
-INSERT INTO `xx_extract_apply` VALUES (11, 13, 1000.00, 1470204989, '1970-01-01', 0, '', 0, 0);
+INSERT INTO `xx_extract_apply` VALUES (18, 13, 100.00, 1550585439, '2019-02-19', 0, '', 0, 0);
 
 -- ----------------------------
 -- Table structure for xx_level
@@ -273,7 +273,7 @@ CREATE TABLE `xx_money_history`  (
   `text` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作的文字说明',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 72 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_money_history
@@ -349,6 +349,9 @@ INSERT INTO `xx_money_history` VALUES (68, 13, 5, 1550365704, 0.20, 500.00, 499.
 INSERT INTO `xx_money_history` VALUES (69, 16, 5, 1550369351, 0.20, 100.00, 99.80, '每日签到奖励');
 INSERT INTO `xx_money_history` VALUES (70, 13, 0, 1550389285, 30.00, 560.20, 530.20, '购买收益币');
 INSERT INTO `xx_money_history` VALUES (71, 13, 0, 1550389301, 30.00, 530.20, 500.20, '购买收益币');
+INSERT INTO `xx_money_history` VALUES (72, 13, 2, 1550585348, 50.00, 350.20, 300.20, '提现');
+INSERT INTO `xx_money_history` VALUES (73, 13, 2, 1550585348, 5.00, 300.20, 295.20, '提现手续费0.1');
+INSERT INTO `xx_money_history` VALUES (74, 13, 2, 1550585382, 50.00, 245.20, 195.20, '提现');
 
 -- ----------------------------
 -- Table structure for xx_recharge
@@ -365,7 +368,7 @@ CREATE TABLE `xx_recharge`  (
   `updated_date` int(11) NULL DEFAULT NULL,
   `response` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '充值返回json',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 71 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户充值表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 77 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户充值表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of xx_recharge
@@ -387,6 +390,12 @@ INSERT INTO `xx_recharge` VALUES (67, 13, '2019021710010050', 31, 1, 2, 15503665
 INSERT INTO `xx_recharge` VALUES (68, 13, '2019021756995657', 31, 1, 2, 1550366616, NULL, NULL);
 INSERT INTO `xx_recharge` VALUES (69, 13, '2019021754555710', 31, 1, 2, 1550366630, NULL, NULL);
 INSERT INTO `xx_recharge` VALUES (70, 13, '2019021753505098', 30, 1, 2, 1550366677, NULL, NULL);
+INSERT INTO `xx_recharge` VALUES (71, 13, '2019021954100549', 31, 0, 2, 1550580102, NULL, NULL);
+INSERT INTO `xx_recharge` VALUES (72, 13, '2019021910197565', 31, 0, 2, 1550580158, NULL, NULL);
+INSERT INTO `xx_recharge` VALUES (73, 13, '2019021950101525', 31, 1, 2, 1550580226, NULL, NULL);
+INSERT INTO `xx_recharge` VALUES (74, 13, '2019021953101974', 31, 0, 2, 1550580261, NULL, NULL);
+INSERT INTO `xx_recharge` VALUES (75, 13, '2019021997101101', 31, 1, 2, 1550580282, NULL, NULL);
+INSERT INTO `xx_recharge` VALUES (76, 13, '2019021950555450', 31, 0, 2, 1550580322, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for xx_users
@@ -422,7 +431,7 @@ CREATE TABLE `xx_users`  (
 -- Records of xx_users
 -- ----------------------------
 INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, '', 26.70, 0, '', '', '', 0, '', 0, 0, 1482841001);
-INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 500.20, 14, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 24, '127.0.0.1', 1550575584, 0, 1482751964);
+INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 1000.00, 14, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 24, '127.0.0.1', 1550575584, 0, 1482751964);
 INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, '13,12', 100.20, 2, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
 INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, '16,13,12', 0.00, 0, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
 INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, '17,16,13,12', 0.00, 0, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
