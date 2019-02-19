@@ -191,3 +191,12 @@ function uploadPic($file,$name)
     }
     return '';
 }
+
+//获取配置内容
+function getConfig($name)
+{
+    $res = db('config')
+        ->where('name',$name)
+        ->value('val');
+    return $res;
+}
