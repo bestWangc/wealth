@@ -1,0 +1,121 @@
+{extend name="layout/layout"}
+
+{block name="body"}
+<!--<style>
+    .nav-tabs{
+        border: 0
+    }
+    .nav-tabs > li > a{
+        background: #fff;
+        border-radius: 4PX;
+        border: #f8ac59 1px solid ;
+    }
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus,
+    .nav-tabs > li.active > a:active,
+    .nav-tabs > li > a:hover,
+    .nav-tabs > li > a:active{
+        background-color: #f8ac59;
+        border-color: #f8ac59;
+        color: #FFFFFF;
+    }
+</style>-->
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active" data-value="3"><a href="javascript:void(0)" role="tab" data-toggle="tab">全部</a></li>
+                <li role="presentation" data-value="2"><a href="javascript:void(0)"  role="tab" data-toggle="tab">支出</a></li>
+                <li role="presentation" data-value="1"><a href="javascript:void(0)"  role="tab" data-toggle="tab">收入</a></li>
+            </ul>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="recordFromData"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Basic -->
+</div>
+
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function(){
+
+        $('.nav.nav-tabs li').click(function(){
+            //3=>全部,2=支出,1=>收入
+            let listValue = $(this).data('value');
+
+            $.ajax({
+                url : '/index/finance/recordList',
+                type : "POST",
+                dataType : "json",
+                data : {"listValue" : listValue},
+                cache : false,
+                success : function(res){
+                    console.log(res);
+                    if(res.code == 0){
+                        $("#recordFromData").bootstrapTable('load', res.data);
+                    }else if(res.status == 0){
+                        layer.msg(data.message,{time: 1000});
+                    }
+                },
+                error : function(){
+                    layer.msg('出错啦，请重试',{time: 1000});
+                }
+            });
+        });
+
+        $('#recordFromData').bootstrapTable({
+            mobileResponsive: true,
+            height: "450",
+            columns: [{
+                field:"action_type",
+                title:"类别",
+                formatter: function (value, row, index) {
+                    return getMainLastStatus(value);
+                }
+            }, {
+                field:"epoints",
+                title:"收入/支出",
+                formatter: function (value, row, index) {
+                    if (value > 0) {
+                        return '<span style="color: red">收入</span>';
+                    } else {
+                        return "支出";
+                    }
+                }
+            }, {
+                field:"epoints",
+                title:"金额"
+            }, {
+                field:"create_time",
+                title:"时间"
+            }, {
+                field:"text",
+                title:"说明"
+            }, {
+                field:"original",
+                title:"之前"
+            }, {
+                field:"after",
+                title:"之后"
+            }]
+        });
+
+        //第一次加载页面时候加载数据
+        $(".nav.nav-tabs li.active").trigger('click');
+    });
+</script>
+{/block}
