@@ -77,12 +77,6 @@ class Extract extends Base
 
             if(!$res) throw new Exception('提交错误，请重试');
 
-            $res = Db::name("users")
-                ->where('id',$this::$uid)
-                ->setDec('money',$epoints);
-
-            if(!$res) throw new Exception('金额错误，请重试');
-
             $writeMoney = $this->writeMoney($this::$uid,$epoints, "提现", 2);
             if(!$writeMoney) throw new Exception('提现错误，请重试');
 
