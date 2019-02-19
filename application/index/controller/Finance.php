@@ -11,6 +11,7 @@ class Finance extends Base
         return $this->fetch();
     }
 
+    //财务记录
     public function recordList(Request $request)
     {
         $listValue = $request::post('listValue',3);
@@ -47,4 +48,5 @@ class Finance extends Base
 
         return jsonRes(0,'success',$list);
     }
+
 }
