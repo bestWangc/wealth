@@ -4,6 +4,7 @@ namespace app\index\controller;
 use think\Db;
 use think\facade\Session;
 use think\facade\Request;
+use think\Exception;
 
 class User extends Base
 {
@@ -118,12 +119,9 @@ class User extends Base
                     'alipay_pic' => $upload
                 ];
 
-                $res = Db::name('users')->where('id',$this::$uid)->update($data);
-                if(!$res){
-                    throw new Exception('error2');
-                }
+                Db::name('users')->where('id',$this::$uid)->update($data);
             }else{
-                throw new Exception('error');
+                throw new Exception('只能上传jpg/png图片');
             }
             unset($data);
             // 提交事务
@@ -133,7 +131,7 @@ class User extends Base
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
-            return jsonRes(1,'错误，请重试');
+            return jsonRes(1,$e->getMessage());
         }
     }
 }
