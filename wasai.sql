@@ -3,15 +3,15 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50553
+ Source Server Version : 50722
  Source Host           : localhost:3306
  Source Schema         : wasai
 
  Target Server Type    : MySQL
- Target Server Version : 50553
+ Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 17/02/2019 15:49:36
+ Date: 19/02/2019 19:43:03
 */
 
 SET NAMES utf8mb4;
@@ -395,24 +395,24 @@ DROP TABLE IF EXISTS `xx_users`;
 CREATE TABLE `xx_users`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
+  `real_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '真实姓名',
   `user_pwd` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '登录密码',
   `user_pwd1` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '二级密码',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '注册的时间',
-  `last_login_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间',
-  `last_login_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '最后登录IP',
-  `create_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '注册IP',
-  `login_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '登录次数',
-  `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后修改时间',
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '状态 1-启用 0-禁用',
-  `real_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '真实姓名',
-  `alipay_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '支付宝账号',
-  `nick_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `mobile` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '手机号码',
   `level_id` int(10) UNSIGNED NOT NULL DEFAULT 1 COMMENT '级别id，默认1 普通会员',
   `main` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '直接推荐用户，默认0，为顶级',
   `path` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '推荐路径，最多记录到5级',
   `money` decimal(12, 2) NOT NULL DEFAULT 0.00 COMMENT '钱包金额',
   `coin` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收益币数量，默认为0 ',
+  `alipay_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '支付宝账号',
+  `alipay_pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '支付宝收款二维码url',
+  `create_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '注册IP',
+  `login_count` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '登录次数',
+  `last_login_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '最后登录IP',
+  `last_login_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后登录时间',
+  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '注册的时间',
+  `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '最后修改时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`user_name`, `status`) USING BTREE,
   INDEX `main1`(`id`, `create_time`, `status`, `main`, `path`) USING BTREE
@@ -421,10 +421,10 @@ CREATE TABLE `xx_users`  (
 -- ----------------------------
 -- Records of xx_users
 -- ----------------------------
-INSERT INTO `xx_users` VALUES (12, 'lanfengye', '1', '1', 0, 0, '', '', 0, 1482841001, 1, '', '', '', '110', 1, 0, '', 26.70, 0);
-INSERT INTO `xx_users` VALUES (13, 'test', 'cc375e34b98c8b4c47e94d4a32295908', 'c81e728d9d4c2f636f067f89cc14862c', 0, 1550384685, '127.0.0.1', '127.0.0.1', 22, 1482751964, 1, '张三12', '123456', '1234', '1', 3, 12, '12', 500.20, 14);
-INSERT INTO `xx_users` VALUES (16, '12345678', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1550369260, 1550369697, '127.0.0.1', '127.0.0.1', 3, 1550369260, 1, '', '', '', '14432465678', 1, 13, '13,12', 100.20, 2);
-INSERT INTO `xx_users` VALUES (17, '123456789', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1550369728, 1550369740, '127.0.0.1', '127.0.0.1', 2, 1550369728, 1, '', '', '', '13423456789', 1, 16, '16,13,12', 0.00, 0);
-INSERT INTO `xx_users` VALUES (18, '1234567890', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1550369771, 1550369771, '127.0.0.1', '127.0.0.1', 1, 1550369771, 1, '', '', '', '13324567898', 1, 17, '17,16,13,12', 0.00, 0);
+INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, '', 26.70, 0, '', '', '', 0, '', 0, 0, 1482841001);
+INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 500.20, 14, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 24, '127.0.0.1', 1550575584, 0, 1482751964);
+INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, '13,12', 100.20, 2, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
+INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, '16,13,12', 0.00, 0, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
+INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, '17,16,13,12', 0.00, 0, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
 
 SET FOREIGN_KEY_CHECKS = 1;
