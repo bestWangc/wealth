@@ -8,7 +8,7 @@ use app\service\controller\Recharge as sRecharge;
 class Recharge extends Base
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $coinPrice = getConfig('coin_price');
         $list = $this->getRecord($this::$uid);

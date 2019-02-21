@@ -44,3 +44,21 @@ function getMainLastStatus(id) {
     }
     return msg;
 }
+
+function commonClick (index) {
+    $(".J_menuItem" , parent.document).each(function () {
+        if($(this).data('index') == index){
+            console.log($(this));
+            $(this).parent('ul').parent('li').addClass('active');
+            let oldHref = $(this).attr('href');
+            //url加上choseUid,并模拟点击
+            // oldHref += '?choseUid='+uid;
+            $(this).attr('href', oldHref);
+            $(this)[0].click();
+
+            //url改回原来的
+            oldHref = oldHref.substr(0,oldHref.indexOf('?'));
+            $(this).attr('href', oldHref);
+        }
+    });
+}

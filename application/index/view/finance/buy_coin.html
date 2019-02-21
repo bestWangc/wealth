@@ -5,41 +5,34 @@
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>申请提现</h5>
+            <h5>购买收益币</h5>
         </div>
         <div class="ibox-content">
             <div class="row row-lg">
                 <form class="form-horizontal m-t col-sm-5 col-sm-offset-1" id="commentForm" onsubmit="return false;">
-                    <input type="hidden" class="minMoney" value="{$moneyMin}">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">余额</label>
                         <div class="col-sm-8">
                             <input type="hidden" class="amount" value="{$money}">
+                            <input type="hidden" class="coinPrice" value="{$coinPrice}">
                             <p> <strong><i class="fa fa-jpy" aria-hidden="true"></i>&nbsp;<span class="text-primary" style="font-size: 2rem">{$money}</span> 元</strong></p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">提现金额</label>
+                        <label class="col-sm-4 control-label">购买数量</label>
                         <div class="col-sm-8">
-                            <select class="form-control epoints" name="epoints">
-                                <option value="50">50 &nbsp;元</option>
-                                <option value="100">100 &nbsp;元</option>
-                                <option value="200">200 &nbsp;元</option>
-                                <option value="500">500 &nbsp;元</option>
-                                <option value="1000">1000 &nbsp;元</option>
-                                <option value="3000">3000 &nbsp;元</option>
-                            </select>
+                            <input type="text" class="form-control buy_num">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">提示</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static">普通会员每日可提现{$limit}次，每笔手续费{$fee}</p>
+                            <p class="form-control-static">每个收益币价值{$coinPrice}元,每次至少购买1个</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-3">
-                            <button type="submit" class="btn btn-primary extract_btn" value="submit">立即提现</button>
+                            <button type="submit" class="btn btn-primary buy_btn" value="submit">立即购买</button>
                         </div>
                     </div>
                 </form>
@@ -55,29 +48,28 @@
 {block name="my-js"}
 <script>
     $(function () {
-        $('.extract_btn').click(function () {
-            let epoints = $('.epoints').val();
-            let minMoney = $('.minMoney').val();
+        $('.buy_btn').click(function () {
+            let coinPrice = $('.coinPrice').val();
+            let buy_num = $('.buy_num').val();
             let amount = $('.amount').val();
 
-            if(epoints == ''){
-                layer.msg('请选择提现金额',{time:1000});
+            if(buy_num == ''){
+                layer.msg('请输入购买数量',{time:1000});
                 return false;
             }
 
-            epoints = parseInt(epoints);
-            minMoney = parseInt(minMoney);
+            coinPrice = parseInt(coinPrice);
+            buy_num = parseInt(buy_num);
             amount = parseInt(amount);
-            if(isNaN(epoints)){
-                layer.msg('提现金额只能为数字',{time:1000});
+            if(isNaN(buy_num)){
+                layer.msg('购买数量只能为数字',{time:1000});
                 return false;
             }
 
-            if(epoints < minMoney){
-                layer.msg('最低提现'+minMoney+'元',{time:1000});
-                return false;
-            }
-            if(epoints > amount){
+            let totalAmount = buy_num * coinPrice;
+            console.log(totalAmount);
+            console.log(amount);
+            if(totalAmount > amount){
                 layer.msg('余额不足',{time:1000});
                 return false;
             }
@@ -86,12 +78,12 @@
                 shade: [0.1,'#fff']
             });
             $.ajax({
-                url : '/index/extract/doCashing',
+                url : '/index/finance/doBuyCoin',
                 type : "POST",
                 dataType : "json",
                 cache : false,
                 data : {
-                    epoints : epoints
+                    buy_num : buy_num
                 },
                 success : function(res){
                     layer.closeAll('loading');
