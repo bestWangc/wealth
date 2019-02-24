@@ -28,40 +28,6 @@ function jsonRes($code, $msg, $data = []){
 }
 
 /**
- * 由数据库取出系统的配置
- *
- * @access  public
- * @param   mix
- * @return  mix
- */
-function MC($name) {
-    //检测session缓存以及是否开启系统配置缓存
-    if (session('?config_cache') && config('Cache_config')) {
-        $sys_conf = session('config_cache');
-        //检测S缓存状态以及是否开启系统配置缓存
-    } elseif (cache('config_cache') && config('Cache_config')) {
-        $sys_conf = cache('config_cache');
-        session('config_cache', $sys_conf);
-    } else {
-        $sys_conf = db("config")
-            ->where('status',1)
-            ->field("name,val")
-            ->select();
-        $sys_conf_new = [];
-        foreach ($sys_conf as $key => $value){
-            $sys_conf_new[$value['name']] = $value['val'];
-        }
-
-        //检测是否开启缓存  开启则进行缓存
-        if (config('Cache_config')) {
-            cache('config_cache', $sys_conf_new, config('Cache_config_time'));
-            session('config_cache', $sys_conf_new);
-        }
-    }
-    return $sys_conf_new[$name];
-}
-
-/**
  * 传递级别ID获取级别信息 其他级别获取数组
  * @param $id
  * @return array|PDOStatement|string|\think\Model|null

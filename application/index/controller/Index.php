@@ -49,42 +49,6 @@ class Index extends Base
         return $roleName;
     }
 
-    //计算团队成员数量
-    public function getTeamInfo($uid)
-    {
-        //今日凌晨时间戳
-        $time = strtotime(date('Ymd'));
-        //今日新增成员
-        $sql1 = 'SELECT count(id) FROM ssc_users WHERE parent_id = '.$uid.' AND created_date > '.$time;
-        //今日活跃成员
-        $sql2 = 'SELECT count(DISTINCT su.id) AS count3 FROM ssc_users su
-                INNER JOIN ssc_order so ON so.user_id = su.id AND so.created_date > '.$time.'
-                WHERE su.parent_id = '.$uid;
-        $result = Db::name('users')
-            ->field('count(id) as count')
-            ->where('parent_id',$uid)
-            ->unionAll($sql1)
-            ->unionAll($sql2)
-            ->select();
-        $result = array_column($result,'count');
-        return $result;
-    }
-
-    //获取简单收益信息
-    public function getTeamOrderCount($uid)
-    {
-        //今日凌晨时间戳
-        $time = strtotime(date('Ymd'));
-        $result = Db::name('order')
-            ->alias('so')
-            ->join('users su','su.id = so.user_id')
-            ->field('COUNT(so.id) AS total,COALESCE(SUM(so.amount),0) AS amount')
-            ->where('su.parent_id',$uid)
-            ->where('so.created_date','>', $time)
-            ->find();
-        return $result;
-    }
-
     /**
      * 获取当日签到的状态,0-未签到 1-已签到
      *
@@ -125,5 +89,113 @@ class Index extends Base
             $res = $info;
         }
         return $res;
+    }
+
+
+    /**
+     * 下线推广
+     */
+    public function extend()
+    {
+        $userInfo = $this::$userInfo;
+        if (!empty($userInfo['main'])) {
+            $main_user_info = Db::name("users")
+                ->where("id", $userInfo['main'])
+                ->find();
+        } else {
+            $main_user_info = [];
+        }
+
+        $first_list = Db::name("users")
+            ->where("main", $userInfo["id"])
+            ->order("id")
+            ->field('user_name,FROM_UNIXTIME(create_time) as create_time,money,coin')
+            ->select();
+
+        $sum_coin = Db::name("users")
+            ->where("path", "like", "%{$userInfo["id"]}%")
+            ->sum("coin");
+
+        $sum_money=Db::name("users")
+            ->where("path", "like", "%{$userInfo["id"]}%")
+            ->sum("money");
+
+        $tuijian_list = Db::name("users")
+            ->where("path", "like", "%{$userInfo["id"]}%")
+            ->field('user_name,FROM_UNIXTIME(create_time) as create_time,money,coin,path')
+            ->order("id asc")
+            ->select();
+
+        //二级推荐列表
+        $second_list = [];
+        //三级推荐列表
+        $three_list = [];
+
+        foreach ($tuijian_list as $key => $value) {
+            $path_array = explode(",", $value['path']);
+            if(isset($path_array[1]) && $path_array[1] == $userInfo['id']){
+                $second_list[] = $value;
+            }
+            if(isset($path_array[2]) && $path_array[2] == $userInfo['id']){
+                $three_list[] = $value;
+            }
+        }
+        $siteUrl = getConfig('site_url');
+
+        $this->assign([
+            'siteUrl' => $siteUrl,
+            'user_id' => $userInfo['id'],
+            'main_user_info' => $main_user_info,
+            'first_list' => json_encode($first_list),
+            'sum_coin' => $sum_coin,
+            'sum_money' => $sum_money,
+            'second_list' => json_encode($second_list),
+            'three_list' => json_encode($three_list)
+        ]);
+        return $this->fetch();
+    }
+
+    /**
+     * 帮助
+     * @return mixed
+     */
+    public function help()
+    {
+        $content = Article::getContentByID(2);
+        $this->assign([
+            'nav' => 11,
+            'content' => $content,
+            'panelName' => '帮助'
+        ]);
+        return $this->fetch('news');
+    }
+
+    /**
+     * 关于
+     * @return mixed
+     */
+    public function about()
+    {
+        $content = Article::getContentByID(1);
+        $this->assign([
+            'nav' => 9,
+            'content' => $content,
+            'panelName' => '关于'
+        ]);
+        return $this->fetch('news');
+    }
+
+    /**
+     * 系统公告
+     * @return mixed
+     */
+    public function news()
+    {
+        $content = Article::getContentByID(3);
+        $this->assign([
+            'content' => $content,
+            'panelName' => '公告'
+        ]);
+        return $this->fetch();
     }
 }
