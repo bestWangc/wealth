@@ -10,79 +10,60 @@ class User extends Base
 
     public function index()
     {
+        $adminList = Db::name('admin')
+            ->field('id,name')
+            ->order('sort desc')
+            ->select();
+        $this->assign('adminList', json_encode($adminList,JSON_UNESCAPED_UNICODE));
         return $this->fetch();
     }
 
-    //用户详细信息
-    public function userDetails()
+    /**
+     * 添加admin 用户
+     * @param Request $request
+     * @return \think\response\Json
+     */
+    public function saveUser(Request $request)
     {
-
-        $useRole = Session::get('user_role');
-        $where = ['parent_id' => $this->uid];
-        if($useRole == 1){
-            $where = '';
+        $userName = $request::post('username');
+        $userPwd = $request::post('userpwd');
+        if(empty($userName) || empty($userPwd)){
+            return jsonRes(1,'信息填写不全，请重试');
         }
-        $userInfo = Db::name('users')
-            ->where($where)
-            ->field('id as uid,name,tel,email,status,created_date')
-            ->order('created_date desc')
-            ->select();
+        $oldUserInfo = Db::name('admin')
+            ->where('name',$userName)
+            ->count('id');
 
-        if(!empty($userInfo)){
-            foreach ($userInfo as $key => &$value){
-                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
-                $value['status'] = $value['status'] ? '启用' : '停用';
-            }
-            return jsonRes(0,'成功',$userInfo);
+        if(!!$oldUserInfo){
+            return jsonRes(1,'帐号已存在，请重新填写');
         }
-        return jsonRes(0,'成功',$userInfo);
+        $data = [
+            'name' => $userName,
+            'password' => md5($userPwd.'jstj'),
+            'sort' => 1
+        ];
+
+        $creatUser = Db::name('admin')->insert($data);
+
+        if($creatUser) return jsonRes(0,'添加成功');
+
+        return jsonRes(1,'添加失败，请重试');
     }
 
-    //修改密码
-    public function changePwd()
+    public function delUser(Request $request)
     {
-        $this->assign([
-            'uid' => $this->uid,
-            'uname' => Session::get('user_name')
-        ]);
-        return $this->fetch('changePwd');
-    }
-
-    //抢购记录
-    public function buyLog(Request $request)
-    {
-        $choseUid = $request::param('choseUid/d',0);
-
-        $this->assign('choseUid',$choseUid);
-        return $this->fetch();
-    }
-
-    //抢购详细记录
-    public function buyLogDetails(Request $request)
-    {
-        $uid = $request::post('choseUid/d');
-        $where = ['so.user_id'=>$uid];
-        if(!$uid){
-            $where = ['su.parent_id'=>$this->uid];
-        }
-
-        $result = Db::name('order')
-            ->alias('so')
-            ->join('users su','su.id = so.user_id','left')
-            ->join('goods sg','sg.id = so.goods_id','left')
-            ->join('award_info sai','sai.id = so.award_id','left')
-            ->where($where)
-            ->field('so.id as order_id,su.`name`,sg.`name` as good_name,so.goods_num,so.amount,so.guessing,sai.term_num,so.created_date')
-            ->order('so.created_date desc')
-            ->select();
-
-        if(!empty($result)){
-            foreach ($result as $key => &$value){
-                $value['guessing'] = $value['guessing'] ? '丰年' : '瑞雪';
-                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
+        $adminId = $request::post('admin_id/d');
+        if(!empty($adminId)){
+            $res = Db::name('admin')
+                ->where('id',$adminId)
+                ->delete();
+            if($res){
+                return jsonRes(0,'删除成功');
+            }else{
+                return jsonRes(1,'该管理员不存在');
             }
         }
-        return jsonRes(0,'成功',$result);
+        return jsonRes(1,'删除失败，请重试');
     }
 
 }

@@ -2,114 +2,179 @@
 {block name="title"}成员列表{/block}
 {block name="body"}
 <body class="gray-bg">
-    <div class="wrapper wrapper-content">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>成员列表</h5>
-            </div>
-            <div class="ibox-content">
-                <div class="row row-lg">
-                    <div class="col-sm-12">
-                        <div class="example-wrap">
-                            <div class="example">
-                                <table id="usersTableFromData"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
-                                </table>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h2>管理员</h2>
+                    <div class="clients-list">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i>管理员列表</a>
+                            </li>
+                            <li><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i>添加管理员</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="row row-lg">
+                                    <div class="col-sm-12">
+                                        <div class="example-wrap">
+                                            <div class="example">
+                                                <input type="hidden" class="adminList" value="{$adminList}">
+                                                <table id="adminList"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[15]>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-2" class="tab-pane">
+                                <form class="form-horizontal m-t col-sm-5 col-sm-offset-1" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">用户名</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control uname">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">登录密码</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control pwd">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">确认密码</label>
+                                        <div class="col-sm-8">
+                                            <input type="password" class="form-control re_pwd">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-3">
+                                            <button type="submit" class="btn btn-primary admin_btn">添加</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Panel Basic -->
     </div>
-
-    <script src="/static/manage/js/common.js"></script>
-
+</div>
 </body>
 {/block}
 {block name="my-js"}
 <script>
     $(function () {
-        $.ajax({
-            url: 'userDetails',
-            type: 'POST',
-            dataType: 'json',
-            cache: false,
-            success: function (res) {
-                if (res.code == 0) {
-                    var btt_data = res.data;
-
-                    $('#usersTableFromData').bootstrapTable({
-                        data: btt_data,
-                        columns: [{
-                            field: "uid",
-                            title: "用户ID"
-                        }, {
-                            field: "name",
-                            title: "用户帐号"
-                        }, {
-                            field: "tel",
-                            title: "绑定手机"
-                        }, {
-                            field: "email",
-                            title: "绑定邮箱"
-                        }, {
-                            field: "status",
-                            title: "状态"
-                        }, {
-                            field: "created_date",
-                            title: "创建时间"
-                        }, {
-                            field: 'operate',
-                            title: '操作',
-                            align: 'center',
-                            formatter: operateFormatter,
-                            events: operateEvents
-                        }]
-                    });
-                } else {
-                    layer.msg(res.msg, {time: 1500});
-                }
-            },
-            error: function () {
-                console.log(res);
-            }
-        });
-
         var operateFormatter = function() {
             return [
-                '<a href="#" class="buyLog btn btn-xs btn-info btn-sm" style="margin-right:10px;">抢购记录</a>',
-                '<a href="#" class="extractLog btn btn-xs btn-info btn-sm" style="margin-right:10px;">提现记录</a>',
-                '<a href="#" class="rechargeLog btn btn-xs btn-info btn-sm" style="margin-right:10px;">充值记录</a>',
+                '<a href="#" class="edit btn btn-xs btn-info btn-sm" style="margin-right:10px;">编辑</a>',
+                '<a href="#" class="del btn btn-xs btn-danger btn-sm" style="margin-right:10px;">删除</a>',
             ].join('');
         };
         window.operateEvents = {
-            'click .buyLog': function (e, value, row) {
-                commonClick(3,row.uid);
+            'click .edit': function (e, value, row) {
+                console.log('test');
             },
-            'click .extractLog': function (e, value, row) {
-                commonClick(4,row.uid);
-            },
-            'click .rechargeLog': function (e, value, row) {
-                commonClick(5,row.uid);
+            'click .del': function (e, value, row) {
+                layer.confirm('确定删除？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    $.ajax({
+                        url : '/manage/user/delUser',
+                        type : "POST",
+                        dataType : "json",
+                        data:{
+                            admin_id:row.id
+                        },
+                        cache : false,
+                        success : function(res){
+                            var callingBack = '';
+                            if(res.code == 0){
+                                callingBack = function () {
+                                    window.location.reload();
+                                };
+                            }
+                            layer.msg(res.msg,{icon:1,time: 1000},callingBack);
+                        },
+                        error : function(data){
+                            console.log(data);
+                        }
+                    });
+                });
             }
         };
-        var commonClick = function (index,uid) {
-            $(".J_menuItem" , parent.document).each(function () {
-                if($(this).data('index') == index){
-                    var oldHref = $(this).attr('href');
+        var admin_data = $('.adminList').val();
+        admin_data = JSON.parse(admin_data);
+        $('#adminList').bootstrapTable({
+            data: admin_data,
+            columns: [{
+                field: "id",
+                title: "ID"
+            }, {
+                field: "name",
+                title: "用户"
+            }, {
+                field: 'operate',
+                title: '操作',
+                align: 'center',
+                formatter: operateFormatter,
+                events: operateEvents
+            }]
+        });
 
-                    //url加上choseUid,并模拟点击
-                    oldHref += '?choseUid='+uid;
-                    $(this).attr('href', oldHref);
-                    $(this)[0].click();
+        $('.admin_btn').click(function () {
+            let user_name = $('.uname').val();
+            let user_pwd = $('.pwd').val();
+            let re_user_pwd = $('.re_pwd').val();
 
-                    //url改回原来的
-                    oldHref = oldHref.substr(0,oldHref.indexOf('?'));
-                    $(this).attr('href', oldHref);
+            if(user_name == ''){
+                layer.msg('帐号不能为空',{time:1000});
+                return false;
+            }
+            if(user_name.length < 8){
+                layer.msg('帐号不能少于8位',{time:1000});
+                return false;
+            }
+            if(user_pwd == ''){
+                layer.msg('密码不能为空',{time:1000});
+                return false;
+            }
+
+            if(user_pwd != re_user_pwd){
+                layer.msg('两次密码输入不一致',{time:1000});
+                return false;
+            }
+
+            layer.load(0, {
+                shade: [0.1,'#fff']
+            });
+            $.ajax({
+                url : '/manage/user/saveUser',
+                type : "POST",
+                dataType : "json",
+                cache : false,
+                data : {
+                    username : user_name,
+                    userpwd : user_pwd
+                },
+                success : function(data){
+                    layer.closeAll('loading');
+                    var callingBack = '';
+                    if(data.code == 0){
+                        callingBack = function(){
+                            window.location.reload();
+                        };
+                    }
+                    layer.msg(data.msg,{time: 1000},callingBack);
+                },
+                error : function(data){
+                    console.log(data);
                 }
             });
-        }
+        });
     });
 </script>
 {/block}
