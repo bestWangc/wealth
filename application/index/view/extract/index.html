@@ -46,7 +46,25 @@
             </div>
         </div>
     </div>
-    <!-- End Panel Basic -->
+
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h4>提现记录</h4>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <input type="hidden" class="ext_data" value="{$list}">
+                            <table id="extractList"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
@@ -55,6 +73,32 @@
 {block name="my-js"}
 <script>
     $(function () {
+        var ext_data = $('.ext_data').val();
+        ext_data = JSON.parse(ext_data);
+        $('#extractList').bootstrapTable({
+            data: ext_data,
+            columns: [{
+                field:"epoints",
+                title:"提现金额"
+            }, {
+                field:"create_time",
+                title:"申请时间"
+            }, {
+                field:"text",
+                title:"状态",
+                formatter: function (value) {
+                    if (value == 1) {
+                        return '提现完成';
+                    } else {
+                        return "提现中";
+                    }
+                }
+            }, {
+                field:"update_time",
+                title:"到账时间"
+            }]
+        });
+
         $('.extract_btn').click(function () {
             let epoints = $('.epoints').val();
             let minMoney = $('.minMoney').val();
