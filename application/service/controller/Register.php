@@ -16,7 +16,7 @@ class Register extends Base
 {
     public function index(Request $request)
     {
-        $tuijian_switch = MC("tuijian_switch");
+        $tuijian_switch = getConfig("tuijian_switch");
 
         $parent_id = $request::param('parent_id');
 
