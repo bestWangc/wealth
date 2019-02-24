@@ -50,6 +50,30 @@ class Index extends Base
     }
 
     /**
+     * 每日签到
+     */
+    public function sign()
+    {
+        $status = $this->getSignStatus($this::$uid);
+        if ($status != 0) {
+            $this->error("今日已签到");
+        }
+
+        $data = [
+            "uid" => $this::$uid,
+            "create_time" => time(),
+            "sign_date" => get_date()
+        ];
+        $res = Db::name('daySign')->insert($data);
+
+        $signIncome = getConfig('sign_income');
+        $this->writeMoney($this::$uid, $signIncome, "每日签到奖励", 5);
+
+        if($res) return jsonRes(0,'签到成功');
+        return jsonRes(0,'签到失败，请重试');
+    }
+
+    /**
      * 获取当日签到的状态,0-未签到 1-已签到
      *
      * @param $uid
@@ -90,7 +114,6 @@ class Index extends Base
         }
         return $res;
     }
-
 
     /**
      * 下线推广

@@ -172,6 +172,7 @@
                 dataType : "json",
                 cache : false,
                 success : function(res){
+                    console.log(res);
                     var callingBack = '';
                     layer.closeAll('loading');
                     if(res.code == 0){
