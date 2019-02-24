@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 19/02/2019 22:14:27
+ Date: 24/02/2019 21:45:52
 */
 
 SET NAMES utf8mb4;
@@ -22,18 +22,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `xx_admin`;
 CREATE TABLE `xx_admin`  (
-  `ly_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
-  `ly_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '管理员名称',
-  `ly_pwd` char(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '管理员密码',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '管理员名称',
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '管理员密码',
   `sort` int(11) NULL DEFAULT 10,
-  PRIMARY KEY (`ly_id`) USING BTREE,
-  INDEX `ly_name`(`ly_name`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态，0-禁用,1-正常',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `ly_name`(`name`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_admin
 -- ----------------------------
-INSERT INTO `xx_admin` VALUES (19, 'admin', '21232f297a57a5a743894a0e4a801fc3', 10);
+INSERT INTO `xx_admin` VALUES (19, 'admin', '7812555d77287d693e711b96e58ac893', 10, 1);
 
 -- ----------------------------
 -- Table structure for xx_admin_bihistory
@@ -176,7 +177,7 @@ CREATE TABLE `xx_day_sign`  (
   `sign_date` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '签到日期',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`uid`, `sign_date`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '每日签到表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '每日签到表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_day_sign
@@ -187,6 +188,7 @@ INSERT INTO `xx_day_sign` VALUES (3, 13, 1482731759, '2016-12-26');
 INSERT INTO `xx_day_sign` VALUES (4, 13, 1482843543, '2016-12-27');
 INSERT INTO `xx_day_sign` VALUES (5, 13, 1550365704, '2019-02-17');
 INSERT INTO `xx_day_sign` VALUES (6, 16, 1550369351, '2019-02-17');
+INSERT INTO `xx_day_sign` VALUES (9, 13, 1550983076, '2019-02-24');
 
 -- ----------------------------
 -- Table structure for xx_extract_apply
@@ -204,12 +206,13 @@ CREATE TABLE `xx_extract_apply`  (
   `update_admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作的管理员id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`, `status`, `create_date`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '提现申请表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '提现申请表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_extract_apply
 -- ----------------------------
 INSERT INTO `xx_extract_apply` VALUES (12, 13, 200.00, 1470279729, '2016-08-04', 1, '', 1470291622, 19);
+INSERT INTO `xx_extract_apply` VALUES (19, 13, 50.00, 1550982622, '2019-02-24', 0, '', 0, 0);
 INSERT INTO `xx_extract_apply` VALUES (18, 13, 100.00, 1550585439, '2019-02-19', 0, '', 0, 0);
 
 -- ----------------------------
@@ -273,7 +276,7 @@ CREATE TABLE `xx_money_history`  (
   `text` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作的文字说明',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 82 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_money_history
@@ -352,6 +355,10 @@ INSERT INTO `xx_money_history` VALUES (71, 13, 0, 1550389301, 30.00, 530.20, 500
 INSERT INTO `xx_money_history` VALUES (72, 13, 2, 1550585348, 50.00, 350.20, 300.20, '提现');
 INSERT INTO `xx_money_history` VALUES (73, 13, 2, 1550585348, 5.00, 300.20, 295.20, '提现手续费0.1');
 INSERT INTO `xx_money_history` VALUES (74, 13, 2, 1550585382, 50.00, 245.20, 195.20, '提现');
+INSERT INTO `xx_money_history` VALUES (80, 13, 2, 1550982622, 5.00, 920.00, 915.00, '提现手续费0.1');
+INSERT INTO `xx_money_history` VALUES (79, 13, 2, 1550982622, 50.00, 970.00, 920.00, '提现');
+INSERT INTO `xx_money_history` VALUES (78, 13, 0, 1550975412, 30.00, 1000.00, 970.00, '购买收益币');
+INSERT INTO `xx_money_history` VALUES (81, 13, 5, 1550983076, 0.20, 915.00, 914.80, '每日签到奖励');
 
 -- ----------------------------
 -- Table structure for xx_recharge
@@ -425,15 +432,16 @@ CREATE TABLE `xx_users`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`user_name`, `status`) USING BTREE,
   INDEX `main1`(`id`, `create_time`, `status`, `main`, `path`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员信息表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_users
 -- ----------------------------
 INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, '', 26.70, 0, '', '', '', 0, '', 0, 0, 1482841001);
-INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 1000.00, 14, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 24, '127.0.0.1', 1550575584, 0, 1482751964);
+INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 915.20, 15, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 25, '127.0.0.1', 1550975391, 0, 1482751964);
 INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, '13,12', 100.20, 2, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
 INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, '16,13,12', 0.00, 0, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
 INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, '17,16,13,12', 0.00, 0, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
+INSERT INTO `xx_users` VALUES (19, '145785654', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '15562523321', 1, 13, '13,12', 0.00, 0, '', '', '127.0.0.1', 1, '127.0.0.1', 1550980557, 1550980557, 1550980557);
 
 SET FOREIGN_KEY_CHECKS = 1;
