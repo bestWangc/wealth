@@ -11,11 +11,11 @@
                 <ul class="nav" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <span><img alt="image" class="img-circle" src="/static/manage/images/profile_small.jpg" /></span>
+                            <span><img alt="image" class="img-circle" src="/static/manage/images/admin.jpg" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold">{$uname}</strong></span>
-                                <span class="text-muted text-xs block">{$roleName}<b class="caret"></b></span>
+                                <span class="text-muted text-xs block"><b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -28,66 +28,79 @@
                     <li>
                         <a href="#">
                             <i class="fa fa-bar-chart-o"></i>
-                            <span class="nav-label">个人信息</span>
+                            <span class="nav-label">系统管理</span>
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                               <a class="J_menuItem" href="{:url('user/changePwd')}">修改密码</a>
+                               <a class="J_menuItem" href="{:url('')}">用户管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('')}">站点配置</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="{:url('')}">收益执行</a>
                             </li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="user_list.html"><i class="fa fa-envelope"></i> <span class="nav-label">团队管理</span><span class="fa arrow"></span></a>
+                        <a href="#">
+                            <i class="fa fa-envelope"></i>
+                            <span class="nav-label">功能管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="{:url('user/index')}">成员列表</a>
-                            </li>
-                            {if ($urole === 1)}
-                            <li>
-                                <a class="J_menuItem" href="{:url('user/buyLog')}">抢购记录</a>
+                                <a class="J_menuItem" href="{:url('')}">会员管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="{:url('extract/index')}">提现记录</a>
+                                <a class="J_menuItem" href="{:url('')}">充值管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="{:url('recharge/index')}">充值记录</a>
+                                <a class="J_menuItem" href="{:url('')}">提现管理</a>
                             </li>
-                            {/if}
+                            <li>
+                                <a class="J_menuItem" href="{:url('')}">晋级管理</a>
+                            </li>
                         </ul>
                     </li>
-
-                    {if $urole === 1}
-                        <li>
-                            <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">申请审核</span><span class="fa arrow"></span><span class="label label-warning pull-right">16</span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a class="J_menuItem" href="{:url('recharge/applyFor')}">充值申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('extract/applyFor')}">提现申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('apply/goldApply')}">金币兑换申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('apply/backGoodsApply')}">退款申请</a></li>
-                                <li><a class="J_menuItem" href="{:url('apply/takeGoodsApply')}">提货申请</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="{:url('income/settleBonus')}">
-                                <i class="fa fa-exchange"></i>
-                                <span class="nav-label">结算分红</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="{:url('income/index')}">
-                                <i class="fa fa-magic"></i>
-                                <span class="nav-label">资金详情</span>
-                            </a>
-                        </li>
-                    {/if}
+                    <li>
+                        <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">充值</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="{:url('recharge/applyFor')}">钱包充值</a></li>
+                            <li><a class="J_menuItem" href="{:url('extract/applyFor')}">收益币充值</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('income/settleBonus')}">
+                            <i class="fa fa-exchange"></i>
+                            <span class="nav-label">文章管理</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{:url('income/index')}">
+                            <i class="fa fa-magic"></i>
+                            <span class="nav-label">缓存管理</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </nav>
         <!--左侧导航结束-->
         <!--右侧部分开始-->
         <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                    <div class="row" style="margin-top: 1.2rem;margin-left: 10rem;">
+                        <span style="font-size: 2rem;">金上添金 -投资理财专家</span>
+                    </div>
+
+                </nav>
+            </div>
             <div class="row content-tabs">
                 <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
                 </button>

@@ -10,49 +10,29 @@ class Index extends Base
 
     public function index()
     {
-        $user_role = Session::get('user_role');
-        $role_name = $this->getUserRole($user_role);
         $this->assign([
-            'uname' => Session::get('user_name'),
-            'roleName' => $role_name,
-            'urole' => $user_role
+            'uname' => Session::get('uname')
         ]);
         return $this->fetch();
     }
 
     public function indexMain()
     {
-        $userName = Session::get('user_name');
 
-        $field = 'su.created_date,su.email,sa.alipay_name,alipay_account,sad.`name`,sad.phone,sad.details';
-        $info = Db::name('users')
-            ->alias('su')
-            ->join('alipay sa','sa.user_id = su.id','left')
-            ->join('address sad','sad.user_id = su.id','left')
-            ->where('su.parent_id',$this->uid)
-            ->field($field)
+        $info = Db::name("users")
+            ->where("status", 1)
+            ->field('count(id) as count,sum(money) as money,sum(coin) as coin')
             ->find();
-        //团队成员数量
-        $count = $this->getTeamInfo($this->uid);
 
-        list($teamAllNum,$teamNewNum,$teamActiveNum) = $count;
-
-        $orderCountInfo = $this->getTeamOrderCount($this->uid);
+        $extractSum = Db::name("extract_apply")
+            ->where("status", 0)
+            ->sum("epoints");
 
         $this->assign([
-            'userName' => $userName,
-            'createdDate' => $info['created_date'] ?? '未设置',
-            'email' => $info['email'] ?? '未设置',
-            'alipayName' => $info['alipay_name'] ?? '未设置',
-            'alipayAccount' => $info['alipay_account'] ?? '未设置',
-            'name' => $info['name'] ?? '未设置',
-            'phone' => $info['phone'] ?? '未设置',
-            'details' => $info['details'] ?? '未设置',
-            'teamAllNum' => $teamAllNum,
-            'teamNewNum' => $teamNewNum,
-            'teamActiveNum' => $teamActiveNum,
-            'orderTotal' => $orderCountInfo['total'],
-            'moneyTotal' => $orderCountInfo['amount']
+            'userNum' => $info['count'],
+            'moneyNum' => $info['money'],
+            'coinNum' => $info['coin'],
+            'extractSum' => $extractSum
         ]);
         return $this->fetch();
     }
