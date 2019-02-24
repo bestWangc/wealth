@@ -56,7 +56,7 @@ class Login extends Base
 
             return jsonRes(0,'登录成功');
         }else{
-            return jsonRes(1,'登录失败');
+            return jsonRes(1,'密码错误');
         }
     }
 }

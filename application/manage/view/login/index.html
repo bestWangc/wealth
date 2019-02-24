@@ -1,39 +1,47 @@
 {extend name="layout/layout"}
-{block name="title"}登录{/block}
+{block name="title"}登录-金上添金{/block}
+
 {block name="body"}
-<body class="gray-bg">
-    <div class="middle-box text-center loginscreen">
-        <div>
-            <div>
-                <h1 class="logo-name">金</h1>
+<link rel="stylesheet" href="/static/manage/css/login.css">
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="signin-info">
+                <div class="logopanel m-b">
+                    <h1>[ 金+ ]</h1>
+                </div>
+                <div class="m-b"></div>
+                <h4>欢迎使用 <strong>金上添金 管理后台</strong></h4>
+
+                <strong>还没有账号？ <a href="javascript:;">立即注册&raquo;</a></strong>
             </div>
-            <h3>欢迎使用 金上添金</h3>
-
-            <form class="m-t" role="form" action="" onsubmit="return false;">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="user_account" placeholder="用户名" required="">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" name="user_pwd" placeholder="密码" required="">
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b submit_btn">登 录</button>
-
-                <p class="text-muted text-center">金上添金后台管理系统</p>
-
+        </div>
+        <div class="col-sm-5">
+            <form method="post" action="" onsubmit="return false">
+                <h4 class="no-margins">登录：</h4>
+                <p class="m-t-md">登录到[ 金+ ] 管理后台</p>
+                <input type="text" class="form-control uname" placeholder="用户名" />
+                <input type="password" class="form-control pword m-b" placeholder="密码" />
+                <button class="btn btn-success btn-block login_btn">登录</button>
             </form>
         </div>
     </div>
+    <div class="signup-footer">
+        <div class="pull-left">
+            &copy; 2017 All Rights Reserved. 金+
+        </div>
+    </div>
+</div>
 </body>
 {/block}
+
 {block name="my-js"}
 <script>
     $(function () {
-        $("input[name='user_account']").keydown(function(){
-            this.value = this.value.replace(/[^A-Za-z0-9]/i,'');
-        });
-        $('.submit_btn').click(function () {
-            var user_name = $('input[name="user_account"]').val();
-            var user_pwd = $('input[name="user_pwd"]').val();
+        $('.login_btn').click(function () {
+            var user_name = $('.uname').val();
+            var user_pwd = $('.pword').val();
             if(user_name == ''){
                 layer.msg('请填写用户名',{time: 1000});
                 return false;
@@ -43,14 +51,13 @@
                 return false;
             }
             $.ajax({
-                url : '/service/login/index',
+                url : '/manage/login/doLogin',
                 type : "POST",
                 dataType : "json",
                 cache : false,
                 data : {
                     username : user_name,
-                    userpwd : user_pwd,
-                    type:3
+                    userpwd : user_pwd
                 },
                 success : function(data){
                     var callBack = '';

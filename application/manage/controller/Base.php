@@ -18,7 +18,6 @@ class Base extends Controller
     {
         parent::initialize();
         $this->checkLogin();
-        $this->checkRole();
         $this->uid = session('uid');
     }
 
@@ -26,12 +25,4 @@ class Base extends Controller
         //seeion没有user_id 重新登录
         if(!session('uid')) $this->redirect('/manage/login');
     }
-
-    //禁止翻墙登录
-    public function checkRole(){
-        //seeion没有user_id 重新登录
-        // if(!session('user_role')) abort(403,'权限不够');
-        if(is_null(session('user_role'))) abort(403,'权限不够');
-    }
-
 }
