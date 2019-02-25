@@ -1,0 +1,184 @@
+{extend name="layout/layout"}
+
+{block name="body"}
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>网站设置</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <form class="form-horizontal m-t col-sm-8 col-sm-offset-1" id="configForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">网站名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="site_name" value="{$info.site_name}">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">网站开关</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="site_switch" value="{$info.site_switch}">
+                            <span class="help-block m-b-none">当为1的时候为开，0为关闭</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">每日收益系数</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="daily_income" value="{$info.daily_income}">
+                            <span class="help-block m-b-none ">收益币的每日收益，默认每天1个收益币获取1元</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">每日签到收益</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="sign_income" value="{$info.sign_income}">
+                            <span class="help-block m-b-none">每日签到获得的收益</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">一级会员收益</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="first_level" value="{$info.first_level}">
+                            <span class="help-block m-b-none ">推荐的一级会员每日收益</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">二级会员收益</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="second_level" value="{$info.second_level}">
+                            <span class="help-block m-b-none">推荐的二级会员每日收益</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">三级会员收益</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="three_level" value="{$info.three_level}">
+                            <span class="help-block m-b-none">推荐的三级会员每日收益</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">收益币的价格</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="coin_price" value="{$info.coin_price}">
+                            <span class="help-block m-b-none ">收益币对应的价格</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">每日发放收益币数量</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="day_count" value="{$info.day_count}">
+                            <span class="help-block m-b-none">每日发放收益币数量上限值</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">推荐开关</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="tuijian_switch" value="{$info.tuijian_switch}">
+                            <span class="help-block m-b-none ">推荐的一级会员每日收益</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">每日提现次数限制</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="cash_num" value="{$info.cash_num}">
+                            <span class="help-block m-b-none ">每日提现次数限制</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">最小提现金额</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="cash_min" value="{$info.cash_min}">
+                            <span class="help-block m-b-none ">最小提现金额</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">提现手续费</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="cash_fee" value="{$info.cash_fee}">
+                            <span class="help-block m-b-none ">提现手续费</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">网站域名</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="site_url" value="{$info.site_url}">
+                            <span class="help-block m-b-none">域名 如http://www.qq.com</span>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">总积分币最大个数</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="buy_max" value="{$info.buy_max}">
+                            <span class="help-block m-b-none">总积分币最大个数</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-3">
+                            <button type="submit" class="btn btn-primary site_btn" value="submit">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+{/block}
+
+{block name="my-js"}
+<script>
+    $(function () {
+        $('.site_btn').click(function () {
+            let data = $('#configForm').serializeArray();
+
+            if(data.length <= 0 ){
+                layer.msg('请修改配置',{time:1000});
+                return false;
+            }
+
+            layer.load(0, {
+                shade: [0.1,'#fff']
+            });
+            $.ajax({
+                url : '/manage/config/saveConfig',
+                type : "POST",
+                dataType : "json",
+                cache : false,
+                data : {
+                    data : data
+                },
+                success : function(res){
+                    layer.closeAll('loading');
+                    let callBack = '';
+                    if(res.code == 0){
+                        callBack = function () {
+                            window.location.reload();
+                        };
+                    }
+                    layer.msg(res.msg,{time: 1500},callBack);
+                },
+                error : function(data){
+                    console.log(data);
+                }
+            });
+        });
+    });
+</script>
+{/block}
