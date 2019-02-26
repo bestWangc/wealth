@@ -27,7 +27,11 @@ function writeMoney($uid, $money, $text = "", $type = 0) {
     $user_info = Db::name('users')->where("id", $uid)->find();
     if ($user_info) {
         $old_money = $user_info['money'];
-        $new_money = $old_money - $money;
+        if($type == 1 || $type == 4 || $type = 5 || $type = 6){
+            $new_money = $old_money + $money;
+        }else{
+            $new_money = $old_money - $money;
+        }
 
         Db::startTrans();
         try {

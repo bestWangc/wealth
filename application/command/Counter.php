@@ -50,7 +50,6 @@ class Counter extends Command
             //计算推荐人的奖金
             if(!empty($value['path'])){
                 $path_array=  explode(',', $value['path']);
-                var_dump($path_array);
 
                 //一级推荐人
                 if(!empty($path_array[0])){
