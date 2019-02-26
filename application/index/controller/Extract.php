@@ -77,11 +77,11 @@ class Extract extends Base
 
             if(!$res) throw new Exception('提交错误，请重试');
 
-            $writeMoney = $this->writeMoney($this::$uid,$epoints, "提现", 2);
+            $writeMoney = writeMoney($this::$uid,$epoints, "提现", 2);
             if(!$writeMoney) throw new Exception('提现错误，请重试');
 
             if($fee > 0){
-                $writeMoney = $this->writeMoney($this::$uid, $fee, '提现手续费' . $cashFea, 2);
+                $writeMoney = writeMoney($this::$uid, $fee, '提现手续费' . $cashFea, 2);
                 if(!$writeMoney) throw new Exception('提现手续费记录错误，请重试');
             }
             // 提交事务

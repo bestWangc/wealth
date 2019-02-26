@@ -85,7 +85,7 @@ class Finance extends Base
 
             // throw new Exception('收益币错误，请重试');
             if(!$res) throw new Exception('收益币错误，请重试');
-            $writeMoney = $this->writeMoney($this::$uid,$price, "购买收益币", 0);
+            $writeMoney = writeMoney($this::$uid,$price, "购买收益币", 0);
             if(!$writeMoney) throw new Exception('money错误，请重试');
             // 提交事务
             Db::commit();

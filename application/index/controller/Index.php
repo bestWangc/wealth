@@ -67,7 +67,7 @@ class Index extends Base
         $res = Db::name('daySign')->insert($data);
 
         $signIncome = getConfig('sign_income');
-        $this->writeMoney($this::$uid, $signIncome, "每日签到奖励", 5);
+        writeMoney($this::$uid, $signIncome, "每日签到奖励", 5);
 
         if($res) return jsonRes(0,'签到成功');
         return jsonRes(0,'签到失败，请重试');
