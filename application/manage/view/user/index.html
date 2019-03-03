@@ -83,7 +83,7 @@
                     btn: ['确定','取消'] //按钮
                 }, function(){
                     $.ajax({
-                        url : '/manage/user/delUser',
+                        url : '/manage/user/delAdmin',
                         type : "POST",
                         dataType : "json",
                         data:{
@@ -152,7 +152,7 @@
                 shade: [0.1,'#fff']
             });
             $.ajax({
-                url : '/manage/user/saveUser',
+                url : '/manage/user/saveAdmin',
                 type : "POST",
                 dataType : "json",
                 cache : false,

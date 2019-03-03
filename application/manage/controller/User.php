@@ -23,7 +23,7 @@ class User extends Base
      * @param Request $request
      * @return \think\response\Json
      */
-    public function saveUser(Request $request)
+    public function saveAdmin(Request $request)
     {
         $userName = $request::post('username');
         $userPwd = $request::post('userpwd');
@@ -50,7 +50,7 @@ class User extends Base
         return jsonRes(1,'添加失败，请重试');
     }
 
-    public function delUser(Request $request)
+    public function delAdmin(Request $request)
     {
         $adminId = $request::post('admin_id/d');
         if(!empty($adminId)){
@@ -66,4 +66,29 @@ class User extends Base
         return jsonRes(1,'删除失败，请重试');
     }
 
+    //会员列表
+    public function user()
+    {
+        return $this->fetch();
+    }
+
+    //会员详细信息
+    public function userDetails()
+    {
+        $userInfo = Db::name('users')
+            ->alias('u')
+            ->join('level l','l.id = u.level_id','left')
+            ->where('status',1)
+            ->field('u.id,u.user_name,u.real_name,u.mobile,u.money,u.coin,u.login_count,u.create_time,l.title')
+            ->order('u.create_time desc')
+            ->select();
+
+        if(!empty($userInfo)){
+            foreach ($userInfo as $k => &$v) {
+                $v['create_time'] = date('Y-m-d H:i:s',$v['create_time']);
+            }
+        }
+
+        return jsonRes(0,'success',$userInfo);
+    }
 }
