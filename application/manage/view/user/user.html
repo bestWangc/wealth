@@ -22,9 +22,28 @@
         </div>
         <!-- End Panel Basic -->
     </div>
-
     <script src="/static/manage/js/common.js"></script>
 
+    <div class="wrapper wrapper-content recordContent" style="display: none">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5></h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="example-wrap">
+                            <div class="example">
+                                <table id="recordTbl"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Basic -->
+    </div>
 </body>
 {/block}
 {block name="my-js"}
@@ -91,31 +110,93 @@
         };
         window.operateEvents = {
             'click .levelLog': function (e, value, row) {
-                // commonClick(3,row.uid);
+                recordAlert(1,row.id);
             },
             'click .extractLog': function (e, value, row) {
-                // commonClick(4,row.uid);
+                recordAlert(2,row.id);
             },
             'click .rechargeLog': function (e, value, row) {
-                // commonClick(5,row.uid);
+                recordAlert(3,row.id);
             }
         };
-        /*var commonClick = function (index,uid) {
-            $(".J_menuItem" , parent.document).each(function () {
-                if($(this).data('index') == index){
-                    var oldHref = $(this).attr('href');
 
-                    //url加上choseUid,并模拟点击
-                    oldHref += '?choseUid='+uid;
-                    $(this).attr('href', oldHref);
-                    $(this)[0].click();
+        var recordAlert = function (index,id) {
+            let url = '';
+            switch (index) {
+                case 1:
+                    url = '/manage/level/record';
+                    break;
+                case 2:
+                    url = '/manage/extract/record';
+                    break;
+                case 3:
+                    url = '/manage/recharge/record';
+                    break;
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                data:{
+                    uid : id
+                },
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    if (res.code == 0) {
+                        let btt_data = res.data;
 
-                    //url改回原来的
-                    oldHref = oldHref.substr(0,oldHref.indexOf('?'));
-                    $(this).attr('href', oldHref);
+                        let colunmn = [];
+                        let showTitle = '';
+                        switch (index) {
+                            case 1:
+                                showTitle = '晋级记录';
+                                colunmn = [{
+                                    field: "id",
+                                    title: "用户ID"
+                                }, {
+                                    field: "title",
+                                    title: "申请级别"
+                                }, {
+                                    field: "status",
+                                    title: "状态"
+                                }, {
+                                    field: "action_status",
+                                    title: "奖励"
+                                }, {
+                                    field: "create_time",
+                                    title: "创建时间"
+                                }];
+                                break;
+                            case 2:
+                                showTitle = '提现记录';
+                                url = '/manage/extract/record';
+                                break;
+                            case 3:
+                                showTitle = '充值记录';
+                                url = '/manage/recharge/record';
+                                break;
+                        }
+
+                        $('#recordTbl').bootstrapTable({
+                            data: btt_data,
+                            columns: colunmn
+                        });
+                        layer.open({
+                            type: 1,
+                            title: showTitle,
+                            area: ['70%', '60%'], //宽高
+                            content: $('.recordContent')
+                        });
+                    } else {
+                        layer.msg(res.msg, {time: 1500});
+                    }
+                },
+                error: function () {
+                    console.log(res);
                 }
             });
-        }*/
+        };
     });
 </script>
 {/block}
