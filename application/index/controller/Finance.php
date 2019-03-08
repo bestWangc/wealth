@@ -49,7 +49,7 @@ class Finance extends Base
         return jsonRes(0,'success',$list);
     }
 
-    public function buyCoin(Request $request)
+    public function buyWorker(Request $request)
     {
         $userInfo = $this::$userInfo;
         $coinPrice = getConfig('coin_price');
@@ -63,7 +63,7 @@ class Finance extends Base
         return $this->fetch();
     }
 
-    public function doBuyCoin(Request $request)
+    public function doBuyWorker(Request $request)
     {
         $num = $request::post('buy_num/d');
         if(empty($num)){

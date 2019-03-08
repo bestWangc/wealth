@@ -5,7 +5,7 @@
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h5>购买收益币</h5>
+            <h5>购买矿工</h5>
         </div>
         <div class="ibox-content">
             <div class="row row-lg">
@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">提示</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static">每个收益币价值{$coinPrice}元,每次至少购买1个</p>
+                            <p class="form-control-static">每个矿工价值{$coinPrice}元,每次至少购买1人</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -78,7 +78,7 @@
                 shade: [0.1,'#fff']
             });
             $.ajax({
-                url : '/index/finance/doBuyCoin',
+                url : '/index/finance/doBuyWorker',
                 type : "POST",
                 dataType : "json",
                 cache : false,
