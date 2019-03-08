@@ -23,11 +23,13 @@ use think\Db;
  * @throws \think\db\exception\ModelNotFoundException
  * @throws \think\exception\DbException
  */
-function writeMoney($uid, $money, $text = "", $type = 0) {
+function writeMoney($uid, $money, $text = "", $type) {
+
     $user_info = Db::name('users')->where("id", $uid)->find();
-    if ($user_info) {
+    if (!empty($user_info)) {
+
         $old_money = $user_info['money'];
-        if($type == 1 || $type == 4 || $type = 5 || $type = 6){
+        if($type == 1 || $type == 4 || $type == 5 || $type == 6){
             $new_money = $old_money + $money;
         }else{
             $new_money = $old_money - $money;
@@ -68,6 +70,7 @@ function writeMoney($uid, $money, $text = "", $type = 0) {
             return false;
         }
     }
+    return false;
 }
 
 /**

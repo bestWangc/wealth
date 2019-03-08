@@ -86,19 +86,12 @@
                 formatter: function (value, row, index) {
                     return getMainLastStatus(value);
                 }
-            }, {
+            },{
                 field:"epoints",
-                title:"收入/支出",
-                formatter: function (value, row, index) {
-                    if (value > 0) {
-                        return '<span style="color: red">收入</span>';
-                    } else {
-                        return "支出";
-                    }
+                title:"金额",
+                formatter: function (value) {
+                    return '<span style="color: red">'+value+'</span>';
                 }
-            }, {
-                field:"epoints",
-                title:"金额"
             }, {
                 field:"create_time",
                 title:"时间"
