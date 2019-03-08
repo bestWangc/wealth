@@ -79,13 +79,22 @@ class Finance extends Base
         }
         Db::startTrans();
         try {
-            $res = Db::name("users")
-                ->where("id", $this::$uid)
-                ->setInc('coin',$num);
+
+            $data = [];
+            for ($i = 0; $i < $num; $i++){
+                $temp = [
+                    'user_id' => $this::$uid,
+                    'money' => 0,
+                    'status' => 1,
+                    'create_time' => time()
+                ];
+                array_push($data,$temp);
+            }
+            Db::name('user')->insertAll($data);
 
             // throw new Exception('收益币错误，请重试');
             if(!$res) throw new Exception('收益币错误，请重试');
-            $writeMoney = writeMoney($this::$uid,$price, "购买收益币", 0);
+            $writeMoney = writeMoney($this::$uid,$price, "购买矿工", 0);
             if(!$writeMoney) throw new Exception('money错误，请重试');
             // 提交事务
             Db::commit();
