@@ -32,7 +32,7 @@ class Counter extends Command
         //未计算过利息的
         $list = Db::name('users')
             ->alias('u')
-            ->join('worker w','w.user_id = u.id and w.status = 1')
+            ->join('worker w','w.user_id = u.id and w.status = 1','left')
             ->field("u.id,u.user_name,u.path,count(w.id) as worker")
             ->where('u.status',1)
             ->whereNotIn('u.id',$hasCountId)
@@ -42,7 +42,6 @@ class Counter extends Command
             $output->writeln('没有人需要计算利息');
             return false;
         }
-
         $dailyIncome = getConfig('daily_income');
         $first_level = getConfig('first_level');
         $second_level = getConfig('second_level');
@@ -69,6 +68,10 @@ class Counter extends Command
                 }
             }
             writeMoney($value['id'], $fee, "矿工赚取收益", 1);
+            Db::name('worker')
+                ->where('user_id',$value['id'])
+                ->where('status',1)
+                ->setInc('money',2);
             $this->write_execute_history($value['id'], $fee);
             trace("会员id={$value['id']},用户名：{$value['user_name']}，利息{$fee}/r/n");
         }
