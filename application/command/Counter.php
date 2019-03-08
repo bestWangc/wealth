@@ -21,6 +21,9 @@ class Counter extends Command
         $output->writeln('开始计算利息');
         $now_date = get_date();
 
+        //修改可以退休矿工的状态
+        Db::name('worker')->where('money','>=',16)->update(['status'=>0]);
+
         //已经计算过利息的
         $hasCountId = Db::name('daily_execute')
             ->where('create_date',$now_date)
@@ -28,10 +31,11 @@ class Counter extends Command
 
         //未计算过利息的
         $list = Db::name('users')
-            ->field("id,user_name,coin,path")
-            ->where('status',1)
-            ->where('coin','>',0)
-            ->whereNotIn('id',$hasCountId)
+            ->alias('u')
+            ->join('worker w','w.user_id = u.id and w.status = 1')
+            ->field("u.id,u.user_name,u.path,count(w.id) as worker")
+            ->where('u.status',1)
+            ->whereNotIn('u.id',$hasCountId)
             ->select();
 
         if(empty($list)){
@@ -45,7 +49,7 @@ class Counter extends Command
         $three_level = getConfig('three_level');
         foreach ($list as $key => $value) {
             //收益币每日收益
-            $fee=  round($value['coin']*$dailyIncome,2);
+            $fee = round($value['worker']*$dailyIncome,2);
 
             //计算推荐人的奖金
             if(!empty($value['path'])){
@@ -64,7 +68,7 @@ class Counter extends Command
                     writeMoney($path_array[2], round($fee*$three_level, 2), "三级推荐奖金".($three_level*100).'%', 4);
                 }
             }
-            writeMoney($value['id'], $fee, "每日利息", 1);
+            writeMoney($value['id'], $fee, "矿工赚取收益", 1);
             $this->write_execute_history($value['id'], $fee);
             trace("会员id={$value['id']},用户名：{$value['user_name']}，利息{$fee}/r/n");
         }
