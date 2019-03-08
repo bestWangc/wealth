@@ -27,8 +27,13 @@ class Index extends Base
         foreach ($moneyHistory as $key => &$value){
             $value['create_time'] = date('Y-m-d H:i',$value['create_time']);
         }
+        //矿工数量
+        $workerNum  = Db::name('worker')
+            ->where('user_id',$this::$uid)
+            ->where('status',1)
+            ->count('id');
         $this->assign([
-            'coin' => $userInfo['coin'],
+            'workerNum' => $workerNum,
             'money' => $userInfo['money'],
             'signStatus' => $signStatus,
             'yesterdayIncome' => $yesterdayIncome,

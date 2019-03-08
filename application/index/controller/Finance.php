@@ -79,7 +79,6 @@ class Finance extends Base
         }
         Db::startTrans();
         try {
-
             $data = [];
             for ($i = 0; $i < $num; $i++){
                 $temp = [
@@ -90,15 +89,14 @@ class Finance extends Base
                 ];
                 array_push($data,$temp);
             }
-            Db::name('user')->insertAll($data);
+            $res = Db::name('worker')->insertAll($data);
 
-            // throw new Exception('收益币错误，请重试');
-            if(!$res) throw new Exception('收益币错误，请重试');
+            if($res != $num) throw new Exception('收益币错误，请重试');
             $writeMoney = writeMoney($this::$uid,$price, "购买矿工", 0);
             if(!$writeMoney) throw new Exception('money错误，请重试');
             // 提交事务
             Db::commit();
-            return jsonRes(0,'购买收益币成功');
+            return jsonRes(0,'购买矿工成功');
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
