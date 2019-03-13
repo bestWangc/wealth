@@ -26,9 +26,6 @@
 
     <div class="wrapper wrapper-content recordContent" style="display: none">
         <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5></h5>
-            </div>
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
@@ -142,8 +139,8 @@
                 },
                 cache: false,
                 success: function (res) {
-                    console.log(res);
                     if (res.code == 0) {
+                        $("#recordTbl").bootstrapTable('destroy');
                         let btt_data = res.data;
 
                         let colunmn = [];
@@ -171,10 +168,39 @@
                             case 2:
                                 showTitle = '提现记录';
                                 url = '/manage/extract/record';
+                                colunmn = [{
+                                    field: "uid",
+                                    title: "用户ID"
+                                }, {
+                                    field: "epoints",
+                                    title: "提现金额"
+                                }, {
+                                    field: "status",
+                                    title: "状态"
+                                }, {
+                                    field: "create_time",
+                                    title: "创建时间"
+                                }];
                                 break;
                             case 3:
                                 showTitle = '充值记录';
                                 url = '/manage/recharge/record';
+                                colunmn = [{
+                                    field: "uid",
+                                    title: "用户ID"
+                                }, {
+                                    field: "amount",
+                                    title: "充值金额"
+                                }, {
+                                    field: "way",
+                                    title: "渠道"
+                                }, {
+                                    field: "status",
+                                    title: "状态"
+                                }, {
+                                    field: "created_date",
+                                    title: "创建时间"
+                                }];
                                 break;
                         }
 

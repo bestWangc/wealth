@@ -15,29 +15,22 @@ class Extract extends Base
         return $this->fetch();
     }
     //提现记录
-    public function extractLog(Request $request)
+    public function record(Request $request)
     {
-        $uid = $request::param('post.choseUid/d');
-        $where = ['se.user_id'=>$uid];
+        $uid = $request::post('uid/d');
 
-        if(!$uid){
-            $where = ['su.parent_id'=>$this->uid];
-        }
+        if(empty($uid)) return jsonRes(1,'请选择用户');
 
-        $field = 'se.id as extract_id,su.name,se.amount,se.real_amount,se.way,sa.alipay_account,sa.alipay_name,se.status,se.created_date';
-        $result = Db::name('extract')
-            ->alias('se')
-            ->join('users su','su.id = se.user_id')
-            ->join('alipay sa','sa.id = se.alipay_id')
-            ->where($where)
-            ->field($field)
-            ->order('se.created_date desc')
+        $result = Db::name('extract_apply')
+            ->where('uid',$uid)
+            ->field('uid,epoints,create_time,status')
+            ->order('create_time desc')
             ->select();
 
         if(!empty($result)){
             foreach ($result as $key => &$value){
-                $value['status'] = statusTrans($value['status']);
-                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
+                $value['status'] = $value['status'] == 1 ? '审核成功' : '审核中';
+                $value['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
             }
         }
         return jsonRes(0,'成功',$result);
@@ -93,7 +86,7 @@ class Extract extends Base
                 ->where('id',$user_id)
                 ->update();
             if(!$result){
-                return jsonRes(1,'充值未成功');
+                return jsonRes(1,'未成功');
             }
         }
         $res = Db::name('extract')->where('id',$id)->update($data);
