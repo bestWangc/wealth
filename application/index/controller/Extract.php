@@ -70,7 +70,7 @@ class Extract extends Base
                 "epoints" => $epoints,
                 "create_time" => time(),
                 "create_date" => get_date(),
-                "status" => 0
+                "status" => 2
             ];
 
             $res = Db::name("extract_apply")->insert($data);

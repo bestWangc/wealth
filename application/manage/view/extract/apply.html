@@ -43,32 +43,23 @@
                             field:"id",
                             title:"编号"
                         }, {
-                            field:"user_id",
+                            field:"uid",
                             title:"用户ID"
                         }, {
                             field:"name",
-                            title:"用户帐号"
+                            title:"用户名"
                         }, {
-                            field:"amount",
+                            field:"epoints",
                             title:"提现金额"
                         }, {
                             field:"real_amount",
                             title:"到账金额"
                         }, {
-                            field:"way",
-                            title:"提现方式"
-                        }, {
-                            field:"alipay_account",
+                            field:"alipay_no",
                             title:"支付宝账号"
                         }, {
-                            field:"alipay_name",
-                            title:"支付宝姓名"
-                        }, {
-                            field:"status",
-                            title:"状态"
-                        }, {
-                            field:"created_date",
-                            title:"提现时间"
+                            field:"create_time",
+                            title:"申请时间"
                         }, {
                             field: 'operate',
                             title: '操作',
@@ -94,18 +85,20 @@
                     btn: ['已支付','关闭'],
                     offset: '5rem' //距离顶部
                 }, function(){
-                    commonOperate(row.id,row.user_id,row.amount,1);
+                    commonOperate(row.id,row.uid,row.epoints,1);
                 });
             },
             'click .refuse': function (e, value, row) {
                 layer.prompt({title: '拒绝原因', formType: 2}, function(text, index){
                     layer.close(index);
-                    commonOperate(row.id,row.user_id,row.amount,0,text);
+                    commonOperate(row.id,row.uid,row.epoints,0,text);
                 });
             }
         };
 
         var commonOperate = function (id,user_id,amount,operate,reason) {
+            console.log(user_id);
+            console.log('1111111111111111111');
             //加载遮罩层
             layer.load(1, {
                 shade: [0.5,'#fff']

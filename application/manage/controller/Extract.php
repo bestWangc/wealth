@@ -37,25 +37,25 @@ class Extract extends Base
     }
 
     //提现申请
-    public function applyFor()
+    public function apply()
     {
         return $this->fetch();
     }
     //提现申请详细信息
     public function applyDetails()
     {
-        $result = Db::name('extract')
+        $result = Db::name('extract_apply')
             ->alias('se')
-            ->join('users su','su.id = se.user_id')
-            ->join('alipay sa','sa.id = se.alipay_id')
+            ->join('users su','su.id = se.uid')
             ->where('se.status',2)
-            ->field('se.id,su.name,se.user_id,se.amount,se.real_amount,se.way,se.status,se.created_date,sa.alipay_account,sa.alipay_name,sa.alipay_pic')
-            ->order('se.created_date asc')
+            ->field('se.id,se.uid,su.user_name as name,se.uid,se.epoints,se.create_time,su.alipay_no,su.alipay_pic')
+            ->order('se.create_time asc')
             ->select();
         if(!empty($result)){
+            $fee = getConfig('cash_fee');
             foreach ($result as $key => &$value){
-                $value['status'] = statusTrans($value['status']);
-                $value['created_date'] = date('Y-m-d H:i:s',$value['created_date']);
+                $value['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
+                $value['real_amount'] = bcdiv($value['epoints']*(1-$fee),1,2);
             }
         }
         return jsonRes(0,'成功',$result);
@@ -66,30 +66,31 @@ class Extract extends Base
     {
         $id = $request::post('id',0);
         $operate = $request::post('operate');
-        $amount = $request::post('amount',0);
+        $amount = $request::post('amount/d',0);
         $user_id = $request::post('user_id');
         $reason = $request::post('reason','');
 
         if(!$id || is_null($operate) || is_null($user_id)){
             return jsonRes(1,'参数不够，请重试');
         }
+
         $data = [
             'status' => $operate,
-            'updated_date' => time(),
-            'refuse_reason'=>$reason
+            'update_time' => time(),
+            'remark'=> $reason,
+            'update_admin_id' => $this->uid
         ];
 
         if(!!$operate){
             $result = Db::name('users')
                 ->dec('money',$amount)
-                ->dec('frozen_money',$amount)
                 ->where('id',$user_id)
                 ->update();
             if(!$result){
-                return jsonRes(1,'未成功');
+                return jsonRes(1,'审核失败');
             }
         }
-        $res = Db::name('extract')->where('id',$id)->update($data);
+        $res = Db::name('extract_apply')->where('id',$id)->update($data);
         if($res){
             return jsonRes(0,'成功');
         }
