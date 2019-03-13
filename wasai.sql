@@ -3,15 +3,15 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50553
+ Source Server Version : 50722
  Source Host           : localhost:3306
  Source Schema         : wasai
 
  Target Server Type    : MySQL
- Target Server Version : 50553
+ Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 05/03/2019 08:42:18
+ Date: 13/03/2019 22:11:20
 */
 
 SET NAMES utf8mb4;
@@ -171,12 +171,13 @@ CREATE TABLE `xx_day_sign`  (
   `sign_date` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '签到日期',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`uid`, `sign_date`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '每日签到表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '每日签到表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_day_sign
 -- ----------------------------
 INSERT INTO `xx_day_sign` VALUES (11, 13, 1551185326, '2019-02-26');
+INSERT INTO `xx_day_sign` VALUES (12, 13, 1552482324, '2019-03-13');
 
 -- ----------------------------
 -- Table structure for xx_extract_apply
@@ -188,7 +189,7 @@ CREATE TABLE `xx_extract_apply`  (
   `epoints` decimal(12, 2) NOT NULL DEFAULT 0.00 COMMENT '提现金额',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '申请时间',
   `create_date` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '提现日期',
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态 0-未审核 1-提现完成',
+  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态 0-拒绝 1-提现完成,2-未审核',
   `remark` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '备注',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '管理员操作时间',
   `update_admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '操作的管理员id',
@@ -200,8 +201,8 @@ CREATE TABLE `xx_extract_apply`  (
 -- Records of xx_extract_apply
 -- ----------------------------
 INSERT INTO `xx_extract_apply` VALUES (12, 13, 200.00, 1470279729, '2016-08-04', 1, '', 1470291622, 19);
-INSERT INTO `xx_extract_apply` VALUES (19, 13, 50.00, 1550982622, '2019-02-24', 0, '', 0, 0);
-INSERT INTO `xx_extract_apply` VALUES (18, 13, 100.00, 1550585439, '2019-02-19', 0, '', 0, 0);
+INSERT INTO `xx_extract_apply` VALUES (19, 13, 50.00, 1550982622, '2019-02-24', 2, 'test1', 1552486067, 19);
+INSERT INTO `xx_extract_apply` VALUES (18, 13, 100.00, 1550585439, '2019-02-19', 1, '', 1552486154, 19);
 
 -- ----------------------------
 -- Table structure for xx_level
@@ -264,7 +265,7 @@ CREATE TABLE `xx_money_history`  (
   `text` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作的文字说明',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 93 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_money_history
@@ -275,6 +276,8 @@ INSERT INTO `xx_money_history` VALUES (89, 13, 4, 1551185114, 0.40, 1015.00, 101
 INSERT INTO `xx_money_history` VALUES (90, 12, 4, 1551185114, 0.20, 32.90, 33.10, '二级推荐奖金10%');
 INSERT INTO `xx_money_history` VALUES (88, 13, 1, 1551185114, 15.00, 1000.00, 1015.00, '每日利息');
 INSERT INTO `xx_money_history` VALUES (87, 12, 4, 1551185114, 3.00, 29.90, 32.90, '一级推荐奖金20%');
+INSERT INTO `xx_money_history` VALUES (93, 13, 0, 1552482308, 10.00, 1015.20, 1005.20, '购买矿工');
+INSERT INTO `xx_money_history` VALUES (94, 13, 5, 1552482324, 0.20, 1005.20, 1005.40, '每日签到奖励');
 
 -- ----------------------------
 -- Table structure for xx_recharge
@@ -336,7 +339,6 @@ CREATE TABLE `xx_users`  (
   `main` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '直接推荐用户，默认0，为顶级',
   `path` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '推荐路径，最多记录到5级',
   `money` decimal(12, 2) NOT NULL DEFAULT 0.00 COMMENT '钱包金额',
-  `coin` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '收益币数量，默认为0 ',
   `alipay_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '支付宝账号',
   `alipay_pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '支付宝收款二维码url',
   `create_ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '注册IP',
@@ -353,12 +355,12 @@ CREATE TABLE `xx_users`  (
 -- ----------------------------
 -- Records of xx_users
 -- ----------------------------
-INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, '', 33.10, 0, '', '', '', 0, '', 0, 0, 1482841001);
-INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 1015.20, 15, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 26, '127.0.0.1', 1551184790, 0, 1482751964);
-INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, '13,12', 104.20, 2, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
-INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, '16,13,12', 0.00, 0, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
-INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, '17,16,13,12', 0.00, 0, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
-INSERT INTO `xx_users` VALUES (19, '145785654', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '15562523321', 1, 13, '13,12', 0.00, 0, '', '', '127.0.0.1', 1, '127.0.0.1', 1550980557, 1550980557, 1550980557);
+INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, '', 33.10, '', '', '', 0, '', 0, 0, 1482841001);
+INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, '12', 905.40, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 26, '127.0.0.1', 1551184790, 0, 1482751964);
+INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, '13,12', 104.20, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
+INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, '16,13,12', 0.00, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
+INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, '17,16,13,12', 0.00, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
+INSERT INTO `xx_users` VALUES (19, '145785654', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '15562523321', 1, 13, '13,12', 0.00, '', '', '127.0.0.1', 1, '127.0.0.1', 1550980557, 1550980557, 1550980557);
 
 -- ----------------------------
 -- Table structure for xx_worker
@@ -372,6 +374,11 @@ CREATE TABLE `xx_worker`  (
   `create_time` int(11) NOT NULL COMMENT '旷工创建时间',
   `update_time` int(11) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of xx_worker
+-- ----------------------------
+INSERT INTO `xx_worker` VALUES (1, 13, 0, 1, 1552482308, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
