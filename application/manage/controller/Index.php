@@ -21,7 +21,7 @@ class Index extends Base
 
         $info = Db::name("users")
             ->where("status", 1)
-            ->field('count(id) as count,sum(money) as money,sum(coin) as coin')
+            ->field('count(id) as count,sum(money) as money,sum(worker) as worker')
             ->find();
 
         $extractSum = Db::name("extract_apply")
@@ -31,7 +31,7 @@ class Index extends Base
         $this->assign([
             'userNum' => $info['count'],
             'moneyNum' => $info['money'],
-            'coinNum' => $info['coin'],
+            'workerNum' => $info['worker'],
             'extractSum' => $extractSum
         ]);
         return $this->fetch();

@@ -29,7 +29,7 @@
                                 <dd>二级每日赚钱奖励：{:getConfig('second_level')*100}%</dd>
                                 <dd>三级每日赚钱奖励：{:getConfig('three_level')*100}%</dd>
                                 <dt>我的团队：</dt>
-                                <dd>团队总收益币：{$sum_coin}</dd>
+                                <dd>团队矿工数量：{$sum_worker}</dd>
                                 <dd>团队钱包合计：{$sum_money}</dd>
                             </dl>
                         </div>
@@ -37,7 +37,7 @@
                             <dl class="dl-horizontal">
                                 <dt>我的上级：</dt>
                                 <dd>用户名：{$main_user_info.user_name}</dd>
-                                <dd>收益币数量：{$main_user_info.coin}</dd>
+                                <dd>矿工数量：{$main_user_info.worker}</dd>
                                 <dd>钱包资金：{$main_user_info.money}</dd>
                             </dl>
                         </div>
@@ -113,8 +113,8 @@
                 field:"money",
                 title:"钱包余额"
             }, {
-                field:"coin",
-                title:"收益币"
+                field:"worker",
+                title:"矿工"
             }]
         });
 
@@ -132,8 +132,8 @@
                 field:"money",
                 title:"钱包余额"
             }, {
-                field:"coin",
-                title:"收益币"
+                field:"worker",
+                title:"矿工"
             }]
         });
 
@@ -151,8 +151,8 @@
                 field:"money",
                 title:"钱包余额"
             }, {
-                field:"coin",
-                title:"收益币"
+                field:"worker",
+                title:"矿工"
             }]
         });
     });

@@ -52,12 +52,12 @@ class Finance extends Base
     public function buyWorker(Request $request)
     {
         $userInfo = $this::$userInfo;
-        $coinPrice = getConfig('coin_price');
+        $workerPrice = getConfig('worker_price');
 
         $type = $request::param('type',0);
         $this->assign([
             'money' => $userInfo['money'],
-            'coinPrice' => $coinPrice,
+            'workerPrice' => $workerPrice,
             'type' => $type
         ]);
         return $this->fetch();
@@ -70,7 +70,7 @@ class Finance extends Base
             return jsonRes(1,'请输入购买数量');
         }
 
-        $coinPrice = (int)getConfig('coin_price');
+        $coinPrice = (int)getConfig('worker_price');
         $userInfo = $this::$userInfo;
         $amount = (int)$userInfo['money'];
         $price = $num * $coinPrice;
@@ -91,9 +91,12 @@ class Finance extends Base
             }
             $res = Db::name('worker')->insertAll($data);
 
-            if($res != $num) throw new Exception('收益币错误，请重试');
+            if($res != $num) throw new Exception('矿工错误，请重试');
             $writeMoney = writeMoney($this::$uid,$price, "购买矿工", 0);
             if(!$writeMoney) throw new Exception('money错误，请重试');
+            Db::name('users')
+                ->where('id',$this::$uid)
+                ->setInc('worker',$num);
             // 提交事务
             Db::commit();
             return jsonRes(0,'购买矿工成功');

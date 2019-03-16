@@ -79,7 +79,7 @@ class User extends Base
             ->alias('u')
             ->join('level l','l.id = u.level_id','left')
             ->where('status',1)
-            ->field('u.id,u.user_name,u.real_name,u.mobile,u.money,u.coin,u.login_count,u.create_time,l.title')
+            ->field('u.id,u.user_name,u.real_name,u.mobile,u.money,u.worker,u.login_count,u.create_time,l.title')
             ->order('u.create_time desc')
             ->select();
 

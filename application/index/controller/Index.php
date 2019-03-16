@@ -27,13 +27,9 @@ class Index extends Base
         foreach ($moneyHistory as $key => &$value){
             $value['create_time'] = date('Y-m-d H:i',$value['create_time']);
         }
-        //矿工数量
-        $workerNum  = Db::name('worker')
-            ->where('user_id',$this::$uid)
-            ->where('status',1)
-            ->count('id');
+
         $this->assign([
-            'workerNum' => $workerNum,
+            'workerNum' => $userInfo['worker'],
             'money' => $userInfo['money'],
             'signStatus' => $signStatus,
             'yesterdayIncome' => $yesterdayIncome,
@@ -137,12 +133,12 @@ class Index extends Base
         $first_list = Db::name("users")
             ->where("main", $userInfo["id"])
             ->order("id")
-            ->field('user_name,FROM_UNIXTIME(create_time) as create_time,money,coin')
+            ->field('user_name,FROM_UNIXTIME(create_time) as create_time,money,worker')
             ->select();
 
-        $sum_coin = Db::name("users")
+        $sum_worker = Db::name("users")
             ->where("path", "like", "%{$userInfo["id"]}%")
-            ->sum("coin");
+            ->value('worker');
 
         $sum_money=Db::name("users")
             ->where("path", "like", "%{$userInfo["id"]}%")
@@ -150,7 +146,7 @@ class Index extends Base
 
         $tuijian_list = Db::name("users")
             ->where("path", "like", "%{$userInfo["id"]}%")
-            ->field('user_name,FROM_UNIXTIME(create_time) as create_time,money,coin,path')
+            ->field('user_name,FROM_UNIXTIME(create_time) as create_time,money,path,worker')
             ->order("id asc")
             ->select();
 
@@ -175,7 +171,7 @@ class Index extends Base
             'user_id' => $userInfo['id'],
             'main_user_info' => $main_user_info,
             'first_list' => json_encode($first_list),
-            'sum_coin' => $sum_coin,
+            'sum_worker' => $sum_worker,
             'sum_money' => $sum_money,
             'second_list' => json_encode($second_list),
             'three_list' => json_encode($three_list)
