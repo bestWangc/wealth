@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 16/03/2019 13:29:33
+ Date: 16/03/2019 17:12:53
 */
 
 SET NAMES utf8mb4;
@@ -96,8 +96,8 @@ CREATE TABLE `xx_article`  (
 -- ----------------------------
 -- Records of xx_article
 -- ----------------------------
-INSERT INTO `xx_article` VALUES (3, 1482733158, '关于我们', '公司简介,公司介绍', '公司简介', 0, ' <div class=\"col-lg-12\">\r\n                                            关于我们：金凤平台一个全新的理财模式，目前虚拟卡币投资，每天分红收益不断，结合分销模式，直销模式多项奖励直推奖，团队奖，分红奖；打造一个全新的模式平台，给人焕然一新。在此给大家分享分享金凤模式的流程运作。<br>\r\n                                            　　\r\n                                            金凤平台介绍：金凤集团全新力作——静态，动态，每日静态分红可免费可投资！一个币30元！首次投资 送1个币，每天静态1元，日签到0.2！<br>\r\n                                            　　\r\n                                            1.静态收益:注册激活需要购买最少一个币，不推广，每天收益最少1元，一个月最少30元，一年最少 360元 20个币每天分红20元，30个币每天分红30元，50个币每天分红50元，1000个币每天分红1000元… …以此类推，永久分红<br>\r\n                                            　　\r\n                                            2.市场推广：1，直推：一代奖励6% 领导 ：二代奖励4%. 三代2%2，您的1级会员每天分红赚钱您有20%的提成！3，您的2级会员每天分红赚钱您有10%的提成！4，您的3级会员每天分红赚钱您有5%的提成！<br>\r\n                                            　　\r\n                                            3提现管理：提现金额50.100 200 500 1000 3000 。 支付宝打款！每天提现一次！<br>\r\n                                            　　\r\n                                            4.团队奖励:1，直推10人，团队300人晋升为主管，奖励1万元。2，直推25人，团队500人晋升为经理，奖励5万元。3，直推35人，团队1000人晋升为总监，奖励10万元。4，直推50人，团队5000人，奖励50万，另加一部20万的轿车.欢迎各界人士加盟，机会创造财富！金凤一日投入终身受益！<br>\r\n                                            　　\r\n                                        以上是金凤平台模式介绍；中国的金融虚拟币商业理财模式，金凤具有独特的理财思想，短期收入，中期团队获利，和后期的分红收益，让理财这不会有疲乏的感觉。。                                        </div>\r\n                                    </div>', 1, 10);
-INSERT INTO `xx_article` VALUES (9, NULL, '系统公告', '', NULL, 0, '系统公告', 3, 10);
+INSERT INTO `xx_article` VALUES (3, 1482733158, '关于我们', '公司简介,公司介绍', '公司简介', 0, ' <div class=\"col-lg-12\">\r\n    关于我们：金凤平台一个全新的理财模式，目前虚拟卡币投资，每天分红收益不断，结合分销模式，直销模式多项奖励直推奖，团队奖，分红奖；打造一个全新的模式平台，给人焕然一新。在此给大家分享分享金凤模式的流程运作。<br>\r\n    　　\r\n    金凤平台介绍：金凤集团全新力作——静态，动态，每日静态分红可免费可投资！一个币30元！首次投资 送1个币，每天静态1元，日签到0.2！<br>\r\n    　　\r\n    1.静态收益:注册激活需要购买最少一个币，不推广，每天收益最少1元，一个月最少30元，一年最少 360元 20个币每天分红20元，30个币每天分红30元，50个币每天分红50元，1000个币每天分红1000元… …以此类推，永久分红<br>\r\n    　　\r\n    2.市场推广：1，直推：一代奖励6% 领导 ：二代奖励4%. 三代2%2，您的1级会员每天分红赚钱您有20%的提成！3，您的2级会员每天分红赚钱您有10%的提成！4，您的3级会员每天分红赚钱您有5%的提成！<br>\r\n    　　\r\n    3提现管理：提现金额50.100 200 500 1000 3000 。 支付宝打款！每天提现一次！<br>\r\n    　　\r\n    4.团队奖励:1，直推10人，团队300人晋升为主管，奖励1万元。2，直推25人，团队500人晋升为经理，奖励5万元。3，直推35人，团队1000人晋升为总监，奖励10万元。4，直推50人，团队5000人，奖励50万，另加一部20万的轿车.欢迎各界人士加盟，机会创造财富！金凤一日投入终身受益！<br>\r\n    　　\r\n以上是金凤平台模式介绍；中国的金融商业理财模式，金上添金具有独特的理财思想，短期收入，中期团队获利，和后期的分红收益，让理财这不会有疲乏的感觉。。                                        </div>\r\n</div>', 1, 10);
+INSERT INTO `xx_article` VALUES (9, NULL, '系统公告', '', NULL, 0, '暂无公告', 3, 10);
 INSERT INTO `xx_article` VALUES (4, 1470012453, '帮助中心', '联系方式,联系电话,通信地址', '联系方式', 0, '帮助信息', 2, 10);
 INSERT INTO `xx_article` VALUES (10, 1482401113, '11', '11', '11', 0, '11', 0, 10);
 
@@ -202,8 +202,8 @@ CREATE TABLE `xx_extract_apply`  (
 -- Records of xx_extract_apply
 -- ----------------------------
 INSERT INTO `xx_extract_apply` VALUES (12, 13, 200.00, 1470279729, '2016-08-04', 1, '', 1470291622, 19);
-INSERT INTO `xx_extract_apply` VALUES (19, 13, 50.00, 1550982622, '2019-02-24', 2, 'test1', 1552486067, 19);
-INSERT INTO `xx_extract_apply` VALUES (18, 13, 100.00, 1550585439, '2019-02-19', 1, '', 1552486154, 19);
+INSERT INTO `xx_extract_apply` VALUES (19, 13, 50.00, 1550982622, '2019-02-24', 0, 'uuuuuu', 1552714974, 19);
+INSERT INTO `xx_extract_apply` VALUES (18, 13, 100.00, 1550585439, '2019-02-19', 2, '', 1552486154, 19);
 
 -- ----------------------------
 -- Table structure for xx_level
@@ -238,10 +238,11 @@ CREATE TABLE `xx_level_apply`  (
   `uid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员id',
   `level_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '申请的级别ID',
   `text` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '申请说明',
-  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '申请时间',
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '审核状态 0-未审核 1-审核通过 2-审核拒绝',
+  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '审核状态 2-未审核 1-审核通过 0-审核拒绝',
   `action_status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否执行了奖励操作 0-未执行 1-执行',
   `remark` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '备注',
+  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '申请时间',
+  `update_time` int(11) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`, `status`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '级别申请表' ROW_FORMAT = Dynamic;
@@ -249,7 +250,7 @@ CREATE TABLE `xx_level_apply`  (
 -- ----------------------------
 -- Records of xx_level_apply
 -- ----------------------------
-INSERT INTO `xx_level_apply` VALUES (1, 13, 3, '11111', 1470208951, 1, 1, '');
+INSERT INTO `xx_level_apply` VALUES (1, 13, 3, '11111', 1, 1, '', 1470208951, 1552717527);
 
 -- ----------------------------
 -- Table structure for xx_money_history
@@ -266,7 +267,7 @@ CREATE TABLE `xx_money_history`  (
   `text` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作的文字说明',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 98 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 99 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_money_history
@@ -282,6 +283,7 @@ INSERT INTO `xx_money_history` VALUES (94, 13, 5, 1552482324, 0.20, 1005.20, 100
 INSERT INTO `xx_money_history` VALUES (95, 13, 0, 1552713478, 10.00, 905.40, 895.40, '购买矿工');
 INSERT INTO `xx_money_history` VALUES (96, 13, 0, 1552713578, 10.00, 895.40, 885.40, '购买矿工');
 INSERT INTO `xx_money_history` VALUES (97, 13, 5, 1552713600, 0.20, 885.40, 885.60, '每日签到奖励');
+INSERT INTO `xx_money_history` VALUES (98, 13, 4, 1552717527, 50000.00, 885.60, 50885.60, '晋级经理奖励');
 
 -- ----------------------------
 -- Table structure for xx_recharge
@@ -361,7 +363,7 @@ CREATE TABLE `xx_users`  (
 -- Records of xx_users
 -- ----------------------------
 INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, 0, '', 33.10, '', '', '', 0, '', 0, 0, 1482841001);
-INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, 1, '12', 885.60, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 27, '127.0.0.1', 1552708843, 0, 1482751964);
+INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, 1, '12', 50885.60, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 27, '127.0.0.1', 1552708843, 0, 1482751964);
 INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, 0, '13,12', 104.20, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
 INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, 0, '16,13,12', 0.00, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
 INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, 0, '17,16,13,12', 0.00, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
