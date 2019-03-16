@@ -1,0 +1,127 @@
+{extend name="layout/layout"}
+{block name="title"}晋级管理{/block}
+{block name="body"}
+<body class="gray-bg" style="height: 100%">
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>晋级申请</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table id="levelApply"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Basic -->
+</div>
+<script src="/static/manage/js/innerCommon.js"></script>
+</body>
+{/block}
+{block name="my-js"}
+<script>
+    $(function () {
+        $.ajax({
+            url: 'applyDetails',
+            type: 'POST',
+            dataType: 'json',
+            cache: false,
+            success: function (res) {
+                if (res.code == 0) {
+                    var btt_data = res.data;
+
+                    $('#levelApply').bootstrapTable({
+                        data: btt_data,
+                        columns: [{
+                            field:"id",
+                            title:"编号"
+                        }, {
+                            field:"uid",
+                            title:"用户ID"
+                        }, {
+                            field:"name",
+                            title:"用户名"
+                        }, {
+                            field:"title",
+                            title:"申请级别"
+                        }, {
+                            field:"create_time",
+                            title:"申请时间"
+                        }, {
+                            field: 'operate',
+                            title: '操作',
+                            align: 'center',
+                            events: operateEvents,
+                            formatter: operateFormatter
+                        }]
+                    });
+                } else {
+                    layer.msg(res.msg, {time: 1500});
+                }
+            },
+            error: function () {
+                console.log(res);
+            }
+        });
+
+        window.operateEvents = {
+            'click .agree': function (e, value, row) {
+                console.log(row);
+                layer.confirm('确认审核通过?', {
+                    btn: ['确定','关闭'],
+                    offset: '5rem' //距离顶部
+                }, function(){
+                    commonOperate(row.id,1);
+                });
+            },
+            'click .refuse': function (e, value, row) {
+                layer.prompt({title: '拒绝原因', formType: 2}, function(text, index){
+                    layer.close(index);
+                    commonOperate(row.id,0,text);
+                });
+            }
+        };
+
+        var commonOperate = function (id,user_id,operate,reason) {
+            //加载遮罩层
+            layer.load(1, {
+                shade: [0.5,'#fff']
+            });
+            $.ajax({
+                url: 'operation',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id : id,
+                    reason : reason,
+                    operate : operate
+                },
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    var callBack = '';
+                    if(res.code == 0){
+                        callBack = function () {
+                            parent.refreshIframe();
+                        };
+                    }
+                    layer.closeAll('loading');
+                    layer.msg(res.msg,{time:1500},callBack);
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    console.log(res);
+                }
+            });
+        };
+
+    });
+</script>
+{/block}

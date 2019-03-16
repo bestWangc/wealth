@@ -2,18 +2,16 @@
 namespace app\manage\controller;
 
 use think\Db;
+use think\Exception;
 use think\facade\Request;
 
 class Extract extends Base
 {
 
-    public function index(Request $request)
+    /*public function index()
     {
-        $choseUid = $request::param('choseUid/d',0);
-
-        $this->assign('choseUid',$choseUid);
         return $this->fetch();
-    }
+    }*/
     //提现记录
     public function record(Request $request)
     {
@@ -74,26 +72,32 @@ class Extract extends Base
             return jsonRes(1,'参数不够，请重试');
         }
 
-        $data = [
-            'status' => $operate,
-            'update_time' => time(),
-            'remark'=> $reason,
-            'update_admin_id' => $this->uid
-        ];
-
-        if(!!$operate){
-            $result = Db::name('users')
-                ->dec('money',$amount)
-                ->where('id',$user_id)
-                ->update();
-            if(!$result){
-                return jsonRes(1,'审核失败');
+        // 启动事务
+        Db::startTrans();
+        try {
+            $data = [
+                'status' => $operate,
+                'update_time' => time(),
+                'remark'=> $reason,
+                'update_admin_id' => $this->uid
+            ];
+            if(!!$operate){
+                $result = Db::name('users')
+                    ->dec('money',$amount)
+                    ->where('id',$user_id)
+                    ->update();
+                if(!$result) throw new Exception('更改金额错误');
             }
-        }
-        $res = Db::name('extract_apply')->where('id',$id)->update($data);
-        if($res){
+            $res = Db::name('extract_apply')->where('id',$id)->update($data);
+
+            if(!$res) throw new Exception('修改状态错误');
+            // 提交事务
+            Db::commit();
             return jsonRes(0,'成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return jsonRes(1,'审核失败');
         }
-        return jsonRes(1,'失败，请重试');
     }
 }
