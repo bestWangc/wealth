@@ -157,7 +157,6 @@
             dataType : "json",
             cache : false,
             success : function(res){
-                console.log(res);
                 if(res.code == 0){
                     let taskUl = $('.taskUl');
                     $.each(res.data,function (i,val) {

@@ -184,13 +184,7 @@ class Index extends Base
      */
     public function help()
     {
-        $content = Article::getContentByID(2);
-        $this->assign([
-            'nav' => 11,
-            'content' => $content,
-            'panelName' => '帮助'
-        ]);
-        return $this->fetch('news');
+        return $this->fetch();
     }
 
     /**
