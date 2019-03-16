@@ -96,19 +96,15 @@
 
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h4>最近10笔收支记录</h4>
-                <a href="/index/finance/index" class="pull-right" style="margin-right: 1rem;">查看全部</a>
-                <div class="clearfix"></div>
+                <h4>平台任务看板</h4>
             </div>
             <div class="ibox-content">
                 <div class="row row-lg">
-                    <div class="col-sm-12">
-                        <div class="example-wrap">
-                            <div class="example">
-                                <input type="hidden" class="data" value="{$moneyHistory}">
-                                <table id="moneyHistory"  data-mobile-responsive="true"  data-pagination="true" data-page-list=[10]>
-                                </table>
-                            </div>
+                    <div class="col-sm-12" style="height: 50rem;">
+                        <div style="background-color: #0C0C0C;width: 100%;height: 100%">
+                            <ul class="taskUl" style="list-style-type: none;color: #00FF00">
+                                <li>连接任务平台成功</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -122,36 +118,7 @@
 {block name="my-js"}
 <script>
     $(function () {
-        var btt_data = $('.data').val();
-        btt_data = JSON.parse(btt_data);
-        $('#moneyHistory').bootstrapTable({
-                data: btt_data,
-                columns: [{
-                    field:"action_type",
-                    title:"类别",
-                    formatter: function (value, row, index) {
-                        return getMainLastStatus(value);
-                    }
-                }, {
-                    field:"epoints",
-                    title:"金额",
-                    formatter: function (value) {
-                        return '<span style="color: red">'+value+'</span>';
-                    }
-                }, {
-                    field:"create_time",
-                    title:"时间"
-                }, {
-                    field:"text",
-                    title:"说明"
-                }, {
-                    field:"original",
-                    title:"之前"
-                }, {
-                    field:"after",
-                    title:"之后"
-                }]
-        });
+        setInterval("getTaseInfo()","3500");
 
         $('.singBtn').click(function () {
             //加载遮罩层
@@ -182,5 +149,28 @@
             });
         });
     });
+
+    var getTaseInfo = function () {
+        $.ajax({
+            url : '/index/Task/info',
+            type : "GET",
+            dataType : "json",
+            cache : false,
+            success : function(res){
+                console.log(res);
+                if(res.code == 0){
+                    let taskUl = $('.taskUl');
+                    $.each(res.data,function (i,val) {
+                        taskUl.append(" <li>"+val+"</li>");
+                        let liLength = $('.taskUl li').length;
+                        if(liLength > 27) $('.taskUl li:eq(0)').remove();
+                    });
+                }
+            },
+            error : function(data){
+                console.log(data);
+            }
+        });
+    };
 </script>
 {/block}
