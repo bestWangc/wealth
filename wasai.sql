@@ -3,15 +3,15 @@
 
  Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50722
+ Source Server Version : 50553
  Source Host           : localhost:3306
  Source Schema         : wasai
 
  Target Server Type    : MySQL
- Target Server Version : 50722
+ Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 16/03/2019 17:12:53
+ Date: 18/03/2019 16:01:02
 */
 
 SET NAMES utf8mb4;
@@ -376,7 +376,8 @@ DROP TABLE IF EXISTS `xx_worker`;
 CREATE TABLE `xx_worker`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户id',
-  `money` int(11) NOT NULL DEFAULT 0 COMMENT '旷工赚取金额',
+  `worker_type_id` int(11) NOT NULL COMMENT '矿工种类id',
+  `work_time` int(11) NOT NULL DEFAULT 0 COMMENT '旷工工作时长',
   `status` tinyint(1) NOT NULL COMMENT '0-已停用，1-工作中',
   `create_time` int(11) NOT NULL COMMENT '旷工创建时间',
   `update_time` int(11) NULL DEFAULT NULL COMMENT '更新时间',
@@ -386,6 +387,30 @@ CREATE TABLE `xx_worker`  (
 -- ----------------------------
 -- Records of xx_worker
 -- ----------------------------
-INSERT INTO `xx_worker` VALUES (3, 13, 0, 1, 1552713578, NULL);
+INSERT INTO `xx_worker` VALUES (3, 13, 0, 0, 1, 1552713578, NULL);
+
+-- ----------------------------
+-- Table structure for xx_worker_type
+-- ----------------------------
+DROP TABLE IF EXISTS `xx_worker_type`;
+CREATE TABLE `xx_worker_type`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '矿工名称',
+  `price` int(10) NOT NULL COMMENT '矿工价格',
+  `daily_income` int(10) NOT NULL COMMENT '每日收益',
+  `retire` int(10) NOT NULL COMMENT '矿工退休金额',
+  `work_time` tinyint(2) NOT NULL COMMENT '矿工工作时长',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of xx_worker_type
+-- ----------------------------
+INSERT INTO `xx_worker_type` VALUES (1, '黑铁矿工', 10, 1, 15, 15);
+INSERT INTO `xx_worker_type` VALUES (2, '青铜矿工', 100, 15, 150, 10);
+INSERT INTO `xx_worker_type` VALUES (3, '白银矿工', 500, 95, 760, 8);
+INSERT INTO `xx_worker_type` VALUES (4, '黄金矿工', 1500, 300, 2400, 8);
+INSERT INTO `xx_worker_type` VALUES (5, '铂金矿工', 3000, 650, 5200, 8);
+INSERT INTO `xx_worker_type` VALUES (6, '钻石矿工', 6000, 1435, 11480, 8);
 
 SET FOREIGN_KEY_CHECKS = 1;
