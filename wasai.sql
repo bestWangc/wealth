@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 18/03/2019 16:01:02
+ Date: 18/03/2019 17:27:55
 */
 
 SET NAMES utf8mb4;
@@ -406,11 +406,9 @@ CREATE TABLE `xx_worker_type`  (
 -- ----------------------------
 -- Records of xx_worker_type
 -- ----------------------------
-INSERT INTO `xx_worker_type` VALUES (1, '黑铁矿工', 10, 1, 15, 15);
-INSERT INTO `xx_worker_type` VALUES (2, '青铜矿工', 100, 15, 150, 10);
-INSERT INTO `xx_worker_type` VALUES (3, '白银矿工', 500, 95, 760, 8);
-INSERT INTO `xx_worker_type` VALUES (4, '黄金矿工', 1500, 300, 2400, 8);
-INSERT INTO `xx_worker_type` VALUES (5, '铂金矿工', 3000, 650, 5200, 8);
-INSERT INTO `xx_worker_type` VALUES (6, '钻石矿工', 6000, 1435, 11480, 8);
+INSERT INTO `xx_worker_type` VALUES (1, '普通矿工', 10, 1, 15, 15);
+INSERT INTO `xx_worker_type` VALUES (2, '白银矿工', 328, 12, 0, 0);
+INSERT INTO `xx_worker_type` VALUES (3, '黄金矿工', 628, 16, 0, 0);
+INSERT INTO `xx_worker_type` VALUES (4, '钻石矿工', 928, 20, 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
