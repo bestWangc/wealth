@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => 'wasai',
     // 用户名
-    'username'        => Env::get('database.username'),
+    'username'        => Env::get('database.username','root'),
     // 密码
-    'password'        => Env::get('database.password'),
+    'password'        => Env::get('database.password','root'),
     // 端口
     'hostport'        => '3306',
     // 连接dsn
