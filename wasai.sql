@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 18/03/2019 17:27:55
+ Date: 26/03/2019 15:30:46
 */
 
 SET NAMES utf8mb4;
@@ -128,9 +128,9 @@ INSERT INTO `xx_config` VALUES ('sign_income', '每日签到收益', '每日签�
 INSERT INTO `xx_config` VALUES ('site_name', '网站名称', '网站的名称', '金上添金', 1, 1, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('worker_price', '旷工的价格', '旷工对应的价格', '10', 1, 6, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('site_switch', '网站开关', '当为1的时候为开，0为关闭', '1', 1, 2, 0, '', 1, 1);
-INSERT INTO `xx_config` VALUES ('first_level', '一级会员收益', '推荐的一级会员每日收益', '0.2', 1, 5, 0, '', 1, 1);
-INSERT INTO `xx_config` VALUES ('second_level', '二级会员收益', '推荐的二级会员每日收益', '0.1', 1, 5, 0, '', 1, 1);
-INSERT INTO `xx_config` VALUES ('three_level', '三级会员收益', '推荐的三级会员每日收益', '0.05', 1, 5, 0, '', 1, 1);
+INSERT INTO `xx_config` VALUES ('first_level', '一级会员收益', '推荐的一级会员每日收益', '0.06', 1, 5, 0, '', 1, 1);
+INSERT INTO `xx_config` VALUES ('second_level', '二级会员收益', '推荐的二级会员每日收益', '0.04', 1, 5, 0, '', 1, 1);
+INSERT INTO `xx_config` VALUES ('three_level', '三级会员收益', '推荐的三级会员每日收益', '0.02', 1, 5, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('tuijian_switch', '推荐开关', '是否必须需要推荐才能注册 1-必须推荐才能注册', '1', 1, 10, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('system_alipay', '网站支付宝账号', '网站支付宝账号', '123@163.com', 1, 10, 0, '', 1, 1);
 INSERT INTO `xx_config` VALUES ('cash_num', '每日提现次数限制', '每日提现次数限制', '1', 1, 10, 0, '', 1, 1);
@@ -152,13 +152,13 @@ CREATE TABLE `xx_daily_execute`  (
   `epoints` decimal(12, 2) NOT NULL DEFAULT 0.00 COMMENT '本次操作影响的金额',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`, `create_date`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '每日奖励执行记录' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '每日奖励执行记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_daily_execute
 -- ----------------------------
-INSERT INTO `xx_daily_execute` VALUES (21, 16, '2019-02-26', 1551185114, 2.00);
-INSERT INTO `xx_daily_execute` VALUES (20, 13, '2019-02-26', 1551185114, 15.00);
+INSERT INTO `xx_daily_execute` VALUES (27, 13, '2019-03-26', 1553584830, 12.00);
+INSERT INTO `xx_daily_execute` VALUES (26, 13, '2019-03-26', 1553584830, 1.00);
 
 -- ----------------------------
 -- Table structure for xx_day_sign
@@ -267,23 +267,15 @@ CREATE TABLE `xx_money_history`  (
   `text` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作的文字说明',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `main`(`id`, `uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 99 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 111 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '钱包金额历史记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xx_money_history
 -- ----------------------------
-INSERT INTO `xx_money_history` VALUES (92, 13, 1, 1551185326, 0.20, 1015.40, 1015.60, '每日签到奖励');
-INSERT INTO `xx_money_history` VALUES (91, 16, 1, 1551185114, 2.00, 102.20, 104.20, '每日利息');
-INSERT INTO `xx_money_history` VALUES (89, 13, 4, 1551185114, 0.40, 1015.00, 1015.40, '一级推荐奖金20%');
-INSERT INTO `xx_money_history` VALUES (90, 12, 4, 1551185114, 0.20, 32.90, 33.10, '二级推荐奖金10%');
-INSERT INTO `xx_money_history` VALUES (88, 13, 1, 1551185114, 15.00, 1000.00, 1015.00, '每日利息');
-INSERT INTO `xx_money_history` VALUES (87, 12, 4, 1551185114, 3.00, 29.90, 32.90, '一级推荐奖金20%');
-INSERT INTO `xx_money_history` VALUES (93, 13, 0, 1552482308, 10.00, 1015.20, 1005.20, '购买矿工');
-INSERT INTO `xx_money_history` VALUES (94, 13, 5, 1552482324, 0.20, 1005.20, 1005.40, '每日签到奖励');
-INSERT INTO `xx_money_history` VALUES (95, 13, 0, 1552713478, 10.00, 905.40, 895.40, '购买矿工');
-INSERT INTO `xx_money_history` VALUES (96, 13, 0, 1552713578, 10.00, 895.40, 885.40, '购买矿工');
-INSERT INTO `xx_money_history` VALUES (97, 13, 5, 1552713600, 0.20, 885.40, 885.60, '每日签到奖励');
-INSERT INTO `xx_money_history` VALUES (98, 13, 4, 1552717527, 50000.00, 885.60, 50885.60, '晋级经理奖励');
+INSERT INTO `xx_money_history` VALUES (110, 13, 1, 1553584830, 12.00, 1014.00, 1026.00, '矿工赚取收益');
+INSERT INTO `xx_money_history` VALUES (109, 12, 4, 1553584830, 0.72, 38.36, 39.08, '一级推荐奖金6%');
+INSERT INTO `xx_money_history` VALUES (108, 13, 1, 1553584830, 1.00, 1013.00, 1014.00, '矿工赚取收益');
+INSERT INTO `xx_money_history` VALUES (107, 12, 4, 1553584830, 0.06, 38.30, 38.36, '一级推荐奖金6%');
 
 -- ----------------------------
 -- Table structure for xx_recharge
@@ -362,8 +354,8 @@ CREATE TABLE `xx_users`  (
 -- ----------------------------
 -- Records of xx_users
 -- ----------------------------
-INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '1', '1', 1, '110', 1, 0, 0, '', 33.10, '', '', '', 0, '', 0, 0, 1482841001);
-INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, 1, '12', 50885.60, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 27, '127.0.0.1', 1552708843, 0, 1482751964);
+INSERT INTO `xx_users` VALUES (12, 'lanfengye', '', '926e2b4cbba173cc36a4f67c734da0e0', '1', 1, '110', 1, 0, 0, '', 39.08, '', '', '', 0, '', 0, 0, 1482841001);
+INSERT INTO `xx_users` VALUES (13, 'test', '张三12', '926e2b4cbba173cc36a4f67c734da0e0', 'c81e728d9d4c2f636f067f89cc14862c', 1, '18868881888', 3, 12, 1, '12', 1026.00, '123456', '/uploads/alipay/5514abe6b1db9c560549b309ae2bd488.jpg', '127.0.0.1', 27, '127.0.0.1', 1552708843, 0, 1482751964);
 INSERT INTO `xx_users` VALUES (16, '12345678', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '14432465678', 1, 13, 0, '13,12', 104.20, '', '', '127.0.0.1', 3, '127.0.0.1', 1550369697, 1550369260, 1550369260);
 INSERT INTO `xx_users` VALUES (17, '123456789', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13423456789', 1, 16, 0, '16,13,12', 0.00, '', '', '127.0.0.1', 2, '127.0.0.1', 1550369740, 1550369728, 1550369728);
 INSERT INTO `xx_users` VALUES (18, '1234567890', '', '8ffde9b2bec703b0037c4d589a968fbf', '8ffde9b2bec703b0037c4d589a968fbf', 1, '13324567898', 1, 17, 0, '17,16,13,12', 0.00, '', '', '127.0.0.1', 1, '127.0.0.1', 1550369771, 1550369771, 1550369771);
@@ -382,12 +374,13 @@ CREATE TABLE `xx_worker`  (
   `create_time` int(11) NOT NULL COMMENT '旷工创建时间',
   `update_time` int(11) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of xx_worker
 -- ----------------------------
-INSERT INTO `xx_worker` VALUES (3, 13, 0, 0, 1, 1552713578, NULL);
+INSERT INTO `xx_worker` VALUES (3, 13, 1, 3, 1, 1552713578, NULL);
+INSERT INTO `xx_worker` VALUES (4, 13, 2, 3, 1, 1552713578, NULL);
 
 -- ----------------------------
 -- Table structure for xx_worker_type
