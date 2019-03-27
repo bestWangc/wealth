@@ -23,16 +23,14 @@ class Index extends Base
         $signStatus = $this->getSignStatus($this::$uid);
         $userInfo = $this::$userInfo;
         $yesterdayIncome = $this->getYesterdayIncome($this::$uid);
-        /*$moneyHistory = MoneyHistry::getHistoryByLimit($this::$uid,10);
-        foreach ($moneyHistory as $key => &$value){
-            $value['create_time'] = date('Y-m-d H:i',$value['create_time']);
-        }*/
+
+        $workerInfo = Worker::getWorkerInfoByUID($this::$uid);
         $this->assign([
             'workerNum' => $userInfo['worker'],
             'money' => $userInfo['money'],
             'signStatus' => $signStatus,
             'yesterdayIncome' => $yesterdayIncome,
-            // 'moneyHistory' => json_encode($moneyHistory)
+            'workerInfo' => $workerInfo
         ]);
         return $this->fetch();
     }

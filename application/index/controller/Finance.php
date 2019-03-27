@@ -52,12 +52,12 @@ class Finance extends Base
     public function buyWorker(Request $request)
     {
         $userInfo = $this::$userInfo;
-        $workerPrice = getConfig('worker_price');
+        $workerTypeInfo = Worker::getWorkerTypeInfo();
 
         $type = $request::param('type',0);
         $this->assign([
             'money' => $userInfo['money'],
-            'workerPrice' => $workerPrice,
+            'workerTypeInfo' => $workerTypeInfo,
             'type' => $type
         ]);
         return $this->fetch();
@@ -66,16 +66,27 @@ class Finance extends Base
     public function doBuyWorker(Request $request)
     {
         $num = $request::post('buy_num/d');
-        if(empty($num)){
-            return jsonRes(1,'请输入购买数量');
-        }
+        $workerTypeId = $request::post('worker_type/d');
+        if(empty($num)) return jsonRes(1,'请输入购买数量');
+        if(empty($workerTypeId)) return jsonRes(1,'请选择购买矿工种类');
 
-        $coinPrice = (int)getConfig('worker_price');
+        $workerTypeInfo = Worker::getWorkerTypeInfo($workerTypeId);
+        $workerTypeInfo = $workerTypeInfo[0];
+
         $userInfo = $this::$userInfo;
         $amount = (int)$userInfo['money'];
-        $price = $num * $coinPrice;
+        $price = $num * $workerTypeInfo['price'];
         if($price > $amount){
             return jsonRes(1,'钱包余额不足！请充值');
+        }
+        if($workerTypeInfo['retire'] > 0){
+            $worker = Db::name('worker')
+                ->where('user_id',$this::$uid)
+                ->where('worker_type_id',$workerTypeInfo['id'])
+                ->count('id');
+            if($worker > 0){
+                return jsonRes(1,'普通矿工每个账号只能购买一次');
+            }
         }
         Db::startTrans();
         try {
@@ -83,7 +94,7 @@ class Finance extends Base
             for ($i = 0; $i < $num; $i++){
                 $temp = [
                     'user_id' => $this::$uid,
-                    'money' => 0,
+                    'worker_type_id' => $workerTypeInfo['id'],
                     'status' => 1,
                     'create_time' => time()
                 ];

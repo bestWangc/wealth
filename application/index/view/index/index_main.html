@@ -14,12 +14,16 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div class="pull-right white bg-green left-radius" >
-                                    <i class="fa fa-eye fa-5x"></i>
+                                    <i class="fa fa-users fa-5x"></i>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <h4>{$workerNum}&nbsp;人</h4>
-                                <a class="btn btn-success btn-sm" href="{:url('/index/finance/buyWorker?type=1')}" role="button">购买</a>
+                                <div class="pull-right" >
+                                    {volist name="workerInfo" id="vo"}
+                                    <h5>{$vo.name} {$vo.worker_num} 人</h5>
+                                    {/volist}
+                                    <a class="btn btn-success btn-xs" href="{:url('/index/finance/buyWorker?type=1')}" role="button">购买矿工</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -39,8 +43,8 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <h4>{$money}&nbsp;元</h4>
-                                <a class="btn btn-success btn-sm" href="{:url('/index/recharge/index')}" role="button">充值</a>
-                                <a class="btn btn-warning btn-sm" href="{:url('/index/extract/index?type=1')}" role="button">提现</a>
+                                <a class="btn btn-success btn-xs" href="{:url('/index/recharge/index')}" role="button">充值</a>
+                                <a class="btn btn-warning btn-xs" href="{:url('/index/extract/index?type=1')}" role="button">提现</a>
                             </div>
                         </div>
                     </div>
@@ -74,15 +78,15 @@
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div class="pull-right white bg-brown left-radius" >
-                                    <i class="fa fa-users fa-5x"></i>
+                                    <i class="fa fa-eye fa-5x"></i>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <strong>
                                     {if($signStatus)}
-                                    <button class='btn btn-default btn-sm'>已签到</button>
+                                    <button class='btn btn-default btn-xs'>已签到</button>
                                     {else /}
-                                    <a class="btn btn-success btn-sm singBtn" href="javascript:;">签 到</a>
+                                    <a class="btn btn-success btn-xs singBtn" href="javascript:;">签 到</a>
                                     {/if}
                                 </strong>
                                 <br>

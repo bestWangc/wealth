@@ -1,6 +1,11 @@
 .white{
     color: #FFFFFF;
 }
+
+.red{
+    color: #FB6E51;;
+}
+
 .bg-blue{
     background-color : #32CEE4;
 }
@@ -15,5 +20,8 @@
 }
 
 .left-radius{
-    border-radius : 50%;
+    border-radius : 20%;
+}
+.left-radius p{
+    padding: .3rem .3rem
 }

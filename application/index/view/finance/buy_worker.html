@@ -1,6 +1,7 @@
 {extend name="layout/layout"}
 
 {block name="body"}
+<link rel="stylesheet" href="/static/manage/css/myown.css">
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
@@ -14,8 +15,19 @@
                         <label class="col-sm-4 control-label">余额</label>
                         <div class="col-sm-8">
                             <input type="hidden" class="amount" value="{$money}">
-                            <input type="hidden" class="workerPrice" value="{$workerPrice}">
                             <p> <strong><i class="fa fa-jpy" aria-hidden="true"></i>&nbsp;<span class="text-primary" style="font-size: 2rem">{$money}</span> 元</strong></p>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">选择矿工</label>
+                        <div class="col-sm-8">
+                            <select class="form-control m-b workerType" name="workerType">
+                                <option value="">请选择矿工种类</option>
+                                {volist name="workerTypeInfo" id="vo"}
+                                <option value="{$vo.id}" data-price="{$vo.price}" data-income="{$vo.daily_income}">{$vo.name}</option>
+                                {/volist}
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,8 +38,8 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">提示</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static">每个矿工价值{$workerPrice}元,每次至少购买1人</p>
+                        <div class="col-sm-8 tooltips">
+                            <p class="form-control-static">普通矿工为期限矿工，每人只能购买一个，其他矿工都为永久矿工,每次至少购买1人</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -48,10 +60,28 @@
 {block name="my-js"}
 <script>
     $(function () {
+        $('.workerType').change(function () {
+            if($('.tooltips p').length > 1){
+                $('.tooltips p:first').remove();
+            }
+            let options = $(this).children("option:selected");
+            let name = options.html();
+            let price = options.data('price');
+            let income = options.data('income');
+            let htmlStr = '<p class="form-control-static red">'+name+'价格为'+price+'元，每日赚取收益'+income+'元</p>';
+            $('.tooltips').prepend(htmlStr);
+        });
+
         $('.buy_btn').click(function () {
             let coinPrice = $('.workerPrice').val();
             let buy_num = $('.buy_num').val();
             let amount = $('.amount').val();
+            let worker_type = $('.workerType').val();
+
+            if(worker_type == ''){
+                layer.msg('请选择购买的矿工种类',{time:1000});
+                return false;
+            }
 
             if(buy_num == ''){
                 layer.msg('请输入购买数量',{time:1000});
@@ -83,7 +113,8 @@
                 dataType : "json",
                 cache : false,
                 data : {
-                    buy_num : buy_num
+                    buy_num : buy_num,
+                    worker_type : worker_type
                 },
                 success : function(res){
                     layer.closeAll('loading');
