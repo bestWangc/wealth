@@ -11,7 +11,7 @@ class Worker extends Base
         $info = Db::name('worker')
             ->alias('w')
             ->join('worker_type wt','wt.id = w.worker_type_id')
-            ->field('w.work_time,wt.name,GROUP_CONCAT(wt.id) as worker_num')
+            ->field('w.work_time,wt.name,GROUP_CONCAT(wt.id) as worker_num,wt.id')
             ->where('user_id',$uid)
             ->group('wt.id')
             ->select();
