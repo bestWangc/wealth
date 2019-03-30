@@ -10,11 +10,11 @@ class Recharge extends Base
 
     public function index(Request $request)
     {
-        $coinPrice = getConfig('coin_price');
+        $coinPrice = getConfig('min_price');
         $list = $this->getRecord($this::$uid);
 
         $this->assign([
-            'coinPrice' => $coinPrice,
+            'minPrice' => $coinPrice,
             'list' => json_encode($list)
         ]);
         return $this->fetch();
@@ -26,9 +26,9 @@ class Recharge extends Base
         $rMoney = $request::post('recharge_money/d',0);
         $rWay = $request::post('recharge_way/d');
 
-        $coinPrice = getConfig('coin_price');
+        $coinPrice = getConfig('min_price');
         if($rMoney < $coinPrice){
-            return jsonRes(1,'最少充值{$coinPrice}元');
+            return jsonRes(1,'最少充值{$minPrice}元');
         }
 
         $res = sRecharge::createRecharge($this::$uid,$rMoney,$rWay);
