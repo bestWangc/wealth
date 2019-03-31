@@ -48,10 +48,10 @@
 <script>
     $(function () {
         $('.user_name').focus(function () {
-            layer.tips('推荐使用手机号码', '.user_name');
+            layer.tips('推荐使用手机号码', '.user_name',{tips: [1, '#3595CC']});
         });
         $('.phone').focus(function () {
-            layer.tips('手机号码是您身份的唯一凭证', '.phone');
+            layer.tips('手机号码是您身份的唯一凭证', '.phone',{tips: [1, '#3595CC']});
         });
         $(".user_name").keydown(function(){
             this.value = this.value.replace(/[^A-Za-z0-9]/i,'');
